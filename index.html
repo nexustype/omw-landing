@@ -1,0 +1,776 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OMW — Bêta Conducteur·rice Test</title>
+  <meta name="description" content="OMW recrute des conducteur·rice·s test à Paris / Île-de-France pour valider le matching en temps réel avec détours minimaux." />
+
+  <style>
+    :root{
+      /* Palette (depuis ton visuel) */
+      --bg: #FFFFFE;
+      --panel: rgba(255,255,255,.72);
+      --stroke: rgba(12, 20, 24, .10);
+      --shadow: 0 20px 60px rgba(0,0,0,.12);
+
+      --mint1: #98CBC2;
+      --mint2: #47AFA0;
+      --mint3: #02D5B8;
+
+      --blue1: #A1B1CD;
+      --blue2: #5579B6;
+      --blue3: #165ED9;
+
+      --sun: #FFC968;
+      --orange: #FF6B03;
+
+      --brand: #0C7EC4; /* proche du logo */
+
+      --ink: #0B1418;
+      --muted: rgba(11,20,24,.68);
+      --muted2: rgba(11,20,24,.52);
+
+      --r: 22px;
+    }
+
+    *{ box-sizing: border-box; }
+    html, body{ height: 100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color: var(--ink);
+      background:
+        radial-gradient(900px 600px at 20% 10%, rgba(2,213,184,.18), transparent 60%),
+        radial-gradient(900px 600px at 90% 20%, rgba(12,126,196,.18), transparent 55%),
+        radial-gradient(900px 600px at 60% 110%, rgba(255,107,3,.10), transparent 55%),
+        var(--bg);
+      overflow-x:hidden;
+    }
+
+    /* texture légère type “grid map” */
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background: radial-gradient(circle at 1px 1px, rgba(11,20,24,.08) 1px, transparent 1.2px);
+      background-size: 26px 26px;
+      opacity:.35;
+      mask-image: radial-gradient(ellipse at 50% 30%, rgba(0,0,0,.9), transparent 65%);
+    }
+
+    a{ color: inherit; text-decoration:none; }
+    .wrap{
+      width: min(1080px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    /* CSS-only language switch */
+    .langRadio{
+      position:absolute;
+      left:-9999px;
+      top:-9999px;
+      opacity:0;
+    }
+
+    header{
+      position: sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter: blur(14px);
+      background: rgba(255,255,255,.55);
+      border-bottom: 1px solid var(--stroke);
+    }
+    .nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding: 14px 0;
+      gap: 16px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width: 160px;
+    }
+    .brand img{
+      width: 34px;
+      height: 34px;
+      object-fit: contain;
+      border-radius: 10px;
+    }
+    .brand span{ font-weight: 750; letter-spacing: .2px; }
+
+    .navlinks{
+      display:flex;
+      align-items:center;
+      gap: 14px;
+      color: var(--muted);
+      font-size: 14px;
+      flex: 1 1 auto;
+      justify-content:center;
+    }
+    .navlinks a{
+      padding: 8px 10px;
+      border-radius: 999px;
+    }
+    .navlinks a:hover{
+      background: rgba(2,213,184,.10);
+      color: rgba(11,20,24,.88);
+    }
+
+    .right{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      justify-content:flex-end;
+      min-width: 280px;
+    }
+
+    .langToggle{
+      display:inline-flex;
+      border: 1px solid var(--stroke);
+      border-radius: 999px;
+      background: rgba(255,255,255,.65);
+      overflow:hidden;
+      box-shadow: 0 10px 25px rgba(0,0,0,.06);
+    }
+    .langToggle label{
+      cursor:pointer;
+      padding: 9px 11px;
+      font-size: 13px;
+      font-weight: 700;
+      color: rgba(11,20,24,.72);
+      user-select:none;
+    }
+
+    /* active state for toggle */
+    #lang-fr:checked ~ header .langToggle label[for="lang-fr"],
+    #lang-en:checked ~ header .langToggle label[for="lang-en"]{
+      background: linear-gradient(135deg, rgba(2,213,184,.95), rgba(12,126,196,.95));
+      color: #061014;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding: 11px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,.7);
+      color: rgba(11,20,24,.92);
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 1;
+      box-shadow: 0 10px 25px rgba(0,0,0,.06);
+      transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+      white-space: nowrap;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px rgba(0,0,0,.09);
+      background: rgba(255,255,255,.9);
+    }
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(2,213,184,.95), rgba(12,126,196,.95));
+      color: #061014;
+      border-color: rgba(2,213,184,.35);
+    }
+
+    main{ padding: 44px 0 70px; }
+
+    .hero{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .card{
+      background: var(--panel);
+      border: 1px solid var(--stroke);
+      border-radius: var(--r);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+
+    .heroLeft{ padding: 28px; }
+    .badgeRow{
+      display:flex;
+      flex-wrap: wrap;
+      gap:10px;
+      margin-bottom: 14px;
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 8px 11px;
+      border-radius: 999px;
+      font-size: 13px;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,.7);
+      color: rgba(11,20,24,.85);
+    }
+    .dot{
+      width: 8px; height: 8px; border-radius: 999px;
+      background: var(--mint3);
+      box-shadow: 0 0 0 4px rgba(2,213,184,.18);
+    }
+
+    h1{
+      margin:0;
+      font-size: clamp(34px, 4vw, 54px);
+      line-height: 1.02;
+      letter-spacing: -0.03em;
+    }
+    .lead{
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.55;
+      max-width: 58ch;
+    }
+    .heroActions{
+      margin-top: 18px;
+      display:flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items:center;
+    }
+    .tiny{
+      margin-top: 10px;
+      font-size: 13px;
+      color: var(--muted2);
+    }
+
+    .heroRight{ padding: 18px; }
+.heroArt{
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(11,20,24,.08);
+  background: rgba(255,255,255,.55);
+}
+
+/* NEW: image handling */
+.heroImg{
+  display: block;
+  width: 100%;
+  height: auto;           /* default */
+  aspect-ratio: 900 / 620;/* keeps the same shape as the old SVG */
+  object-fit: cover;      /* crops elegantly */
+  object-position: center;/* adjust if needed: center 35% etc */
+}
+
+/* optional: subtle polish to match your palette */
+.heroArt{
+  box-shadow: 0 18px 45px rgba(0,0,0,.10);
+}
+.heroImg{
+  filter: saturate(1.05) contrast(1.02);
+}
+
+    .artCaption{
+      margin-top: 10px;
+      color: var(--muted2);
+      font-size: 13px;
+      line-height: 1.45;
+      padding: 0 6px 4px;
+    }
+
+    .section{ margin-top: 18px; padding: 22px; }
+    .grid3{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 12px;
+    }
+    .tile{
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(11,20,24,.09);
+      background: rgba(255,255,255,.6);
+    }
+    .tile strong{ display:block; margin-bottom: 6px; }
+    .tile span{ color: var(--muted); font-size: 14px; line-height: 1.5; }
+
+    .form{ margin-top: 14px; display:grid; gap: 10px; }
+    .row2{ display:grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    label.flabel{
+      font-size: 12px;
+      color: var(--muted2);
+      display:block;
+      margin-bottom: 6px;
+    }
+    input, select, textarea{
+      width:100%;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(11,20,24,.12);
+      background: rgba(255,255,255,.85);
+      outline:none;
+      font: inherit;
+      color: rgba(11,20,24,.92);
+    }
+    input:focus, select:focus, textarea:focus{
+      border-color: rgba(2,213,184,.55);
+      box-shadow: 0 0 0 6px rgba(2,213,184,.14);
+    }
+    textarea{ min-height: 96px; resize: vertical; }
+
+    .formActions{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items:center;
+      margin-top: 4px;
+    }
+    .note{ font-size: 12.5px; color: var(--muted2); }
+
+    .faq{ margin-top: 14px; display:grid; gap: 10px; }
+    details{
+      background: rgba(255,255,255,.6);
+      border: 1px solid rgba(11,20,24,.09);
+      border-radius: 18px;
+      padding: 12px 14px;
+    }
+    summary{ cursor:pointer; font-weight: 700; }
+    details p{ margin: 10px 0 0; color: var(--muted); line-height: 1.55; font-size: 14px; }
+
+    footer{
+      padding: 26px 0 46px;
+      color: var(--muted2);
+      font-size: 13px;
+    }
+    .foot{
+      display:flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 10px;
+      border-top: 1px solid var(--stroke);
+      padding-top: 18px;
+    }
+    .foot a{
+      color: rgba(11,20,24,.78);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* Language visibility */
+    .content.fr, .content.en{ display:none; }
+    #lang-fr:checked ~ main .content.fr{ display:block; }
+    #lang-en:checked ~ main .content.en{ display:block; }
+
+    /* Nav / CTA language */
+    .navlinks.fr, .navlinks.en, .cta.fr, .cta.en{ display:none; }
+    #lang-fr:checked ~ header .navlinks.fr,
+    #lang-fr:checked ~ header .cta.fr{ display:flex; }
+    #lang-en:checked ~ header .navlinks.en,
+    #lang-en:checked ~ header .cta.en{ display:flex; }
+
+    @media (max-width: 920px){
+      .hero{ grid-template-columns: 1fr; }
+      .navlinks{ display:none !important; }
+      .right{ min-width: auto; }
+    }
+    @media (max-width: 620px){
+      main{ padding: 28px 0 56px; }
+      .heroLeft{ padding: 22px; }
+      .heroRight{ padding: 18px; }
+      .grid3{ grid-template-columns: 1fr; }
+      .row2{ grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- default FR -->
+  <input class="langRadio" type="radio" id="lang-fr" name="lang" checked />
+  <input class="langRadio" type="radio" id="lang-en" name="lang" />
+
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="#top" aria-label="OMW accueil">
+        <!-- change src to your real filename if needed -->
+        <img src="Logo.jan.26.png" alt="Logo OMW" />
+        <span>OMW</span>
+      </a>
+
+      <!-- FR nav -->
+      <nav class="navlinks fr" aria-label="Navigation">
+        <a href="#how-fr">Comment ça marche</a>
+        <a href="#perks-fr">Avantages</a>
+        <a href="#signup-fr">Rejoindre la bêta</a>
+        <a href="#faq-fr">FAQ</a>
+      </nav>
+
+      <!-- EN nav -->
+      <nav class="navlinks en" aria-label="Navigation">
+        <a href="#how-en">How it works</a>
+        <a href="#perks-en">Perks</a>
+        <a href="#signup-en">Join beta</a>
+        <a href="#faq-en">FAQ</a>
+      </nav>
+
+      <div class="right">
+        <div class="langToggle" role="tablist" aria-label="Language selector">
+          <label for="lang-fr" role="tab" aria-controls="content-fr">FR</label>
+          <label for="lang-en" role="tab" aria-controls="content-en">EN</label>
+        </div>
+
+        <!-- FR CTAs -->
+        <div class="cta fr" style="gap:10px;">
+          <a class="btn" href="#signup-fr">Liste d’attente</a>
+          <a class="btn primary" href="#signup-fr">Devenir test driver</a>
+        </div>
+
+        <!-- EN CTAs -->
+        <div class="cta en" style="gap:10px;">
+          <a class="btn" href="#signup-en">Waitlist</a>
+          <a class="btn primary" href="#signup-en">Become a test driver</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- ========================= -->
+    <!-- ======= FRENCH ========== -->
+    <!-- ========================= -->
+    <div class="content fr" id="content-fr">
+      <div class="wrap hero">
+        <section class="card heroLeft" aria-label="Hero FR">
+          <div class="badgeRow">
+            <span class="badge"><span class="dot" aria-hidden="true"></span> Paris / Île-de-France — bêta</span>
+            <span class="badge">Détour cible : ≤ 5 min</span>
+          </div>
+
+          <h1>
+            Transforme ton trajet<br />
+            en ride utile.
+          </h1>
+
+          <p class="lead">
+            OMW connecte conducteur·rice·s et passager·ère·s en temps réel pendant la navigation.
+            Tu gardes le contrôle du trajet. Nous rendons le pickup simple, clair, et sans détours inutiles.
+          </p>
+
+          <div class="heroActions">
+            <a class="btn primary" href="#signup-fr">Candidater comme conducteur·rice test</a>
+            <a class="btn" href="#how-fr">Voir le flow</a>
+          </div>
+
+          <p class="tiny">
+            Petite cohorte, feedback direct, itérations rapides. On cherche des conducteur·rice·s réguliers pour valider
+            matching, points de rendez-vous, et confort côté driver.
+          </p>
+        </section>
+
+<aside class="card heroRight" aria-label="Hero image">
+  <div class="heroArt">
+    <img class="heroImg" src="hero.png" alt="Illustration OMW — route + pickup" />
+  </div>
+
+  <div class="artCaption" id="how-fr">
+    Flow visuel : route + pickup — simple, lisible, “zéro awkwardness”.
+  </div>
+</aside>
+
+      </div>
+
+      <div class="wrap">
+        <section class="card section" id="perks-fr">
+          <strong style="font-size:14px; letter-spacing:.2px;">Ce que tu gagnes en tant que conducteur·rice test</strong>
+
+          <div class="grid3">
+            <div class="tile">
+              <strong>Accès prioritaire</strong>
+              <span>Tu testes en premier les features et les itérations de l’app.</span>
+            </div>
+            <div class="tile">
+              <strong>Impact direct</strong>
+              <span>Ton feedback influence matching, points de RDV, et règles de détours.</span>
+            </div>
+            <div class="tile">
+              <strong>Canal fondateur</strong>
+              <span>Une boucle courte : retour → fix → release. Pas de blabla.</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="card section" id="signup-fr">
+          <strong style="font-size:14px; letter-spacing:.2px;">Candidater (bêta conducteur·rice)</strong>
+          <p style="margin:10px 0 0; color: var(--muted); line-height:1.55; font-size:14px;">
+            Formulaire frontend-only. Pour “activer” l’envoi sans JS : branche-le ensuite sur Formspree / Netlify Forms / ton backend.
+            En attendant, le bouton principal ouvre un email prérempli.
+          </p>
+
+          <form class="form" action="#" method="post" autocomplete="on">
+            <div class="row2">
+              <div>
+                <label class="flabel" for="name-fr">Nom</label>
+                <input id="name-fr" name="name" placeholder="Ton nom" />
+              </div>
+              <div>
+                <label class="flabel" for="email-fr">Email</label>
+                <input id="email-fr" name="email" type="email" placeholder="toi@domaine.com" />
+              </div>
+            </div>
+
+            <div class="row2">
+              <div>
+                <label class="flabel" for="area-fr">Zone principale</label>
+                <input id="area-fr" name="area" placeholder="Paris 18e / Boulogne / Saint-Denis…" />
+              </div>
+              <div>
+                <label class="flabel" for="freq-fr">Fréquence de conduite</label>
+                <select id="freq-fr" name="freq">
+                  <option value="">Choisir</option>
+                  <option>Tous les jours</option>
+                  <option>3–5x / semaine</option>
+                  <option>1–2x / semaine</option>
+                  <option>Occasionnel</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row2">
+              <div>
+                <label class="flabel" for="vehicle-fr">Véhicule</label>
+                <input id="vehicle-fr" name="vehicle" placeholder="Modèle + année (optionnel)" />
+              </div>
+              <div>
+                <label class="flabel" for="detour-fr">Détour max confortable</label>
+                <select id="detour-fr" name="detour">
+                  <option value="">Choisir</option>
+                  <option>≤ 3 minutes</option>
+                  <option>≤ 5 minutes</option>
+                  <option>≤ 8 minutes</option>
+                  <option>Flexible</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label class="flabel" for="notes-fr">Notes</label>
+              <textarea id="notes-fr" name="notes" placeholder="Horaires, trajet régulier, contraintes, etc."></textarea>
+            </div>
+
+            <div class="formActions">
+              <!-- Remplace l’email -->
+              <a class="btn primary"
+                 href="mailto:hello@omw.app?subject=OMW%20—%20Candidature%20conducteur·rice%20test&body=Nom%3A%0AEmail%3A%0AZone%3A%0AFr%C3%A9quence%3A%0AV%C3%A9hicule%3A%0AD%C3%A9tour%20max%3A%0ANotes%3A%0A">
+                Envoyer la candidature (email)
+              </a>
+              <button class="btn" type="submit" disabled title="Connecte un backend pour activer">
+                Envoyer (à brancher)
+              </button>
+              <span class="note">Petite cohorte. Réponse rapide.</span>
+            </div>
+          </form>
+        </section>
+
+        <section class="card section" id="faq-fr">
+          <strong style="font-size:14px; letter-spacing:.2px;">FAQ</strong>
+
+          <div class="faq">
+            <details>
+              <summary>Est-ce du ride-hailing (VTC) ?</summary>
+              <p>
+                Non. Objectif : cost-sharing avec détours minimaux. Tu valides chaque match et tu fixes tes limites.
+              </p>
+            </details>
+
+            <details>
+              <summary>Qu’attendez-vous des test drivers ?</summary>
+              <p>
+                Conduite régulière en Île-de-France, retours honnêtes, et envie de tester une UX qui évolue vite.
+              </p>
+            </details>
+
+            <details>
+              <summary>Quand démarre la bêta ?</summary>
+              <p>
+                Onboardings en continu, par petits lots, pour garder une boucle feedback → shipping ultra efficace.
+              </p>
+            </details>
+          </div>
+        </section>
+
+        <footer>
+          <div class="foot">
+            <div>© 2026 OMW — On My Way</div>
+            <div><a href="#signup-fr">Rejoindre la bêta</a> · <a href="#how-fr">Comment ça marche</a></div>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <!-- ========================= -->
+    <!-- ======= ENGLISH ========= -->
+    <!-- ========================= -->
+    <div class="content en" id="content-en">
+      <div class="wrap hero">
+        <section class="card heroLeft" aria-label="Hero EN">
+          <div class="badgeRow">
+            <span class="badge"><span class="dot" aria-hidden="true"></span> Paris / Île-de-France — beta</span>
+            <span class="badge">Detour target: ≤ 5 min</span>
+          </div>
+
+          <h1>
+            Turn your commute<br />
+            into a real ride.
+          </h1>
+
+          <p class="lead">
+            OMW matches drivers and riders in real time while you navigate.
+            You stay in control. We keep it simple: clear pickup points, minimal detours, zero friction.
+          </p>
+
+          <div class="heroActions">
+            <a class="btn primary" href="#signup-en">Apply as a test driver</a>
+            <a class="btn" href="#how-en">See the flow</a>
+          </div>
+
+          <p class="tiny">
+            Small cohort, direct feedback, fast iterations. We’re recruiting consistent drivers to validate matching,
+            pickup clarity, and driver comfort.
+          </p>
+        </section>
+
+        <aside class="card heroRight" aria-label="Hero image">
+          <div class="heroArt">
+            <img class="heroImg" src="hero.png" alt="Illustration OMW — route + pickup" />
+          </div>
+
+          <div class="artCaption" id="how-en">
+            Visual cue: route + pickup — simple, readable, “zero awkwardness”.
+          </div>
+        </aside>
+      </div>
+
+      <div class="wrap">
+        <section class="card section" id="perks-en">
+          <strong style="font-size:14px; letter-spacing:.2px;">What you get as a test driver</strong>
+
+          <div class="grid3">
+            <div class="tile">
+              <strong>Priority access</strong>
+              <span>Be first to try new features and iterations.</span>
+            </div>
+            <div class="tile">
+              <strong>Direct impact</strong>
+              <span>Your feedback shapes matching, pickup UX, and detour rules.</span>
+            </div>
+            <div class="tile">
+              <strong>Founder channel</strong>
+              <span>Fast loop: report → fix → ship. No bureaucracy.</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="card section" id="signup-en">
+          <strong style="font-size:14px; letter-spacing:.2px;">Apply (driver beta)</strong>
+          <p style="margin:10px 0 0; color: var(--muted); line-height:1.55; font-size:14px;">
+            Frontend-only form. Hook it up later (Formspree / Netlify Forms / your backend). For now, the main button opens a prefilled email.
+          </p>
+
+          <form class="form" action="#" method="post" autocomplete="on">
+            <div class="row2">
+              <div>
+                <label class="flabel" for="name-en">Name</label>
+                <input id="name-en" name="name" placeholder="Your name" />
+              </div>
+              <div>
+                <label class="flabel" for="email-en">Email</label>
+                <input id="email-en" name="email" type="email" placeholder="you@domain.com" />
+              </div>
+            </div>
+
+            <div class="row2">
+              <div>
+                <label class="flabel" for="area-en">Primary area</label>
+                <input id="area-en" name="area" placeholder="Paris 18e / Boulogne / Saint-Denis…" />
+              </div>
+              <div>
+                <label class="flabel" for="freq-en">Driving frequency</label>
+                <select id="freq-en" name="freq">
+                  <option value="">Select</option>
+                  <option>Daily</option>
+                  <option>3–5x / week</option>
+                  <option>1–2x / week</option>
+                  <option>Occasionally</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row2">
+              <div>
+                <label class="flabel" for="vehicle-en">Vehicle</label>
+                <input id="vehicle-en" name="vehicle" placeholder="Model + year (optional)" />
+              </div>
+              <div>
+                <label class="flabel" for="detour-en">Max detour</label>
+                <select id="detour-en" name="detour">
+                  <option value="">Select</option>
+                  <option>≤ 3 minutes</option>
+                  <option>≤ 5 minutes</option>
+                  <option>≤ 8 minutes</option>
+                  <option>Flexible</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label class="flabel" for="notes-en">Notes</label>
+              <textarea id="notes-en" name="notes" placeholder="Commute pattern, hours, constraints, etc."></textarea>
+            </div>
+
+            <div class="formActions">
+              <a class="btn primary"
+                 href="mailto:hello@omw.app?subject=OMW%20—%20Test%20Driver%20Application&body=Name%3A%0AEmail%3A%0AArea%3A%0AFrequency%3A%0AVehicle%3A%0AMax%20detour%3A%0ANotes%3A%0A">
+                Send application email
+              </a>
+              <button class="btn" type="submit" disabled title="Connect a backend to enable">
+                Submit (hook backend)
+              </button>
+              <span class="note">Small cohort. Fast replies.</span>
+            </div>
+          </form>
+        </section>
+
+        <section class="card section" id="faq-en">
+          <strong style="font-size:14px; letter-spacing:.2px;">FAQ</strong>
+
+          <div class="faq">
+            <details>
+              <summary>Is this ride-hailing?</summary>
+              <p>No — the goal is cost-sharing with minimal detours. Drivers stay in control and approve matches.</p>
+            </details>
+            <details>
+              <summary>What do you need from test drivers?</summary>
+              <p>Consistent driving in Île-de-France, honest feedback, and willingness to test evolving UX.</p>
+            </details>
+            <details>
+              <summary>When does the beta start?</summary>
+              <p>Rolling intake in small batches to keep feedback loops tight.</p>
+            </details>
+          </div>
+        </section>
+
+        <footer>
+          <div class="foot">
+            <div>© 2026 OMW — On My Way</div>
+            <div><a href="#signup-en">Join beta</a> · <a href="#how-en">How it works</a></div>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
