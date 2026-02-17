@@ -571,7 +571,7 @@
               <span class="note">Réponse rapide.</span>
             </div>
             <div class="formStatus success" role="status" aria-live="polite">Merci. Nous revenons vite vers toi.</div>
-            <div class="formStatus error" role="status" aria-live="polite">Oups, échec. Un email s’ouvrira si besoin.</div>
+            <div class="formStatus error" role="status" aria-live="polite">Oups, échec. Écris-nous à <a href="mailto:hello@rideomw.com">hello@rideomw.com</a>.</div>
           </form>
         </section>
 
@@ -639,7 +639,7 @@
               <span class="note">On te prévient quand ta zone ouvre.</span>
             </div>
             <div class="formStatus success" role="status" aria-live="polite">Merci. On te tient au courant.</div>
-            <div class="formStatus error" role="status" aria-live="polite">Oups, échec. Un email s’ouvrira si besoin.</div>
+            <div class="formStatus error" role="status" aria-live="polite">Oups, échec. Écris-nous à <a href="mailto:hello@rideomw.com">hello@rideomw.com</a>.</div>
           </form>
         </section>
 
@@ -872,7 +872,7 @@
               <span class="note">Fast response.</span>
             </div>
             <div class="formStatus success" role="status" aria-live="polite">Thanks. We'll get back to you soon.</div>
-            <div class="formStatus error" role="status" aria-live="polite">Something went wrong. We'll open email if needed.</div>
+            <div class="formStatus error" role="status" aria-live="polite">Something went wrong. Email us at <a href="mailto:hello@rideomw.com">hello@rideomw.com</a>.</div>
           </form>
         </section>
 
@@ -940,7 +940,7 @@
               <span class="note">We'll notify you when your area opens.</span>
             </div>
             <div class="formStatus success" role="status" aria-live="polite">Thanks. We'll keep you posted.</div>
-            <div class="formStatus error" role="status" aria-live="polite">Something went wrong. We'll open email if needed.</div>
+            <div class="formStatus error" role="status" aria-live="polite">Something went wrong. Email us at <a href="mailto:hello@rideomw.com">hello@rideomw.com</a>.</div>
           </form>
         </section>
 
@@ -997,7 +997,6 @@
         driver: (config.driverFormEndpoint || "").trim()
       };
 
-      const fallbackEmail = (config.fallbackEmail || "hello@rideomw.com").trim();
       const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
       function setCtaMode(group, mode) {
@@ -1037,18 +1036,6 @@
         applyMode(segment.getAttribute("data-default") || "rider");
       });
 
-      function buildMailto(email, formData) {
-        const lines = [];
-        formData.forEach((value, key) => {
-          if (!value) return;
-          if (key === "company") return;
-          lines.push(key + ": " + value);
-        });
-        const subject = "OMW form submission";
-        const body = encodeURIComponent(lines.join("\n"));
-        return "mailto:" + email + "?subject=" + encodeURIComponent(subject) + "&body=" + body;
-      }
-
       document.querySelectorAll("form[data-form]").forEach((form) => {
         form.addEventListener("submit", async (event) => {
           event.preventDefault();
@@ -1062,8 +1049,6 @@
           form.setAttribute("data-state", "loading");
 
           if (!endpoint) {
-            const mailto = buildMailto(form.getAttribute("data-fallback") || fallbackEmail, formData);
-            window.location.href = mailto;
             form.setAttribute("data-state", "error");
             return;
           }
@@ -1079,13 +1064,9 @@
               form.reset();
               form.setAttribute("data-state", "success");
             } else {
-              const mailto = buildMailto(form.getAttribute("data-fallback") || fallbackEmail, formData);
-              window.location.href = mailto;
               form.setAttribute("data-state", "error");
             }
           } catch (err) {
-            const mailto = buildMailto(form.getAttribute("data-fallback") || fallbackEmail, formData);
-            window.location.href = mailto;
             form.setAttribute("data-state", "error");
           }
         });

@@ -5,14 +5,14 @@ Single-page bilingual (FR/EN) landing for rideomw.com.
 ## Run locally
 Open `index.html` (no build step). `<!doctype html>.html` is kept in sync as a legacy copy.
 
-## Configure lead capture
-Forms are wired through a simple config file:
+## Configure lead capture (Hostinger email)
+Forms post to a lightweight PHP endpoint that sends via SMTP.
 
-- Edit `config.js`
-- Set `riderFormEndpoint` and `driverFormEndpoint` to your Formspree (or equivalent) endpoints
-- Optional: update `fallbackEmail`
+- Copy `api/mail-config.example.php` to `api/mail-config.php` and fill in the SMTP settings from the Hostinger panel (host, port, encryption, username, password).
+- Keep `config.js` endpoints pointing to `/api/submit.php` (default).
+- `fallbackEmail` is used only in the error message (no auto mailto).
 
-If endpoints are empty, submissions fall back to a mailto draft.
+If you want to use Formspree or another provider instead, set the endpoints in `config.js` accordingly.
 
 ## Deploy (Vercel)
 - Import the repo

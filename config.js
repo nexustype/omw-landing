@@ -1,9 +1,8 @@
 window.OMW_CONFIG = {
-  // Paste your Formspree or other endpoint URLs here.
-  // Example: "https://formspree.io/f/xxxxxxxx"
-  riderFormEndpoint: "",
-  driverFormEndpoint: "",
+  // Your form endpoint. For Hostinger PHP, use "/api/submit.php".
+  riderFormEndpoint: "/api/submit.php",
+  driverFormEndpoint: "/api/submit.php",
 
-  // Fallback email if endpoints are empty or unreachable.
+  // Fallback email for display only (no auto mailto).
   fallbackEmail: "hello@rideomw.com"
 };
