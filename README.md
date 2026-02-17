@@ -20,7 +20,7 @@ Forms post to a Vercel serverless function that sends via SMTP.
   - `MAIL_FROM_NAME` (optional, default `OMW`)
   - `ALLOWED_ORIGINS` (comma-separated list, optional)
 
-If you want to use Hostinger PHP instead, point endpoints to `/api/submit.php` and configure `api/mail-config.php` on a PHP host.
+If you want to use Hostinger PHP instead, copy `api/submit-php.example.php` to `api/submit.php` on a PHP host, point endpoints to `/api/submit.php`, and configure `api/mail-config.php`.
 
 ## Deploy (Vercel)
 - Import the repo
