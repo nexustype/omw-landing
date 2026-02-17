@@ -5,5 +5,5 @@ window.OMW_CONFIG = {
   driverFormEndpoint: "",
 
   // Fallback email if endpoints are empty or unreachable.
-  fallbackEmail: "hello@omw.app"
+  fallbackEmail: "hello@rideomw.com"
 };

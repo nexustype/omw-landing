@@ -7,6 +7,9 @@
   <meta name="description" content="OMW est une plateforme de covoiturage en temps réel à Paris / Île-de-France. Détour max ≤ 5 min, matching en moins de 60 s, prix clair et partage des frais. Liste d’attente passagers et bêta conducteurs." />
   <meta name="keywords" content="covoiturage temps réel, ridesharing en temps réel, covoiturage dynamique, Paris, Île-de-France, détour max, cost-sharing, anti-surge, corridors" />
   <link rel="canonical" href="https://www.rideomw.com/" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
 
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="OMW" />
@@ -497,7 +500,7 @@
             <li><strong>Moins de stress</strong> : pickup clair, annulation facile.</li>
           </ul>
 
-          <form class="form" id="driver-form-fr" data-form="driver" method="post" autocomplete="on" data-fallback="hello@omw.app">
+          <form class="form" id="driver-form-fr" data-form="driver" method="post" autocomplete="on" data-fallback="hello@rideomw.com">
             <input type="hidden" name="form_type" value="Driver beta (FR)" />
             <div class="hp" aria-hidden="true">
               <label for="company-fr">Company</label>
@@ -572,7 +575,7 @@
             <li><strong>Sécurité</strong> : identité visible, annulation simple.</li>
           </ul>
 
-          <form class="form" id="rider-form-fr" data-form="rider" method="post" autocomplete="on" data-fallback="hello@omw.app">
+          <form class="form" id="rider-form-fr" data-form="rider" method="post" autocomplete="on" data-fallback="hello@rideomw.com">
             <input type="hidden" name="form_type" value="Rider waitlist (FR)" />
             <div class="hp" aria-hidden="true">
               <label for="company-rider-fr">Company</label>
@@ -668,7 +671,7 @@
         <footer>
           <div class="foot">
             <div>© 2026 OMW — On My Way</div>
-            <div><a href="mailto:hello@omw.app">hello@omw.app</a> · <a href="#faq-fr">FAQ</a></div>
+            <div><a href="mailto:hello@rideomw.com">hello@rideomw.com</a> · <a href="#faq-fr">FAQ</a></div>
           </div>
         </footer>
       </div>
@@ -799,7 +802,7 @@
             <li><strong>Lower stress</strong>: clear pickup, easy cancel.</li>
           </ul>
 
-          <form class="form" id="driver-form-en" data-form="driver" method="post" autocomplete="on" data-fallback="hello@omw.app">
+          <form class="form" id="driver-form-en" data-form="driver" method="post" autocomplete="on" data-fallback="hello@rideomw.com">
             <input type="hidden" name="form_type" value="Driver beta (EN)" />
             <div class="hp" aria-hidden="true">
               <label for="company-en">Company</label>
@@ -874,7 +877,7 @@
             <li><strong>Safety</strong>: visible identity, easy cancel.</li>
           </ul>
 
-          <form class="form" id="rider-form-en" data-form="rider" method="post" autocomplete="on" data-fallback="hello@omw.app">
+          <form class="form" id="rider-form-en" data-form="rider" method="post" autocomplete="on" data-fallback="hello@rideomw.com">
             <input type="hidden" name="form_type" value="Rider waitlist (EN)" />
             <div class="hp" aria-hidden="true">
               <label for="company-rider-en">Company</label>
@@ -970,7 +973,7 @@
         <footer>
           <div class="foot">
             <div>© 2026 OMW — On My Way</div>
-            <div><a href="mailto:hello@omw.app">hello@omw.app</a> · <a href="#faq-en">FAQ</a></div>
+            <div><a href="mailto:hello@rideomw.com">hello@rideomw.com</a> · <a href="#faq-en">FAQ</a></div>
           </div>
         </footer>
       </div>
@@ -986,7 +989,7 @@
         driver: (config.driverFormEndpoint || "").trim()
       };
 
-      const fallbackEmail = (config.fallbackEmail || "hello@omw.app").trim();
+      const fallbackEmail = (config.fallbackEmail || "hello@rideomw.com").trim();
       const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
       function setCtaMode(group, mode) {
