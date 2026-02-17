@@ -246,129 +246,6 @@
     .heroRight{ padding: 18px; }
     .heroArt{ border-radius: 18px; overflow: hidden; border: 1px solid rgba(11,20,24,.08); background: rgba(255,255,255,.55); box-shadow: 0 18px 45px rgba(0,0,0,.10); }
     .heroImg{ display:block; width: 100%; height: auto; aspect-ratio: 900 / 620; object-fit: cover; object-position: center; filter: saturate(1.05) contrast(1.02); }
-    .artCaption{ margin-top: 10px; color: var(--muted2); font-size: 13px; line-height: 1.45; padding: 0 6px 4px; }
-
-    .heroWipe{
-      position: relative;
-      overflow: hidden;
-      border-radius: 18px;
-      aspect-ratio: 900 / 620;
-      width: 100%;
-      background: linear-gradient(135deg, rgba(2,213,184,.14), rgba(12,126,196,.10));
-      --pos: 50;
-    }
-    .wipeImg{
-      display:block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-    }
-    .wipeOverlay{
-      position:absolute;
-      inset:0;
-      width: calc(var(--pos) * 1%);
-      overflow:hidden;
-      pointer-events:none;
-    }
-    .wipeOverlay .wipeImg{
-      height: 100%;
-      transform-origin: left center;
-      transform: scaleX(var(--scale, 1));
-    }
-    .wipeDivider{
-      position:absolute;
-      top:0;
-      bottom:0;
-      left: calc(var(--pos) * 1%);
-      width: 2px;
-      transform: translateX(-1px);
-      background: rgba(255,255,255,.75);
-      box-shadow: 0 0 0 1px rgba(11,20,24,.12);
-      pointer-events:none;
-    }
-    .wipeControl{
-      position:absolute;
-      left:12px;
-      right:12px;
-      bottom:12px;
-      display:flex;
-      align-items:center;
-      gap:10px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.72);
-      border: 1px solid rgba(11,20,24,.10);
-      box-shadow: 0 12px 30px rgba(0,0,0,.12);
-      backdrop-filter: blur(10px);
-    }
-    .wipeIcon{
-      width: 26px;
-      height: 26px;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      color: rgba(11,20,24,.72);
-      flex: 0 0 auto;
-    }
-    .wipeIcon svg{
-      width: 22px;
-      height: 22px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 1.8;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-    .wipeTrack{
-      position:relative;
-      flex: 1 1 auto;
-      height: 44px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.8);
-      border: 1px solid rgba(11,20,24,.12);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.8);
-    }
-    .wipeFill{
-      position:absolute;
-      inset:0;
-      width: calc(var(--pos) * 1%);
-      border-radius: 999px;
-      background: linear-gradient(90deg, rgba(2,213,184,.4), rgba(12,126,196,.35));
-    }
-    .wipeThumb{
-      position:absolute;
-      top:50%;
-      left: calc(var(--pos) * 1%);
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      background: linear-gradient(135deg, rgba(255,255,255,.98), rgba(255,255,255,.75));
-      border: 1px solid rgba(11,20,24,.18);
-      box-shadow: 0 10px 20px rgba(0,0,0,.18);
-    }
-    .wipeInput{
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      opacity:0;
-      cursor: grab;
-      touch-action: none;
-    }
-    .wipeInput:active{ cursor: grabbing; }
-    .wipeTrack:focus-within{
-      outline: 3px solid rgba(2,213,184,.5);
-      outline-offset: 3px;
-    }
-
-    @media (prefers-reduced-motion: no-preference){
-      .wipeOverlay,
-      .wipeDivider{ transition: width .2s ease, left .2s ease; }
-      .wipeFill,
-      .wipeThumb{ transition: width .2s ease, left .2s ease; }
-    }
 
     .section{ margin-top: 16px; padding: 22px; }
     .kicker{ font-size:11px; letter-spacing:.18em; text-transform: uppercase; color: var(--muted2); }
@@ -543,39 +420,8 @@
 
         <aside class="card heroRight" aria-label="Hero image">
           <div class="heroArt">
-            <div class="heroWipe" data-hero-wipe style="--pos: 50;">
-              <img class="wipeImg wipeBase" src="hero-rider.jpg" alt="Passager·ère levant la main" />
-              <div class="wipeOverlay" aria-hidden="true">
-                <img class="wipeImg" src="hero-driver.jpg" alt="" />
-              </div>
-              <div class="wipeDivider" aria-hidden="true"></div>
-
-              <div class="wipeControl" aria-label="Basculer passager·ère / conducteur·rice">
-                <span class="wipeIcon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <circle cx="8" cy="7" r="2.6"></circle>
-                    <path d="M5.5 20v-4.3a4.6 4.6 0 0 1 9.2 0V20"></path>
-                    <path d="M14.5 10.5l3-3.5"></path>
-                    <path d="M17.5 7V4.5"></path>
-                  </svg>
-                </span>
-                <div class="wipeTrack" data-wipe-track>
-                  <div class="wipeFill" aria-hidden="true"></div>
-                  <div class="wipeThumb" aria-hidden="true"></div>
-                  <input class="wipeInput" type="range" min="0" max="100" value="50" aria-label="Basculer entre passager·ère et conducteur·rice" />
-                </div>
-                <span class="wipeIcon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M3 13l2.5-5h13L21 13"></path>
-                    <path d="M4 13h16v5H4z"></path>
-                    <circle cx="7" cy="18" r="1.5"></circle>
-                    <circle cx="17" cy="18" r="1.5"></circle>
-                  </svg>
-                </span>
-              </div>
-            </div>
+            <img class="heroImg" src="hero.png" alt="OMW — covoiturage temps réel" />
           </div>
-          <div class="artCaption">Glisse le curseur : passager·ère ↔ conducteur·rice.</div>
         </aside>
       </div>
 
@@ -875,39 +721,8 @@
 
         <aside class="card heroRight" aria-label="Hero image">
           <div class="heroArt">
-            <div class="heroWipe" data-hero-wipe style="--pos: 50;">
-              <img class="wipeImg wipeBase" src="hero-rider.jpg" alt="Rider raising a hand" />
-              <div class="wipeOverlay" aria-hidden="true">
-                <img class="wipeImg" src="hero-driver.jpg" alt="" />
-              </div>
-              <div class="wipeDivider" aria-hidden="true"></div>
-
-              <div class="wipeControl" aria-label="Toggle rider / driver">
-                <span class="wipeIcon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <circle cx="8" cy="7" r="2.6"></circle>
-                    <path d="M5.5 20v-4.3a4.6 4.6 0 0 1 9.2 0V20"></path>
-                    <path d="M14.5 10.5l3-3.5"></path>
-                    <path d="M17.5 7V4.5"></path>
-                  </svg>
-                </span>
-                <div class="wipeTrack" data-wipe-track>
-                  <div class="wipeFill" aria-hidden="true"></div>
-                  <div class="wipeThumb" aria-hidden="true"></div>
-                  <input class="wipeInput" type="range" min="0" max="100" value="50" aria-label="Toggle rider versus driver view" />
-                </div>
-                <span class="wipeIcon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M3 13l2.5-5h13L21 13"></path>
-                    <path d="M4 13h16v5H4z"></path>
-                    <circle cx="7" cy="18" r="1.5"></circle>
-                    <circle cx="17" cy="18" r="1.5"></circle>
-                  </svg>
-                </span>
-              </div>
-            </div>
+            <img class="heroImg" src="hero.png" alt="OMW — real-time ridesharing" />
           </div>
-          <div class="artCaption">Drag the slider: rider ↔ driver.</div>
         </aside>
       </div>
 
@@ -1194,40 +1009,6 @@
         });
       }
 
-      function updateWipe(wipe, value) {
-        if (!wipe) return;
-        const input = wipe.querySelector(".wipeInput");
-        if (!input) return;
-        const clamped = Math.max(0, Math.min(100, Number(value)));
-        const safe = Math.max(1, clamped);
-        const scale = clamped === 0 ? 1 : 100 / safe;
-        wipe.style.setProperty("--pos", clamped);
-        wipe.style.setProperty("--scale", scale);
-        input.value = clamped;
-        input.setAttribute("aria-valuetext", Math.round(clamped) + "%");
-      }
-
-      document.querySelectorAll("[data-hero-wipe]").forEach((wipe) => {
-        const input = wipe.querySelector(".wipeInput");
-        const track = wipe.querySelector("[data-wipe-track]");
-        if (!input || !track) return;
-
-        input.addEventListener("input", () => {
-          updateWipe(wipe, input.value);
-        });
-
-        track.addEventListener("pointerdown", (event) => {
-          if (event.button !== undefined && event.button !== 0) return;
-          const rect = track.getBoundingClientRect();
-          const x = Math.min(rect.right, Math.max(rect.left, event.clientX));
-          const pct = ((x - rect.left) / rect.width) * 100;
-          updateWipe(wipe, pct);
-          input.focus({ preventScroll: true });
-        });
-
-        updateWipe(wipe, input.value || wipe.style.getPropertyValue("--pos") || 50);
-      });
-
       document.querySelectorAll("[data-segment]").forEach((segment) => {
         const hero = segment.closest(".hero");
         const ctaGroup = hero ? hero.querySelector("[data-cta-group]") : null;
@@ -1239,10 +1020,6 @@
             btn.setAttribute("aria-pressed", isPressed ? "true" : "false");
           });
           setCtaMode(ctaGroup, mode);
-          const wipe = hero ? hero.querySelector("[data-hero-wipe]") : null;
-          if (wipe) {
-            updateWipe(wipe, mode === "driver" ? 100 : 0);
-          }
           if (targetId) {
             const target = document.getElementById(targetId);
             if (target) {
