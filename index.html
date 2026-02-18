@@ -8,11 +8,12 @@
   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
   })(window,document,'script','dataLayer','GTM-MC6GCTVX');</script>
   <!-- End Google Tag Manager -->
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>OMW — Covoiturage temps réel, détour max 5 min (Paris / Île-de-France)</title>
-  <meta name="description" content="OMW est une plateforme de covoiturage en temps réel à Paris / Île-de-France. Détour max ≤ 5 min, matching en moins de 60 s, prix clair et partage des frais. Liste d’attente passagers et bêta conducteurs." />
-  <meta name="keywords" content="covoiturage temps réel, ridesharing en temps réel, covoiturage dynamique, Paris, Île-de-France, détour max, cost-sharing, anti-surge, corridors" />
+  <title>OMW - Le plan B quand le RER lâche</title>
+  <meta name="description" content="OMW connecte Riders et Drivers en partage de frais : option en 10 secondes, prix clair, détour max 5 min, couverture qui grandit avec la communauté." />
+  <meta name="keywords" content="covoiturage temps réel, plan B RER, partage de frais, Île-de-France, inter-city, détour max 5 min, OMW" />
   <link rel="canonical" href="https://www.rideomw.com/" />
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
@@ -20,16 +21,16 @@
 
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="OMW" />
-  <meta property="og:title" content="OMW — Real-time ridesharing with detour cap" />
-  <meta property="og:description" content="Real-time ridesharing in Paris / Île-de-France. Detour cap ≤ 5 min, shared costs, request + confirm in under 60 s." />
+  <meta property="og:title" content="OMW - Le plan B quand le RER lâche" />
+  <meta property="og:description" content="Option en 10 secondes, prix clair en partage de frais, détour max 5 min et couverture en croissance." />
   <meta property="og:url" content="https://www.rideomw.com/" />
   <meta property="og:image" content="https://www.rideomw.com/hero.png" />
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:locale:alternate" content="en_US" />
 
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="OMW — Real-time ridesharing" />
-  <meta name="twitter:description" content="Detour cap ≤ 5 min. Paris / Île-de-France pilot corridors. Shared costs, safer, simpler." />
+  <meta name="twitter:title" content="OMW - Le plan B quand le RER lâche" />
+  <meta name="twitter:description" content="Covoiturage en partage de frais : option rapide, prix clair, détour max 5 min." />
   <meta name="twitter:image" content="https://www.rideomw.com/hero.png" />
 
   <script type="application/ld+json">
@@ -52,296 +53,1141 @@
   </script>
 
   <style>
-    :root{
-      --bg: #FFFFFE;
-      --panel: rgba(255,255,255,.78);
-      --stroke: rgba(12, 20, 24, .10);
-      --shadow: 0 20px 60px rgba(0,0,0,.12);
-
-      --mint1: #98CBC2;
-      --mint2: #47AFA0;
-      --mint3: #02D5B8;
-
-      --blue2: #5579B6;
-      --blue3: #165ED9;
-
-      --sun: #FFC968;
-      --orange: #FF6B03;
-
-      --brand: #0C7EC4;
-
-      --ink: #0B1418;
-      --muted: rgba(11,20,24,.68);
-      --muted2: rgba(11,20,24,.52);
-
-      --r: 22px;
+    :root {
+      --bg: #ffffff;
+      --panel: #ffffff;
+      --panel-strong: #ffffff;
+      --stroke: rgba(18, 30, 52, 0.11);
+      --ink: #10182a;
+      --muted: rgba(16, 24, 42, 0.72);
+      --muted-soft: rgba(16, 24, 42, 0.56);
+      --brand: #1a5fd0;
+      --brand-strong: #0f47a3;
+      --accent: #0ca389;
+      --accent-soft: #dff3ee;
+      --shadow: 0 24px 60px rgba(16, 24, 42, 0.12);
+      --radius: 24px;
     }
 
-    *{ box-sizing: border-box; }
-    html, body{ height: 100%; }
-    body{
-      margin:0;
+    * { box-sizing: border-box; }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      margin: 0;
       font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       font-size: 16px;
+      line-height: 1.45;
       color: var(--ink);
-      background:
-        radial-gradient(900px 600px at 20% 10%, rgba(2,213,184,.18), transparent 60%),
-        radial-gradient(900px 600px at 90% 20%, rgba(12,126,196,.18), transparent 55%),
-        radial-gradient(900px 600px at 60% 110%, rgba(255,107,3,.10), transparent 55%),
-        var(--bg);
-      overflow-x:hidden;
+      background: var(--bg);
+      overflow-x: hidden;
+    }
+    body::before {
+      display: none;
     }
 
-    body::before{
-      content:"";
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      background: radial-gradient(circle at 1px 1px, rgba(11,20,24,.08) 1px, transparent 1.2px);
-      background-size: 26px 26px;
-      opacity:.35;
-      mask-image: radial-gradient(ellipse at 50% 30%, rgba(0,0,0,.9), transparent 65%);
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+    img {
+      max-width: 100%;
+      display: block;
     }
 
-    a{ color: inherit; text-decoration:none; }
-    img{ max-width:100%; display:block; }
-    .wrap{ width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
+    .wrap {
+      width: min(1160px, calc(100% - 40px));
+      margin: 0 auto;
+    }
 
-    .langRadio{ position:absolute; left:-9999px; top:-9999px; opacity:0; }
+    .langRadio {
+      position: absolute;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+    }
 
-    header{
+    header {
       position: sticky;
-      top:0;
-      z-index:50;
+      top: 0;
+      z-index: 40;
       backdrop-filter: blur(14px);
-      background: rgba(255,255,255,.6);
+      background: rgba(255, 255, 255, 0.78);
       border-bottom: 1px solid var(--stroke);
     }
-    .nav{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding: 14px 0;
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       gap: 16px;
+      padding: 14px 0;
     }
 
-    .brand{ display:flex; align-items:center; gap:10px; min-width: 160px; }
-    .brand img{ width: 50px; height: 50px; object-fit: contain; border-radius: 10px; }
-    .brand span{ font-weight: 700; letter-spacing: .2px; font-size: 1.5em; }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 128px;
+    }
+    .brand img {
+      width: 42px;
+      height: 42px;
+      border-radius: 11px;
+    }
+    .brand span {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
 
-    .navlinks{
-      display:flex;
-      align-items:center;
-      gap: 14px;
+    .navlinks {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
       color: var(--muted);
       font-size: 14px;
+      justify-content: center;
       flex: 1 1 auto;
-      justify-content:center;
+    }
+    .navlinks a {
+      padding: 8px 10px;
+      border-radius: 999px;
+      transition: background-color .18s ease, color .18s ease;
+    }
+    .navlinks a:hover {
+      background: var(--accent-soft);
+      color: var(--ink);
+    }
+
+    .right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
       flex-wrap: wrap;
     }
-    .navlinks a{ padding: 8px 10px; border-radius: 999px; }
-    .navlinks a:hover{ background: rgba(2,213,184,.10); color: rgba(11,20,24,.88); }
 
-    .right{ display:flex; align-items:center; gap: 10px; justify-content:flex-end; }
-
-    .langToggle{
-      display:inline-flex;
+    .langToggle {
+      display: inline-flex;
       border: 1px solid var(--stroke);
       border-radius: 999px;
-      background: rgba(255,255,255,.65);
-      overflow:hidden;
-      box-shadow: 0 10px 25px rgba(0,0,0,.06);
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.84);
+      box-shadow: 0 12px 24px rgba(16, 24, 42, 0.08);
     }
-    .langToggle label{
-      cursor:pointer;
-      padding: 9px 11px;
-      font-size: 13px;
-      font-weight: 700;
-      color: rgba(11,20,24,.72);
-      user-select:none;
-    }
-    #lang-fr:checked ~ header .langToggle label[for="lang-fr"],
-    #lang-en:checked ~ header .langToggle label[for="lang-en"]{
-      background: linear-gradient(135deg, rgba(2,213,184,.95), rgba(12,126,196,.95));
-      color: #061014;
-    }
-
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      padding: 11px 14px;
-      border-radius: 999px;
-      border: 1px solid var(--stroke);
-      background: rgba(255,255,255,.7);
-      color: rgba(11,20,24,.92);
-      font-weight: 700;
-      font-size: 14px;
-      line-height: 1;
-      box-shadow: 0 10px 25px rgba(0,0,0,.06);
-      transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
-      white-space: nowrap;
+    .langToggle label {
       cursor: pointer;
-    }
-    .btn:hover{ transform: translateY(-1px); box-shadow: 0 14px 28px rgba(0,0,0,.09); background: rgba(255,255,255,.9); }
-    .btn.primary{ background: linear-gradient(135deg, rgba(2,213,184,.95), rgba(12,126,196,.95)); color: #061014; border-color: rgba(2,213,184,.35); }
-    .btn.ghost{ background: transparent; }
-
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding: 8px 11px;
-      border-radius: 999px;
-      font-size: 13px;
-      border: 1px solid var(--stroke);
-      background: rgba(255,255,255,.7);
-      color: rgba(11,20,24,.85);
-    }
-    .dot{ width: 8px; height: 8px; border-radius: 999px; background: var(--mint3); box-shadow: 0 0 0 4px rgba(2,213,184,.18); }
-
-    main{ padding: 44px 0 70px; }
-
-    .hero{ display:grid; grid-template-columns: 1.15fr .85fr; gap: 22px; align-items: start; }
-
-    .card{
-      background: var(--panel);
-      border: 1px solid var(--stroke);
-      border-radius: var(--r);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(16px);
+      user-select: none;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      padding: 9px 10px;
+      color: var(--muted);
     }
 
-    .heroLeft{ padding: 30px; }
-    .badgeRow{ display:flex; flex-wrap: wrap; gap:10px; margin-bottom: 16px; }
-
-    h1{ margin:0; font-size: clamp(30px, 3.6vw, 46px); line-height: 1.08; letter-spacing: -0.02em; }
-    .lead{ margin: 12px 0 0; color: var(--muted); font-size: 16px; line-height: 1.65; max-width: 58ch; }
-    .heroActions{ margin-top: 18px; display:flex; flex-wrap: wrap; gap: 10px; align-items:center; }
-    .tiny{ margin-top: 10px; font-size: 13px; color: var(--muted2); }
-
-    .segment{
-      margin-top: 16px;
-      background: rgba(255,255,255,.85);
-      border: 1px solid var(--stroke);
-      padding: 6px;
-      border-radius: 999px;
-      display:inline-flex;
-      gap:6px;
-    }
-    .segment button{
-      border: 0;
-      background: transparent;
-      padding: 8px 12px;
-      border-radius: 999px;
-      font-weight: 700;
-      color: rgba(11,20,24,.72);
-    }
-    .segment button[aria-pressed="true"]{
-      background: linear-gradient(135deg, rgba(2,213,184,.95), rgba(12,126,196,.95));
-      color: #061014;
+    #lang-fr:checked ~ header .langToggle label[for="lang-fr"],
+    #lang-en:checked ~ header .langToggle label[for="lang-en"] {
+      background: linear-gradient(120deg, var(--brand), var(--accent));
+      color: #ffffff;
     }
 
-    .heroRight{ padding: 18px; }
-    .heroArt{ border-radius: 18px; overflow: hidden; border: 1px solid rgba(11,20,24,.08); background: rgba(255,255,255,.55); box-shadow: 0 18px 45px rgba(0,0,0,.10); }
-    .heroImg{ display:block; width: 100%; height: auto; aspect-ratio: 900 / 620; object-fit: cover; object-position: center; filter: saturate(1.05) contrast(1.02); }
-
-    .section{ margin-top: 16px; padding: 22px; }
-    .kicker{ font-size:11px; letter-spacing:.18em; text-transform: uppercase; color: var(--muted2); }
-    .sectionTitle{ font-size: 20px; margin: 6px 0 0; }
-    .sectionLead{ margin: 8px 0 0; color: var(--muted); font-size: 14.5px; line-height: 1.6; }
-
-    .grid3{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 14px; }
-    .grid2{ display:grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 14px; }
-
-    .tile{ padding: 16px; border-radius: 18px; border: 1px solid rgba(11,20,24,.09); background: rgba(255,255,255,.6); }
-    .tile strong{ display:block; margin-bottom: 6px; }
-    .tile span{ color: var(--muted); font-size: 14px; line-height: 1.5; }
-
-    .list{ margin: 12px 0 0; padding: 0; list-style: none; display:grid; gap: 10px; }
-    .list li{ display:flex; gap: 10px; align-items:flex-start; color: var(--muted); }
-    .list li::before{ content:"•"; color: var(--brand); font-weight: 700; }
-
-    .split{ display:grid; grid-template-columns: 1.1fr .9fr; gap: 16px; margin-top: 12px; }
-
-    .form{ margin-top: 14px; display:grid; gap: 10px; }
-    .row2{ display:grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    label.flabel{ font-size: 12px; color: var(--muted2); display:block; margin-bottom: 6px; }
-    input, select, textarea{
-      width:100%;
-      padding: 12px 12px;
-      border-radius: 14px;
-      border: 1px solid rgba(11,20,24,.12);
-      background: rgba(255,255,255,.85);
-      outline:none;
-      font: inherit;
-      color: rgba(11,20,24,.92);
+    .cta.fr,
+    .cta.en,
+    .navlinks.fr,
+    .navlinks.en {
+      display: none;
     }
-    input:focus, select:focus, textarea:focus{ border-color: rgba(2,213,184,.55); box-shadow: 0 0 0 6px rgba(2,213,184,.14); }
-    textarea{ min-height: 96px; resize: vertical; }
 
-    .formActions{ display:flex; flex-wrap: wrap; gap: 10px; align-items:center; margin-top: 4px; }
-    .note{ font-size: 12.5px; color: var(--muted2); }
-
-    .formStatus{ display:none; margin-top: 8px; font-size: 13px; }
-    .formStatus.success{ color: #0c6b59; }
-    .formStatus.error{ color: #9b2c2c; }
-
-    form[data-state="success"] .formStatus.success{ display:block; }
-    form[data-state="error"] .formStatus.error{ display:block; }
-    form[data-state="loading"] .btn.primary{ opacity:.6; pointer-events:none; }
-
-    .hp{ position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden; }
-
-    .faq{ margin-top: 14px; display:grid; gap: 10px; }
-    details{ background: rgba(255,255,255,.6); border: 1px solid rgba(11,20,24,.09); border-radius: 18px; padding: 12px 14px; }
-    summary{ cursor:pointer; font-weight: 700; }
-    details p{ margin: 10px 0 0; color: var(--muted); line-height: 1.55; font-size: 14px; }
-
-    .ctaBlock{ display:flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
-
-    footer{ padding: 26px 0 46px; color: var(--muted2); font-size: 13px; }
-    .foot{ display:flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; border-top: 1px solid var(--stroke); padding-top: 18px; }
-    .foot a{ color: rgba(11,20,24,.78); text-decoration: underline; text-underline-offset: 3px; }
-
-    .content.fr, .content.en{ display:none; }
-    #lang-fr:checked ~ main .content.fr{ display:block; }
-    #lang-en:checked ~ main .content.en{ display:block; }
-
-    .navlinks.fr, .navlinks.en, .cta.fr, .cta.en{ display:none; }
     #lang-fr:checked ~ header .navlinks.fr,
-    #lang-fr:checked ~ header .cta.fr{ display:flex; }
+    #lang-fr:checked ~ header .cta.fr {
+      display: inline-flex;
+    }
     #lang-en:checked ~ header .navlinks.en,
-    #lang-en:checked ~ header .cta.en{ display:flex; }
-
-    :focus-visible{ outline: 3px solid rgba(2,213,184,.7); outline-offset: 2px; }
-
-    @media (max-width: 960px){
-      .hero{ grid-template-columns: 1fr; }
-      .navlinks{ display:none !important; }
-      .right{ min-width: auto; }
-      .split{ grid-template-columns: 1fr; }
-    }
-    @media (max-width: 700px){
-      main{ padding: 28px 0 56px; }
-      .heroLeft{ padding: 22px; }
-      .heroRight{ padding: 18px; }
-      .grid3, .grid2{ grid-template-columns: 1fr; }
-      .row2{ grid-template-columns: 1fr; }
+    #lang-en:checked ~ header .cta.en {
+      display: inline-flex;
     }
 
-    @media (prefers-reduced-motion: reduce){
-      *{ scroll-behavior: auto !important; transition: none !important; }
+    .btn {
+      appearance: none;
+      border: 1px solid var(--stroke);
+      background: rgba(255, 255, 255, 0.92);
+      color: var(--ink);
+      font: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1;
+      padding: 12px 15px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 14px 28px rgba(16, 24, 42, 0.08);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: transform .14s ease, box-shadow .14s ease, background-color .14s ease;
+    }
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 32px rgba(16, 24, 42, 0.12);
+      background: #ffffff;
+    }
+    .btn.primary {
+      border-color: rgba(26, 95, 208, 0.28);
+      background: linear-gradient(120deg, var(--brand), var(--brand-strong));
+      color: #ffffff;
+    }
+
+    :focus-visible {
+      outline: 3px solid rgba(26, 95, 208, 0.45);
+      outline-offset: 2px;
+    }
+
+    main {
+      padding: 30px 0 72px;
+    }
+
+    .content.fr,
+    .content.en {
+      display: none;
+    }
+    #lang-fr:checked ~ main .content.fr {
+      display: block;
+    }
+    #lang-en:checked ~ main .content.en {
+      display: block;
+    }
+
+    .card {
+      border-radius: 0;
+      border: none;
+      background: transparent;
+      box-shadow: none;
+      backdrop-filter: none;
+    }
+
+    .heroSplit {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+      gap: 26px;
+      padding: 34px;
+      padding-bottom: 84px;
+      margin-bottom: 78px;
+      overflow: visible;
+      --split: 50%;
+    }
+
+    .heroContent {
+      position: relative;
+      z-index: 3;
+    }
+
+    .heroCopyDeck {
+      position: relative;
+      min-height: 290px;
+    }
+
+    .heroCopy {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transform: translateY(8px);
+      pointer-events: none;
+      transition: opacity .28s ease, transform .28s ease;
+    }
+
+    .heroSplit[data-persona="rider"] .heroCopy.rider,
+    .heroSplit[data-persona="driver"] .heroCopy.driver,
+    .heroSplit[data-persona="common"] .heroCopy.common {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .heroBadge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      border: 1px solid var(--stroke);
+      background: rgba(255, 255, 255, 0.82);
+      font-size: 12px;
+      color: var(--muted);
+      padding: 8px 10px;
+      margin-bottom: 12px;
+    }
+
+    .heroBadgeStack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .heroBadgeStack .heroBadge {
+      margin-bottom: 0;
+    }
+
+    .heroBadge::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 5px rgba(12, 163, 137, 0.18);
+    }
+
+    .heroCopy.rider .heroBadge::before {
+      background: var(--brand);
+      box-shadow: 0 0 0 5px rgba(26, 95, 208, 0.18);
+    }
+
+    .heroCopy.driver .heroBadge::before {
+      background: var(--accent);
+      box-shadow: 0 0 0 5px rgba(12, 163, 137, 0.18);
+    }
+
+    .heroBadge.riderBadge::before {
+      background: var(--brand);
+      box-shadow: 0 0 0 5px rgba(26, 95, 208, 0.18);
+    }
+
+    .heroBadge.driverBadge::before {
+      background: var(--accent);
+      box-shadow: 0 0 0 5px rgba(12, 163, 137, 0.18);
+    }
+
+    .heroTitle {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.06;
+      letter-spacing: -0.028em;
+    }
+
+    .heroSub {
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.58;
+      max-width: 36ch;
+    }
+
+    .heroActions {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .heroTiny {
+      margin-top: 12px;
+      color: var(--muted-soft);
+      font-size: 13px;
+    }
+
+    .heroVisual {
+      position: relative;
+      min-height: 440px;
+      border-radius: 22px;
+      overflow: hidden;
+      background: #d9e0eb;
+      border: none;
+      box-shadow: 0 20px 44px rgba(16, 24, 42, 0.16);
+    }
+
+    .heroLayer {
+      position: absolute;
+      inset: 0;
+    }
+    .heroLayer img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .heroLayer.rider {
+      clip-path: polygon(0 0, var(--split) 0, var(--split) 100%, 0 100%);
+    }
+
+    .heroLayer.driver {
+      clip-path: polygon(var(--split) 0, 100% 0, 100% 100%, var(--split) 100%);
+    }
+
+    .heroDivider {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: var(--split);
+      width: 2px;
+      transform: translateX(-1px);
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 0 0 1px rgba(16, 24, 42, 0.1), 0 0 25px rgba(255, 255, 255, 0.45);
+      pointer-events: none;
+    }
+
+    .heroSlider {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translate(-50%, 40%);
+      width: min(700px, calc(100% - 28px));
+      border: none;
+      background: transparent;
+      box-shadow: none;
+      padding: 0 clamp(14px, 6vw, 54px);
+      z-index: 4;
+    }
+
+    .heroSliderTrack {
+      position: relative;
+      height: 64px;
+      border-radius: 999px;
+      border: 1px solid rgba(136, 158, 178, 0.58);
+      background: linear-gradient(140deg, #dce7ef 0%, #cedce8 100%);
+      box-shadow: inset 0 3px 8px rgba(106, 126, 146, 0.48), inset 0 -6px 12px rgba(255, 255, 255, 0.76), inset 0 10px 14px rgba(95, 115, 136, 0.16), inset 0 -1px 0 rgba(255, 255, 255, 0.84);
+      --knob-size: 52px;
+    }
+
+    .heroSliderTrack::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(140deg, #d1ebe4 0%, #c3ddd5 100%);
+      opacity: calc(var(--persona-progress, 50) / 100);
+      transition: opacity .16s linear;
+      z-index: 0;
+    }
+
+    .heroSliderText {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 9;
+      pointer-events: none;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(109, 130, 149, 0.74);
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+      opacity: var(--label-center-opacity, 1);
+      transition: opacity .16s linear;
+    }
+
+    .heroSliderText.rider {
+      left: 22px;
+      width: 86px;
+      text-align: center;
+    }
+
+    .heroSliderText.driver {
+      right: 22px;
+      width: 86px;
+      text-align: center;
+    }
+
+    .rangeKnobIcon {
+      position: absolute;
+      top: 50%;
+      left: calc((var(--persona-progress, 50) * (100% - var(--knob-size))) / 100 + (var(--knob-size) / 2));
+      transform: translate(-50%, -50%);
+      width: var(--knob-size);
+      height: var(--knob-size);
+      border-radius: 999px;
+      border: 2px solid #f8fbfd;
+      background: linear-gradient(180deg, #ffffff 0%, #f4f7fb 100%);
+      box-shadow: 0 8px 18px rgba(45, 65, 91, 0.22), 0 1px 0 rgba(255, 255, 255, 0.95) inset;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 8;
+      transition: left .1s linear;
+    }
+
+    .rangeKnobIcon img {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+    }
+
+    .personaRange {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: calc(var(--knob-size) / 2);
+      right: calc(var(--knob-size) / 2);
+      width: auto;
+      margin: 0;
+      background: transparent;
+      border: none;
+      color: transparent;
+      accent-color: transparent;
+      opacity: 0.001;
+      -webkit-appearance: none;
+      appearance: none;
+      cursor: pointer;
+      z-index: 7;
+    }
+
+    .personaRange:focus {
+      outline: none;
+    }
+
+    .personaRange::-webkit-slider-runnable-track {
+      -webkit-appearance: none;
+      height: 64px;
+      background: transparent;
+      border: none;
+    }
+    .personaRange::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      margin-top: 6px;
+      width: var(--knob-size);
+      height: var(--knob-size);
+      border-radius: 999px;
+      border: none;
+      background: transparent;
+      box-shadow: none;
+      cursor: grab;
+    }
+    .personaRange::-moz-range-track {
+      height: 64px;
+      background: transparent;
+      border: none;
+    }
+    .personaRange::-moz-range-progress {
+      height: 64px;
+      background: transparent;
+      border: none;
+    }
+    .personaRange::-moz-range-thumb {
+      width: var(--knob-size);
+      height: var(--knob-size);
+      border-radius: 999px;
+      border: none;
+      background: transparent;
+      box-shadow: none;
+      cursor: grab;
+    }
+
+    .personaRange:active::-webkit-slider-thumb {
+      cursor: grabbing;
+    }
+    .personaRange:active::-moz-range-thumb {
+      cursor: grabbing;
+    }
+
+    .section {
+      margin-top: 28px;
+      padding: 34px;
+    }
+
+    .kicker {
+      margin: 0;
+      font-size: 12px;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      color: var(--muted-soft);
+      font-weight: 700;
+    }
+
+    .sectionTitle {
+      margin: 8px 0 0;
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      letter-spacing: -0.02em;
+      line-height: 1.12;
+    }
+
+    .sectionLead {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.6;
+      max-width: 72ch;
+    }
+
+    .proofBand {
+      display: grid;
+      gap: 18px;
+      align-items: start;
+      margin-top: 16px;
+    }
+
+    .proofList {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    .proofList li {
+      border: none;
+      border-radius: 0;
+      background: transparent;
+      padding: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .featureGrid {
+      margin-top: 52px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 54px 48px;
+      align-items: start;
+    }
+
+    .featureCard {
+      border: none;
+      border-radius: 0;
+      background: transparent;
+      padding: 0;
+      box-shadow: none;
+      max-width: 370px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .featureIcon {
+      width: 42px;
+      height: 42px;
+      border-radius: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      background: transparent;
+      color: inherit;
+      margin: 0 auto 16px;
+      padding: 0;
+    }
+
+    .featureIcon img {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+      opacity: 0.76;
+    }
+
+    .featureCard h3 {
+      margin: 0;
+      font-size: clamp(1.45rem, 1.7vw, 1.95rem);
+      letter-spacing: -0.02em;
+      line-height: 1.18;
+      color: rgba(16, 24, 42, 0.95);
+    }
+
+    .featureCard p {
+      margin: 12px auto 0;
+      color: rgba(16, 24, 42, 0.72);
+      font-size: clamp(0.95rem, 1.12vw, 1.22rem);
+      line-height: 1.58;
+      max-width: 33ch;
+    }
+
+    .featuresShowcase {
+      text-align: center;
+    }
+
+    .featuresShowcase .sectionTitle {
+      margin-top: 0;
+      font-size: clamp(2rem, 3.6vw, 3.2rem);
+      letter-spacing: -0.03em;
+      line-height: 1.06;
+    }
+
+    .featuresShowcase .sectionLead {
+      margin: 16px auto 0;
+      max-width: 980px;
+      font-size: clamp(1.08rem, 1.5vw, 1.6rem);
+      line-height: 1.42;
+      color: rgba(16, 24, 42, 0.72);
+    }
+
+    .featureNote {
+      margin: 16px 0 0;
+      color: var(--muted-soft);
+      font-size: 14px;
+      padding: 10px 12px;
+      border-left: 3px solid rgba(26, 95, 208, 0.35);
+      background: rgba(26, 95, 208, 0.06);
+      border-radius: 10px;
+    }
+
+    .testimonials-section {
+      padding-top: 40px;
+    }
+
+    .testimonials-section .container {
+      width: min(1160px, 100%);
+      margin: 0 auto;
+    }
+
+    .testimonials-section .sectionTitle {
+      margin: 0;
+      font-size: clamp(3.3rem, 6vw, 4rem);
+      line-height: 1.02;
+      letter-spacing: -0.035em;
+      color: rgba(16, 24, 42, 0.96);
+      max-width: 18ch;
+    }
+
+    .testimonials-section .sectionLead {
+      margin: 18px 0 0;
+      max-width: 56ch;
+      font-size: clamp(1.12rem, 2vw, 1.32rem);
+      line-height: 1.5;
+      color: rgba(16, 24, 42, 0.72);
+    }
+
+    .testimonial-grid {
+      margin-top: 34px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 30px;
+    }
+
+    .testimonial-card {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+    }
+
+    .stars {
+      display: inline-flex;
+      color: #2f6bff;
+      font-size: 19px;
+      letter-spacing: 0.18em;
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+
+    .testimonial-card h3 {
+      margin: 0;
+      font-size: clamp(1.5rem, 2.3vw, 1.72rem);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      color: rgba(16, 24, 42, 0.94);
+    }
+
+    .testimonial-card blockquote {
+      margin: 14px 0 0;
+      color: rgba(16, 24, 42, 0.72);
+      font-size: 1.03rem;
+      line-height: 1.62;
+    }
+
+    .divider {
+      margin: 24px 0 18px;
+      border-top: 1px solid #e8ebf0;
+    }
+
+    .author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: rgba(16, 24, 42, 0.78);
+      font-size: 1.04rem;
+      font-weight: 500;
+      line-height: 1.3;
+    }
+
+    .testimonial-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      background: linear-gradient(140deg, #eff4ff 0%, #e6edf9 100%);
+      color: rgba(26, 95, 208, 0.88);
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: none;
+      overflow: hidden;
+    }
+
+    .testimonial-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    .faq {
+      margin-top: 16px;
+      display: grid;
+      gap: 10px;
+    }
+
+    details {
+      border-radius: 16px;
+      border: none;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 12px 14px;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 15px;
+      line-height: 1.35;
+    }
+
+    details p {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.58;
+    }
+
+    .formsGrid {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .formCard {
+      border: none;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 20px;
+      box-shadow: 0 12px 20px rgba(16, 24, 42, 0.06);
+    }
+
+    .formCard h3 {
+      margin: 4px 0 0;
+      font-size: 24px;
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+    }
+
+    .formCard p {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.58;
+    }
+
+    .list {
+      margin: 12px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 9px;
+    }
+
+    .list li {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .list li::before {
+      content: "•";
+      color: var(--brand);
+      font-weight: 900;
+      line-height: 1;
+      margin-top: 2px;
+    }
+
+    .form {
+      margin-top: 14px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .row2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    label.flabel {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 12px;
+      color: var(--muted-soft);
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid rgba(16, 24, 42, 0.14);
+      background: #ffffff;
+      color: var(--ink);
+      font: inherit;
+      font-size: 15px;
+      padding: 11px 12px;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: rgba(26, 95, 208, 0.52);
+      box-shadow: 0 0 0 4px rgba(26, 95, 208, 0.16);
+    }
+
+    textarea {
+      min-height: 94px;
+      resize: vertical;
+    }
+
+    .note {
+      color: var(--muted-soft);
+      font-size: 12px;
+    }
+
+    .formActions {
+      margin-top: 4px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .formStatus {
+      display: none;
+      margin-top: 8px;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .formStatus.success { color: #0f6f5d; }
+    .formStatus.error { color: #9f3030; }
+
+    form[data-state="success"] .formStatus.success { display: block; }
+    form[data-state="error"] .formStatus.error { display: block; }
+    form[data-state="loading"] .btn.primary { opacity: .65; pointer-events: none; }
+
+    .hp {
+      position: absolute;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+
+    .betaCta {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    footer {
+      margin-top: 26px;
+      padding: 24px 0 36px;
+      border-top: 1px solid var(--stroke);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      color: var(--muted-soft);
+      font-size: 13px;
+    }
+
+    footer a {
+      color: var(--muted);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    @media (max-width: 1080px) {
+      .heroSplit {
+        grid-template-columns: 1fr;
+      }
+
+      .heroCopyDeck {
+        min-height: 310px;
+      }
+
+      .heroVisual {
+        min-height: 360px;
+      }
+
+      .formsGrid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 940px) {
+      .navlinks {
+        display: none !important;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .testimonial-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 600px) {
+      .testimonial-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .testimonial-card {
+        padding: 24px;
+      }
+
+      .stars {
+        font-size: 18px;
+      }
+    }
+
+    @media (max-width: 780px) {
+      .wrap {
+        width: min(1160px, calc(100% - 24px));
+      }
+
+      main {
+        padding-top: 18px;
+      }
+
+      .heroSplit,
+      .section {
+        padding: 22px;
+      }
+
+      .heroSplit {
+        padding-bottom: 82px;
+      }
+
+      .heroCopyDeck {
+        min-height: 360px;
+      }
+
+      .heroSub {
+        font-size: 16px;
+      }
+
+      .featureGrid,
+      .row2 {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .featureGrid {
+        gap: 34px 22px;
+      }
+
+      .featuresShowcase .sectionLead {
+        font-size: 0.98rem;
+        line-height: 1.5;
+      }
+
+      .featureCard h3 {
+        font-size: 1.38rem;
+      }
+
+      .featureCard p {
+        font-size: 0.9rem;
+      }
+
+      .heroSlider {
+        width: calc(100% - 24px);
+      }
+
+    }
+
+    @media (max-width: 580px) {
+      .featureGrid,
+      .row2 {
+        grid-template-columns: 1fr;
+      }
+
+      .featureGrid {
+        gap: 28px;
+      }
+
+      .featuresShowcase .sectionTitle {
+        font-size: clamp(1.8rem, 8vw, 2.35rem);
+      }
+
+      .featuresShowcase .sectionLead {
+        font-size: 0.92rem;
+      }
+
+      .featureCard h3 {
+        font-size: 1.28rem;
+      }
+
+      .featureCard p {
+        font-size: 0.88rem;
+      }
+
+      .heroCopyDeck {
+        min-height: 420px;
+      }
+
+      .heroSlider {
+        padding: 0 12px;
+      }
+
+      .heroSliderText {
+        font-size: 13px;
+      }
+
+      .heroSliderText.rider,
+      .heroSliderText.driver {
+        width: 72px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+
+    .reduced-motion *,
+    .reduced-motion *::before,
+    .reduced-motion *::after {
+      animation: none !important;
+      transition: none !important;
     }
   </style>
 </head>
 
 <body>
   <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MC6GCTVX"
-  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MC6GCTVX" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
+
   <input class="langRadio" type="radio" id="lang-fr" name="lang" checked />
   <input class="langRadio" type="radio" id="lang-en" name="lang" />
 
@@ -352,637 +1198,764 @@
         <span>OMW</span>
       </a>
 
-      <nav class="navlinks fr" aria-label="Navigation">
-        <a href="#how-fr">Comment ça marche</a>
-        <a href="#why-fr">Pourquoi OMW</a>
-        <a href="#safety-fr">Sécurité</a>
-        <a href="#where-fr">Où ça marche</a>
-        <a href="#drivers-fr">Conducteurs</a>
-        <a href="#riders-fr">Passagers</a>
+      <nav class="navlinks fr" aria-label="Navigation FR">
+        <a href="#features-fr">Fonctionnalités</a>
+        <a href="#testimonials-fr">Témoignages</a>
         <a href="#faq-fr">FAQ</a>
       </nav>
 
-      <nav class="navlinks en" aria-label="Navigation">
-        <a href="#how-en">How it works</a>
-        <a href="#why-en">Why OMW</a>
-        <a href="#safety-en">Safety</a>
-        <a href="#where-en">Where it works</a>
-        <a href="#drivers-en">Drivers</a>
-        <a href="#riders-en">Riders</a>
+      <nav class="navlinks en" aria-label="Navigation EN">
+        <a href="#features-en">Features</a>
+        <a href="#testimonials-en">Testimonials</a>
         <a href="#faq-en">FAQ</a>
       </nav>
 
       <div class="right">
+
+        <a class="btn primary cta fr" href="#beta-fr" data-scroll="beta-fr">Rejoindre la bêta</a>
+        <a class="btn primary cta en" href="#beta-en" data-scroll="beta-en">Join beta</a>
+
         <div class="langToggle" role="tablist" aria-label="Language selector">
           <label for="lang-fr" role="tab" aria-controls="content-fr">FR</label>
           <label for="lang-en" role="tab" aria-controls="content-en">EN</label>
         </div>
-
-        <!-- CTAs live in the hero + final block -->
       </div>
     </div>
   </header>
 
   <main id="top">
-    <!-- ========================= -->
-    <!-- ======= FRENCH ========== -->
-    <!-- ========================= -->
     <div class="content fr" id="content-fr">
-      <div class="wrap hero">
-        <section class="card heroLeft" aria-label="Hero FR">
-          <div class="badgeRow">
-            <span class="pill"><span class="dot" aria-hidden="true"></span> Paris / Île-de-France — corridors pilotes</span>
-            <span class="pill">Détour max garanti : ≤ 5 min (ou ≤ 3 km)</span>
-            <span class="pill">Demande + confirmation en moins de 60 s</span>
-          </div>
-
-          <h1>Le covoiturage en temps réel, simple et fiable.</h1>
-
-          <p class="lead">
-            OMW connecte passager·ère·s et conducteur·rice·s déjà sur la route.
-            Détour limité, points de RDV clairs, et zones pilotes visibles dès maintenant.
-          </p>
-
-          <div class="segment" data-segment data-default="rider">
-            <button type="button" data-mode="rider" data-target="riders-fr" aria-pressed="true">Je suis passager·ère</button>
-            <button type="button" data-mode="driver" data-target="drivers-fr" aria-pressed="false">Je suis conducteur·rice</button>
-          </div>
-
-          <div class="heroActions" data-cta-group>
-            <a class="btn primary" data-role="rider" href="#riders-fr">Liste d’attente passager·ère</a>
-            <a class="btn" data-role="driver" href="#drivers-fr">Candidater comme bêta conducteur·rice</a>
-          </div>
-
-          <p class="tiny">
-            Statut de course visible, annulation et signalement en un tap.
-          </p>
-        </section>
-
-        <aside class="card heroRight" aria-label="Hero image">
-          <div class="heroArt">
-            <img class="heroImg" src="hero.png" alt="OMW — covoiturage temps réel" />
-          </div>
-        </aside>
-      </div>
-
       <div class="wrap">
-        <section class="card section" id="how-fr">
-          <div class="kicker">Comment ça marche</div>
-          <h2 class="sectionTitle">3 étapes, sans friction</h2>
-          <p class="sectionLead">Un flux simple pour éviter les détours inutiles.</p>
+        <section class="card heroSplit" data-split-hero data-persona="common" id="hero-fr" aria-label="Hero OMW FR">
+          <div class="heroContent">
+            <div class="heroCopyDeck" id="hero-copy-fr">
+              <article class="heroCopy common" data-copy-persona="common" aria-label="Message commun">
+                <div class="heroBadgeStack">
+                  <span class="heroBadge riderBadge">Passager</span>
+                  <span class="heroBadge driverBadge">Conducteur</span>
+                </div>
+                <h1 class="heroTitle">Promesse commune : “Bouger sans payer le prix fort.”</h1>
+                <p class="heroSub">Pose une option ou active ton trajet : matching sur ton axe, contribution claire — et des économies pour les deux.</p>
+                <div class="heroActions">
+                  <a class="btn primary" href="#beta-fr" data-scroll="beta-fr">Rejoindre la bêta</a>
+                </div>
+              </article>
 
-          <div class="grid3">
-            <div class="tile">
-              <strong>1. Choisis ton corridor</strong>
-              <span>Ton axe principal et ta fenêtre horaire suffisent.</span>
+              <article class="heroCopy rider" data-copy-persona="rider" aria-label="Message Rider">
+                <span class="heroBadge"> Passager</span>
+                <h1 class="heroTitle">Le plan B quand tout le reste lâche — sans payer 40€ de VTC.</h1>
+                <p class="heroSub">Pose une option en 10 secondes. Quand un conducteur passe sur ton axe, tu reçois une proposition à prix clair (partage de frais). Couverture en croissance.</p>
+                <div class="heroActions">
+                  <a class="btn primary" href="#beta-fr" data-scroll="beta-fr">Rejoindre la bêta</a>
+                  <button class="btn" type="button" data-switch-persona="driver" aria-pressed="false">Je suis Driver</button>
+                </div>
+                <p class="heroTiny">Fonctionne aussi pour les trajets inter-city du week-end, souvent moins cher que train ou bus.</p>
+              </article>
+
+              <article class="heroCopy driver" data-copy-persona="driver" aria-label="Message Driver">
+                <span class="heroBadge"> Conducteur</span>
+                <h1 class="heroTitle">Ton siège vide peut payer tes péages.</h1>
+                <p class="heroSub">Active ton trajet (quotidien ou inter-city). Match sur ton axe, détour max 5 min, contribution claire. Ajoute tes réguliers à ton Cercle.</p>
+                <div class="heroActions">
+                  <a class="btn primary" href="#beta-fr" data-scroll="beta-fr">Rejoindre la bêta</a>
+                  <button class="btn" type="button" data-switch-persona="rider" aria-pressed="false">Je suis Rider</button>
+                </div>
+                <p class="heroTiny">Détour limité, prix transparent, et Cercle pour retrouver collègues et passagers réguliers.</p>
+              </article>
             </div>
-            <div class="tile">
-              <strong>2. Match sur ton trajet</strong>
-              <span>On propose uniquement des trajets compatibles. Détour ≤ 5 min.</span>
+          </div>
+
+          <div class="heroVisual" aria-hidden="true">
+            <div class="heroLayer rider">
+              <img src="Assets/Hero-rider.png" alt="" />
             </div>
-            <div class="tile">
-              <strong>3. Confirme vite</strong>
-              <span>RDV clairs, statut visible, annulation possible.</span>
+            <div class="heroLayer driver">
+              <img src="Assets/Hero-driver.png" alt="" />
+            </div>
+            <div class="heroDivider"></div>
+          </div>
+
+          <div class="heroSlider" role="group" aria-label="Controle hero Rider Driver">
+            <div class="heroSliderTrack">
+              <span class="heroSliderText rider" aria-hidden="true">Rider</span>
+              <span class="rangeKnobIcon" aria-hidden="true"><img src="Icon.png" alt="" /></span>
+              <span class="heroSliderText driver" aria-hidden="true">Driver</span>
+              <input class="personaRange" type="range" min="0" max="100" value="50" step="1" data-persona-range data-common-valuetext="Rider et Driver" aria-label="Basculer entre Rider et Driver" aria-valuetext="Rider et Driver" aria-controls="hero-copy-fr" />
             </div>
           </div>
         </section>
 
-        <section class="card section" id="why-fr">
-          <div class="kicker">Pourquoi OMW</div>
-          <h2 class="sectionTitle">Des garanties claires</h2>
-          <ul class="list">
-            <li><strong>Détour max</strong> : ≤ 5 min (ou ≤ 3 km), visible avant confirmation.</li>
-            <li><strong>Disponibilité locale</strong> : corridors pilotes pour éviter le “ça marche ici ?”.</li>
-            <li><strong>Prix lisible</strong> : partage des frais, pas de hausse surprise.</li>
-            <li><strong>Sécurité simple</strong> : identité, statut, Annuler + Signaler accessibles.</li>
-          </ul>
-        </section>
+        <section class="card section featuresShowcase" id="features-fr">
+          <h2 class="sectionTitle">Fonctionnalités clés de On My Way</h2>
+          <p class="sectionLead">Découvre ce qui fait de On My Way un choix décisif pour les navetteurs et ride-hailers en Île-de-France.<br />Nos fonctionnalités améliorent tes trajets en priorisant sécurité, simplicité et budget.</p>
 
-        <section class="card section" id="safety-fr">
-          <div class="kicker">Sécurité & confiance</div>
-          <h2 class="sectionTitle">Conçu pour rouler serein</h2>
-          <div class="split">
-            <div class="tile">
-              <strong>Actions immédiates</strong>
-              <span>Annuler, signaler, et voir l’état de course à tout moment.</span>
-            </div>
-            <div class="tile">
-              <strong>Support & modération</strong>
-              <span>Identité visible et équipe joignable si besoin.</span>
-            </div>
+          <div class="featureGrid">
+            <article class="featureCard">
+              <span class="featureIcon" aria-hidden="true"><img src="Assets/navigation.svg" alt="" /></span>
+              <h3>Navigation native</h3>
+              <p>OMW est construit sur la navigation : ETA en direct, point de rendez-vous clair et moins de messages. Tu sais toujours où te retrouver et quand tu arrives.</p>
+            </article>
+
+            <article class="featureCard">
+              <span class="featureIcon" aria-hidden="true"><img src="Assets/bolt.svg" alt="" /></span>
+              <h3>Matching en temps réel</h3>
+              <p>Obtiens un driver ou un rider confirmé en quelques minutes, pas en heures. OMW te connecte avec des personnes déjà sur ton axe, tout simplement.</p>
+            </article>
+
+            <article class="featureCard">
+              <span class="featureIcon" aria-hidden="true"><img src="Assets/verified_user.svg" alt="" /></span>
+              <h3>Trajet sécurisé</h3>
+              <p>Profils vérifiés + notes, confirmation mutuelle au pickup, et réassurance type “partage de trajet”. Pensé pour rassurer riders et drivers.</p>
+            </article>
+
+            <article class="featureCard">
+              <span class="featureIcon" aria-hidden="true"><img src="Assets/handshake.svg" alt="" /></span>
+              <h3>Cercle de favoris</h3>
+              <p>Sauvegarde tes personnes préférées : collègues, voisins, amis d’amis. Idéal pour les trajets récurrents et les matchs répétés.</p>
+            </article>
+
+            <article class="featureCard">
+              <span class="featureIcon" aria-hidden="true"><img src="Assets/euro_symbol.svg" alt="" /></span>
+              <h3>Partage de frais transparent</h3>
+              <p>Réduis tes dépenses trajet avec un système de contribution clair et des rides partagés, pour voyager sans payer le prix fort.</p>
+            </article>
+
+            <article class="featureCard">
+              <span class="featureIcon" aria-hidden="true"><img src="Assets/route.svg" alt="" /></span>
+              <h3>Pas de longs détours</h3>
+              <p>Pas de détour interminable. Les matchs sont limités à de petits écarts (ex : ≤ 5 minutes), pour garder drivers à l’heure et riders sereins.</p>
+            </article>
           </div>
         </section>
 
-        <section class="card section" id="where-fr">
-          <div class="kicker">Où ça marche maintenant</div>
-          <h2 class="sectionTitle">Pilote Paris / Île-de-France</h2>
-          <p class="sectionLead">Fenetres privilégiées : 7-10 h, 17-21 h, et retours nocturnes.</p>
-          <div class="grid2">
-            <div class="tile"><strong>Paris ↔ La Défense</strong><span>Commute dense, RDV fiables.</span></div>
-            <div class="tile"><strong>Paris ↔ Orly</strong><span>Trajets directs, forte utilité.</span></div>
-            <div class="tile"><strong>Paris ↔ Saint-Denis</strong><span>Flux réguliers, accès simple.</span></div>
+        <section class="card section testimonials-section" id="testimonials-fr">
+          <div class="container">
+            <h2 class="sectionTitle">Ce que disent nos utilisateurs</h2>
+            <p class="sectionLead">Des retours courts et concrets de Riders et Drivers. (Bêta — la communauté grandit chaque semaine.)</p>
+
+            <div class="testimonial-grid">
+              <article class="testimonial-card">
+                <div class="stars" role="img" aria-label="5 sur 5">★★★★★</div>
+                <h3>Fini le VTC à 40€</h3>
+                <blockquote>“Quand le RER lâche, je pose une option et j’évite le VTC hors de prix. Simple et clair.”</blockquote>
+                <div class="divider" aria-hidden="true"></div>
+                <div class="author">
+                  <span class="testimonial-avatar" aria-hidden="true"><img src="Assets/avatar-claire.png" alt="" /></span>
+                  <span>Claire — Rider (Grande couronne)</span>
+                </div>
+              </article>
+
+              <article class="testimonial-card">
+                <div class="stars" role="img" aria-label="5 sur 5">★★★★★</div>
+                <h3>Le Cercle fait gagner du temps</h3>
+                <blockquote>“Je retrouve mes réguliers et collègues en 1 geste. Moins de friction, plus d’habitude.”</blockquote>
+                <div class="divider" aria-hidden="true"></div>
+                <div class="author">
+                  <span class="testimonial-avatar" aria-hidden="true"><img src="Assets/avatar-mehdi.png" alt="" /></span>
+                  <span>Thomas — Driver</span>
+                </div>
+              </article>
+
+              <article class="testimonial-card">
+                <div class="stars" role="img" aria-label="5 sur 5">★★★★★</div>
+                <h3>Enfin du covoit sans prise de tête</h3>
+                <blockquote>“Je partage quand ça colle à mon itinéraire. Je garde le contrôle, je décline si besoin.”</blockquote>
+                <div class="divider" aria-hidden="true"></div>
+                <div class="author">
+                  <span class="testimonial-avatar" aria-hidden="true"><img src="Assets/avatar-thomas.png" alt="" /></span>
+                  <span>Mehdi — Driver</span>
+                </div>
+              </article>
+            </div>
           </div>
-
-          <div style="margin-top:14px;" class="tile">
-            <strong>Suggérer mon corridor</strong>
-            <span>Ajoute ton axe, on priorise les zones demandées.</span>
-            <div class="row2" style="margin-top:10px;">
-              <div>
-                <label class="flabel" for="suggest-fr">Corridor proposé</label>
-                <input id="suggest-fr" name="corridor_suggested" form="rider-form-fr" placeholder="Ex: Montreuil ↔ Paris 11e" />
-              </div>
-              <div>
-                <label class="flabel" for="time-fr">Fenêtre horaire</label>
-                <input id="time-fr" name="corridor_time" form="rider-form-fr" placeholder="Ex: 7h30-9h / 23h-1h" />
-              </div>
-            </div>
-            <p class="note">Ces champs sont attachés à la liste d’attente.</p>
-          </div>
-        </section>
-
-        <section class="card section" id="drivers-fr">
-          <div class="kicker">Pour les conducteurs</div>
-          <h2 class="sectionTitle">Tu restes maître du trajet</h2>
-          <ul class="list">
-            <li><strong>Contrôle total</strong> : tu fixes ton détour max et valides chaque match.</li>
-            <li><strong>Partage des frais</strong> : simple, transparent, sans surprise.</li>
-            <li><strong>Moins de stress</strong> : pickup clair, annulation facile.</li>
-          </ul>
-
-          <form class="form" id="driver-form-fr" data-form="driver" method="post" autocomplete="on" data-fallback="hello@rideomw.com">
-            <input type="hidden" name="form_type" value="Driver beta (FR)" />
-            <div class="hp" aria-hidden="true">
-              <label for="company-fr">Company</label>
-              <input id="company-fr" name="company" tabindex="-1" autocomplete="off" />
-            </div>
-
-            <div class="row2">
-              <div>
-                <label class="flabel" for="name-driver-fr">Nom</label>
-                <input id="name-driver-fr" name="name" placeholder="Ton nom" required />
-              </div>
-              <div>
-                <label class="flabel" for="email-driver-fr">Email</label>
-                <input id="email-driver-fr" name="email" type="email" placeholder="toi@domaine.com" required />
-              </div>
-            </div>
-
-            <div class="row2">
-              <div>
-                <label class="flabel" for="area-driver-fr">Trajet principal</label>
-                <input id="area-driver-fr" name="route" placeholder="Ex: Nanterre → Paris 8e" required />
-              </div>
-              <div>
-                <label class="flabel" for="freq-driver-fr">Fréquence</label>
-                <select id="freq-driver-fr" name="frequency" required>
-                  <option value="">Choisir</option>
-                  <option>Tous les jours</option>
-                  <option>3-5x / semaine</option>
-                  <option>1-2x / semaine</option>
-                  <option>Occasionnel</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="row2">
-              <div>
-                <label class="flabel" for="vehicle-fr">Véhicule</label>
-                <input id="vehicle-fr" name="vehicle" placeholder="Modèle + année" />
-              </div>
-              <div>
-                <label class="flabel" for="detour-fr">Détour max confortable</label>
-                <select id="detour-fr" name="detour" required>
-                  <option value="">Choisir</option>
-                  <option>≤ 3 minutes</option>
-                  <option>≤ 5 minutes</option>
-                  <option>≤ 8 minutes</option>
-                  <option>Flexible</option>
-                </select>
-              </div>
-            </div>
-
-            <div>
-              <label class="flabel" for="notes-driver-fr">Notes</label>
-              <textarea id="notes-driver-fr" name="notes" placeholder="Horaires, contraintes, etc."></textarea>
-            </div>
-
-            <div class="formActions">
-              <button class="btn primary" type="submit">Envoyer la candidature</button>
-              <span class="note">Réponse rapide.</span>
-            </div>
-            <div class="formStatus success" role="status" aria-live="polite">Merci. Nous revenons vite vers toi.</div>
-            <div class="formStatus error" role="status" aria-live="polite">Oups, échec. Écris-nous à <a href="mailto:hello@rideomw.com">hello@rideomw.com</a>.</div>
-          </form>
-        </section>
-
-        <section class="card section" id="riders-fr">
-          <div class="kicker">Pour les passagers</div>
-          <h2 class="sectionTitle">Un plan B clair et utile</h2>
-          <ul class="list">
-            <li><strong>Fiabilité</strong> : corridors pilotes pour limiter l’incertitude.</li>
-            <li><strong>Prix prévisible</strong> : partage des frais, pas de hausse surprise.</li>
-            <li><strong>Sécurité</strong> : identité visible, annulation simple.</li>
-          </ul>
-
-          <form class="form" id="rider-form-fr" data-form="rider" method="post" autocomplete="on" data-fallback="hello@rideomw.com">
-            <input type="hidden" name="form_type" value="Rider waitlist (FR)" />
-            <div class="hp" aria-hidden="true">
-              <label for="company-rider-fr">Company</label>
-              <input id="company-rider-fr" name="company" tabindex="-1" autocomplete="off" />
-            </div>
-
-            <div class="row2">
-              <div>
-                <label class="flabel" for="name-rider-fr">Nom</label>
-                <input id="name-rider-fr" name="name" placeholder="Ton nom" required />
-              </div>
-              <div>
-                <label class="flabel" for="email-rider-fr">Email</label>
-                <input id="email-rider-fr" name="email" type="email" placeholder="toi@domaine.com" required />
-              </div>
-            </div>
-
-            <div class="row2">
-              <div>
-                <label class="flabel" for="area-rider-fr">Zone principale</label>
-                <input id="area-rider-fr" name="area" placeholder="Ex: Montreuil / Paris 11e" required />
-              </div>
-              <div>
-                <label class="flabel" for="usecase-fr">Usage principal</label>
-                <select id="usecase-fr" name="use_case" required>
-                  <option value="">Choisir</option>
-                  <option>Commute quotidien</option>
-                  <option>Retour de soirée</option>
-                  <option>Occasionnel</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="row2">
-              <div>
-                <label class="flabel" for="timewindow-fr">Horaires typiques</label>
-                <input id="timewindow-fr" name="time_window" placeholder="Ex: 7h30-9h / 23h-1h" />
-              </div>
-              <div>
-                <label class="flabel" for="pickup-fr">Point de RDV préféré</label>
-                <input id="pickup-fr" name="pickup" placeholder="Station, avenue, sortie" />
-              </div>
-            </div>
-
-            <div>
-              <label class="flabel" for="notes-rider-fr">Notes</label>
-              <textarea id="notes-rider-fr" name="notes" placeholder="Contraintes, attentes, etc."></textarea>
-            </div>
-
-            <div class="formActions">
-              <button class="btn primary" type="submit">Rejoindre la liste d’attente</button>
-              <span class="note">On te prévient quand ta zone ouvre.</span>
-            </div>
-            <div class="formStatus success" role="status" aria-live="polite">Merci. On te tient au courant.</div>
-            <div class="formStatus error" role="status" aria-live="polite">Oups, échec. Écris-nous à <a href="mailto:hello@rideomw.com">hello@rideomw.com</a>.</div>
-          </form>
         </section>
 
         <section class="card section" id="faq-fr">
-          <div class="kicker">FAQ</div>
-          <h2 class="sectionTitle">Questions fréquentes</h2>
+          <p class="kicker">FAQ</p>
+          <h2 class="sectionTitle">FAQ</h2>
 
           <div class="faq">
             <details>
-              <summary>Est-ce un VTC ?</summary>
-              <p>Non. OMW met en relation des particuliers qui partagent leurs frais de trajet.</p>
+              <summary>OMW est-ce un taxi/VTC ?</summary>
+              <p>Non. OMW repose sur le partage de frais entre particuliers, avec contribution transparente avant validation.</p>
             </details>
+
             <details>
-              <summary>Combien ça coûte ?</summary>
-              <p>Les frais sont partagés, sans hausse surprise. Le prix est affiché avant confirmation.</p>
+              <summary>Est-ce disponible instantanément partout ?</summary>
+              <p>Non. La disponibilité dépend de la densité locale. La couverture augmente avec la communauté et tu vois la probabilité de match.</p>
             </details>
+
             <details>
-              <summary>Que se passe-t-il si le pickup échoue ?</summary>
-              <p>Tu peux annuler immédiatement et signaler le problème.</p>
+              <summary>Comment fonctionne une “option” / beacon ?</summary>
+              <p>Tu poses une option en quelques secondes sur ton axe et ton horaire. Si un conducteur compatible passe, tu reçois une proposition claire.</p>
             </details>
+
             <details>
-              <summary>Et l’assurance ?</summary>
-              <p>Le conducteur reste couvert par son assurance auto. Les détails seront précisés avant l’ouverture large.</p>
+              <summary>Prix : comment c’est calculé ?</summary>
+              <p>Une estimation est affichée avant validation selon distance et détour. La contribution reste en partage de frais, sans hausse surprise.</p>
+            </details>
+
+            <details>
+              <summary>Détour max 5 min : garanti comment ?</summary>
+              <p>Le matching filtre les trajets au-delà du cap. Le conducteur ne voit que des options compatibles avec ce détour.</p>
+            </details>
+
+            <details>
+              <summary>Sécurité : profils vérifiés, partage trajet, assistance</summary>
+              <p>Les profils sont vérifiés, le trajet est partageable et une assistance est accessible en cas de souci.</p>
+            </details>
+
+            <details>
+              <summary>Inter-city : ça marche comment ?</summary>
+              <p>Tu actives un trajet longue distance (week-end ou ponctuel), OMW propose des matchs sur ton axe avec contribution annoncée à l’avance.</p>
+            </details>
+
+            <details>
+              <summary>Cercle : à quoi ça sert ?</summary>
+              <p>Cercle permet de garder en favoris collègues et réguliers pour retrouver plus vite des personnes de confiance.</p>
             </details>
           </div>
         </section>
 
-        <section class="card section" id="final-fr">
-          <div class="kicker">Passe à l'action</div>
-          <h2 class="sectionTitle">OMW commence par toi</h2>
-          <p class="sectionLead">Riders et drivers créent la fiabilité du réseau.</p>
-          <div class="ctaBlock">
-            <a class="btn primary" href="#riders-fr">Liste d’attente passager·ère</a>
-            <a class="btn" href="#drivers-fr">Candidater comme bêta conducteur·rice</a>
+        <section class="card section" id="beta-fr">
+          <p class="kicker">Bêta</p>
+          <h2 class="sectionTitle">Rejoindre la bêta OMW</h2>
+          <p class="sectionLead">Choisis ton profil : Rider ou Driver. Les formulaires ci-dessous gardent exactement la logique de candidature actuelle.</p>
+
+          <div class="formsGrid">
+            <section class="formCard" id="drivers-fr">
+              <p class="kicker">Pour les conducteurs</p>
+              <h3>Ton siège vide peut vraiment amortir tes trajets</h3>
+              <ul class="list">
+                <li><strong>Détour max 5 min :</strong> tu restes maître de ton trajet.</li>
+                <li><strong>Inter-city utile :</strong> contribution claire pour aider sur péages et carburant.</li>
+                <li><strong>Cercle :</strong> retrouve rapidement tes réguliers.</li>
+              </ul>
+
+              <form class="form" id="driver-form-fr" data-form="driver" method="post" autocomplete="on" data-fallback="hello@rideomw.com">
+                <input type="hidden" name="form_type" value="Driver beta (FR)" />
+                <div class="hp" aria-hidden="true">
+                  <label for="company-fr">Company</label>
+                  <input id="company-fr" name="company" tabindex="-1" autocomplete="off" />
+                </div>
+
+                <div class="row2">
+                  <div>
+                    <label class="flabel" for="name-driver-fr">Nom</label>
+                    <input id="name-driver-fr" name="name" placeholder="Ton nom" required />
+                  </div>
+                  <div>
+                    <label class="flabel" for="email-driver-fr">Email</label>
+                    <input id="email-driver-fr" name="email" type="email" placeholder="toi@domaine.com" required />
+                  </div>
+                </div>
+
+                <div class="row2">
+                  <div>
+                    <label class="flabel" for="area-driver-fr">Trajet principal</label>
+                    <input id="area-driver-fr" name="route" placeholder="Ex: Nanterre → Paris 8e" required />
+                  </div>
+                  <div>
+                    <label class="flabel" for="freq-driver-fr">Fréquence</label>
+                    <select id="freq-driver-fr" name="frequency" required>
+                      <option value="">Choisir</option>
+                      <option>Tous les jours</option>
+                      <option>3-5x / semaine</option>
+                      <option>1-2x / semaine</option>
+                      <option>Occasionnel</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row2">
+                  <div>
+                    <label class="flabel" for="vehicle-fr">Véhicule</label>
+                    <input id="vehicle-fr" name="vehicle" placeholder="Modèle + année" />
+                  </div>
+                  <div>
+                    <label class="flabel" for="detour-fr">Détour max confortable</label>
+                    <select id="detour-fr" name="detour" required>
+                      <option value="">Choisir</option>
+                      <option>≤ 3 minutes</option>
+                      <option>≤ 5 minutes</option>
+                      <option>≤ 8 minutes</option>
+                      <option>Flexible</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="flabel" for="notes-driver-fr">Notes</label>
+                  <textarea id="notes-driver-fr" name="notes" placeholder="Horaires, contraintes, etc."></textarea>
+                </div>
+
+                <div class="formActions">
+                  <button class="btn primary" type="submit">Envoyer la candidature</button>
+                  <span class="note">Réponse rapide.</span>
+                </div>
+                <div class="formStatus success" role="status" aria-live="polite">Merci. Nous revenons vite vers toi.</div>
+                <div class="formStatus error" role="status" aria-live="polite">Oups, échec. Écris-nous à <a href="mailto:hello@rideomw.com">hello@rideomw.com</a>.</div>
+              </form>
+            </section>
+
+            <section class="formCard" id="riders-fr">
+              <p class="kicker">Pour les passagers</p>
+              <h3>Un plan B concret quand les transports bloquent</h3>
+              <ul class="list">
+                <li><strong>Option rapide:</strong> pose ton beacon en quelques secondes.</li>
+                <li><strong>Prix lisible:</strong> partage de frais annonce avant validation.</li>
+                <li><strong>Inter-city:</strong> utile aussi pour tes trajets week-end.</li>
+              </ul>
+
+              <div style="margin-top: 14px;" class="note">Suggérer un corridor (rattaché au formulaire rider):</div>
+              <div class="row2" style="margin-top: 8px;">
+                <div>
+                  <label class="flabel" for="suggest-fr">Corridor proposé</label>
+                  <input id="suggest-fr" name="corridor_suggested" form="rider-form-fr" placeholder="Ex: Montreuil ↔ Paris 11e" />
+                </div>
+                <div>
+                  <label class="flabel" for="time-fr">Fenêtre horaire</label>
+                  <input id="time-fr" name="corridor_time" form="rider-form-fr" placeholder="Ex: 7h30-9h / 23h-1h" />
+                </div>
+              </div>
+
+              <form class="form" id="rider-form-fr" data-form="rider" method="post" autocomplete="on" data-fallback="hello@rideomw.com">
+                <input type="hidden" name="form_type" value="Rider waitlist (FR)" />
+                <div class="hp" aria-hidden="true">
+                  <label for="company-rider-fr">Company</label>
+                  <input id="company-rider-fr" name="company" tabindex="-1" autocomplete="off" />
+                </div>
+
+                <div class="row2">
+                  <div>
+                    <label class="flabel" for="name-rider-fr">Nom</label>
+                    <input id="name-rider-fr" name="name" placeholder="Ton nom" required />
+                  </div>
+                  <div>
+                    <label class="flabel" for="email-rider-fr">Email</label>
+                    <input id="email-rider-fr" name="email" type="email" placeholder="toi@domaine.com" required />
+                  </div>
+                </div>
+
+                <div class="row2">
+                  <div>
+                    <label class="flabel" for="area-rider-fr">Zone principale</label>
+                    <input id="area-rider-fr" name="area" placeholder="Ex: Montreuil / Paris 11e" required />
+                  </div>
+                  <div>
+                    <label class="flabel" for="usecase-fr">Usage principal</label>
+                    <select id="usecase-fr" name="use_case" required>
+                      <option value="">Choisir</option>
+                      <option>Commute quotidien</option>
+                      <option>Retour de soirée</option>
+                      <option>Occasionnel</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row2">
+                  <div>
+                    <label class="flabel" for="timewindow-fr">Horaires typiques</label>
+                    <input id="timewindow-fr" name="time_window" placeholder="Ex: 7h30-9h / 23h-1h" />
+                  </div>
+                  <div>
+                    <label class="flabel" for="pickup-fr">Point de RDV préféré</label>
+                    <input id="pickup-fr" name="pickup" placeholder="Station, avenue, sortie" />
+                  </div>
+                </div>
+
+                <div>
+                  <label class="flabel" for="notes-rider-fr">Notes</label>
+                  <textarea id="notes-rider-fr" name="notes" placeholder="Contraintes, attentes, etc."></textarea>
+                </div>
+
+                <div class="formActions">
+                  <button class="btn primary" type="submit">Rejoindre la liste d’attente</button>
+                  <span class="note">On te prévient quand ta zone ouvre.</span>
+                </div>
+                <div class="formStatus success" role="status" aria-live="polite">Merci. On te tient au courant.</div>
+                <div class="formStatus error" role="status" aria-live="polite">Oups, échec. Écris-nous à <a href="mailto:hello@rideomw.com">hello@rideomw.com</a>.</div>
+              </form>
+            </section>
+          </div>
+
+          <div class="betaCta">
+            <a class="btn primary" href="#riders-fr" data-scroll="riders-fr">Rejoindre en tant que Rider</a>
+            <a class="btn" href="#drivers-fr" data-scroll="drivers-fr">Rejoindre en tant que Driver</a>
           </div>
         </section>
 
         <footer>
-          <div class="foot">
-            <div>© 2026 OMW — On My Way</div>
-            <div><a href="mailto:hello@rideomw.com">hello@rideomw.com</a> · <a href="#faq-fr">FAQ</a></div>
-          </div>
+          <div>© 2026 OMW - On My Way</div>
+          <div><a href="mailto:hello@rideomw.com">hello@rideomw.com</a> · <a href="#faq-fr" data-scroll="faq-fr">FAQ</a></div>
         </footer>
       </div>
     </div>
-<!-- ========================= -->
-    <!-- ======= ENGLISH ========= -->
-    <!-- ========================= -->
+
     <div class="content en" id="content-en">
-      <div class="wrap hero">
-        <section class="card heroLeft" aria-label="Hero EN">
-          <div class="badgeRow">
-            <span class="pill"><span class="dot" aria-hidden="true"></span> Paris / Île-de-France — pilot corridors</span>
-            <span class="pill">Detour cap: ≤ 5 min (or ≤ 3 km)</span>
-            <span class="pill">Request + confirm in under 60 s</span>
-          </div>
-
-          <h1>Real-time ridesharing, simple and reliable.</h1>
-
-          <p class="lead">
-            OMW connects riders and drivers already on the road.
-            Small detours, clear pickup points, and visible pilot corridors.
-          </p>
-
-          <div class="segment" data-segment data-default="rider">
-            <button type="button" data-mode="rider" data-target="riders-en" aria-pressed="true">I'm a Rider</button>
-            <button type="button" data-mode="driver" data-target="drivers-en" aria-pressed="false">I'm a Driver</button>
-          </div>
-
-          <div class="heroActions" data-cta-group>
-            <a class="btn primary" data-role="rider" href="#riders-en">Join the rider waitlist</a>
-            <a class="btn" data-role="driver" href="#drivers-en">Apply as a beta driver</a>
-          </div>
-
-          <p class="tiny">
-            Ride status stays visible. Cancel or report in one tap.
-          </p>
-        </section>
-
-        <aside class="card heroRight" aria-label="Hero image">
-          <div class="heroArt">
-            <img class="heroImg" src="hero.png" alt="OMW — real-time ridesharing" />
-          </div>
-        </aside>
-      </div>
-
       <div class="wrap">
-        <section class="card section" id="how-en">
-          <div class="kicker">How it works</div>
-          <h2 class="sectionTitle">3 steps, low friction</h2>
-          <p class="sectionLead">A simple flow that avoids wasted detours.</p>
+        <section class="card heroSplit" data-split-hero data-persona="common" id="hero-en" aria-label="OMW Hero EN">
+          <div class="heroContent">
+            <div class="heroCopyDeck" id="hero-copy-en">
+              <article class="heroCopy common" data-copy-persona="common" aria-label="Shared message">
+                <div class="heroBadgeStack">
+                  <span class="heroBadge riderBadge">Rider</span>
+                  <span class="heroBadge driverBadge">Driver</span>
+                </div>
+                <h1 class="heroTitle">Shared promise: "Move without paying full price."</h1>
+                <p class="heroSub">Post an option or activate your route: matching on your axis, clear contribution - and savings for both.</p>
+                <div class="heroActions">
+                  <a class="btn primary" href="#beta-en" data-scroll="beta-en">Join beta</a>
+                </div>
+              </article>
 
-          <div class="grid3">
-            <div class="tile">
-              <strong>1. Pick your corridor</strong>
-              <span>Your main axis + time window is enough.</span>
+              <article class="heroCopy rider" data-copy-persona="rider" aria-label="Rider message">
+                <span class="heroBadge">Rider</span>
+                <h1 class="heroTitle">The backup plan when all else fails.</h1>
+                <p class="heroSub">Drop an option in 10 seconds. When a driver crosses your axis, you get a clear shared-cost offer. Coverage grows with the community.</p>
+                <div class="heroActions">
+                  <a class="btn primary" href="#beta-en" data-scroll="beta-en">Join beta</a>
+                  <button class="btn" type="button" data-switch-persona="driver" aria-pressed="false">I'm Driver</button>
+                </div>
+                <p class="heroTiny">Also useful for inter-city weekend trips, often cheaper than train or coach.</p>
+              </article>
+
+              <article class="heroCopy driver" data-copy-persona="driver" aria-label="Driver message">
+                <span class="heroBadge">Driver</span>
+                <h1 class="heroTitle">Your empty seat can cover your tolls.</h1>
+                <p class="heroSub">Activate your route (daily or inter-city). Match on your axis, max 5 min detour, clear contribution. Add regulars to your Circle.</p>
+                <div class="heroActions">
+                  <a class="btn primary" href="#beta-en" data-scroll="beta-en">Join beta</a>
+                  <button class="btn" type="button" data-switch-persona="rider" aria-pressed="false">I'm Rider</button>
+                </div>
+                <p class="heroTiny">Limited detour, transparent contribution, and Circle for recurring riders.</p>
+              </article>
             </div>
-            <div class="tile">
-              <strong>2. Match on your route</strong>
-              <span>Only compatible trips. Detour ≤ 5 min.</span>
+          </div>
+
+          <div class="heroVisual" aria-hidden="true">
+            <div class="heroLayer rider">
+              <img src="Assets/Hero-rider.png" alt="" />
             </div>
-            <div class="tile">
-              <strong>3. Confirm fast</strong>
-              <span>Clear pickup points, visible status, easy cancel.</span>
+            <div class="heroLayer driver">
+              <img src="Assets/Hero-driver.png" alt="" />
+            </div>
+            <div class="heroDivider"></div>
+          </div>
+
+          <div class="heroSlider" role="group" aria-label="Rider Driver hero control">
+            <div class="heroSliderTrack">
+              <span class="heroSliderText rider" aria-hidden="true">Rider</span>
+              <span class="rangeKnobIcon" aria-hidden="true"><img src="Icon.png" alt="" /></span>
+              <span class="heroSliderText driver" aria-hidden="true">Driver</span>
+              <input class="personaRange" type="range" min="0" max="100" value="50" step="1" data-persona-range data-common-valuetext="Rider and Driver" aria-label="Switch between Rider and Driver" aria-valuetext="Rider and Driver" aria-controls="hero-copy-en" />
             </div>
           </div>
         </section>
 
-        <section class="card section" id="why-en">
-          <div class="kicker">Why OMW</div>
-          <h2 class="sectionTitle">Clear guarantees</h2>
-          <ul class="list">
-            <li><strong>Detour cap</strong>: ≤ 5 minutes (or ≤ 3 km), shown before you accept.</li>
-            <li><strong>Local availability</strong>: pilot corridors reduce “does this work here?”.</li>
-            <li><strong>Price clarity</strong>: cost-sharing, no surprise spikes.</li>
-            <li><strong>Simple safety</strong>: identity, ride status, Cancel + Report.</li>
-          </ul>
-        </section>
+        <section class="card section featuresShowcase" id="features-en">
+          <h2 class="sectionTitle">Key Features of On My Way</h2>
+          <p class="sectionLead">Discover what makes On My Way the right choice for commuters and ride-hailers in Ile-de-France.<br />Our features improve every trip by prioritizing safety, convenience, and affordability.</p>
 
-        <section class="card section" id="safety-en">
-          <div class="kicker">Safety & trust</div>
-          <h2 class="sectionTitle">Built to feel safe</h2>
-          <div class="split">
-            <div class="tile">
-              <strong>Instant actions</strong>
-              <span>Cancel, report, and keep status visible at all times.</span>
-            </div>
-            <div class="tile">
-              <strong>Support & moderation</strong>
-              <span>Visible identity and a support team if anything goes wrong.</span>
-            </div>
+          <div class="featureGrid">
+            <article class="featureCard">
+              <span class="featureIcon" aria-hidden="true"><img src="Assets/navigation.svg" alt="" /></span>
+              <h3>Navigation-Native</h3>
+              <p>OMW is built on navigation: live ETA, clear pickup point, and fewer messages. Always know where to meet and when you arrive.</p>
+            </article>
+
+            <article class="featureCard">
+              <span class="featureIcon" aria-hidden="true"><img src="Assets/bolt.svg" alt="" /></span>
+              <h3>Real-Time Matching</h3>
+              <p>Get a confirmed driver or rider in minutes, not hours. OMW matches you with people already going your way.</p>
+            </article>
+
+            <article class="featureCard">
+              <span class="featureIcon" aria-hidden="true"><img src="Assets/verified_user.svg" alt="" /></span>
+              <h3>Safe Journey</h3>
+              <p>Verified profiles + ratings, mutual pickup confirmation, and simple trip-sharing reassurance. Built to feel safe for riders and drivers.</p>
+            </article>
+
+            <article class="featureCard">
+              <span class="featureIcon" aria-hidden="true"><img src="Assets/handshake.svg" alt="" /></span>
+              <h3>Circle of Favorites</h3>
+              <p>Save preferred people and ride with familiar faces: coworkers, neighbors, and friends-of-friends. Great for recurring commutes.</p>
+            </article>
+
+            <article class="featureCard">
+              <span class="featureIcon" aria-hidden="true"><img src="Assets/euro_symbol.svg" alt="" /></span>
+              <h3>Upfront Cost-Sharing</h3>
+              <p>Reduce commute and travel costs with transparent contributions and shared rides, making everyday mobility more affordable.</p>
+            </article>
+
+            <article class="featureCard">
+              <span class="featureIcon" aria-hidden="true"><img src="Assets/route.svg" alt="" /></span>
+              <h3>No Long Detours</h3>
+              <p>No endless detours. Matches stay constrained to small route offsets (ex: ≤ 5 minutes) so drivers stay on schedule.</p>
+            </article>
           </div>
         </section>
 
-        <section class="card section" id="where-en">
-          <div class="kicker">Where it works now</div>
-          <h2 class="sectionTitle">Paris / Île-de-France pilot</h2>
-          <p class="sectionLead">Preferred windows: 7-10am, 5-9pm, and late-night returns.</p>
-          <div class="grid2">
-            <div class="tile"><strong>Paris ↔ La Défense</strong><span>Dense commute, reliable pickup points.</span></div>
-            <div class="tile"><strong>Paris ↔ Orly</strong><span>Direct routes, high utility.</span></div>
-            <div class="tile"><strong>Paris ↔ Saint-Denis</strong><span>Regular flow, simple access.</span></div>
+        <section class="card section testimonials-section" id="testimonials-en">
+          <div class="container">
+            <h2 class="sectionTitle">What Our Users Say</h2>
+            <p class="sectionLead">Short, concrete feedback from riders and drivers. (Beta - the community is growing every week.)</p>
+
+            <div class="testimonial-grid">
+              <article class="testimonial-card">
+                <div class="stars" role="img" aria-label="5 out of 5">★★★★★</div>
+                <h3>No More 40EUR Ride-Hails</h3>
+                <blockquote>“When the train breaks down, I post an option and avoid overpriced ride-hails. Simple and clear.”</blockquote>
+                <div class="divider" aria-hidden="true"></div>
+                <div class="author">
+                  <span class="testimonial-avatar" aria-hidden="true"><img src="Assets/avatar-claire.png" alt="" /></span>
+                  <span>Claire - Rider (Outer suburbs)</span>
+                </div>
+              </article>
+
+              <article class="testimonial-card">
+                <div class="stars" role="img" aria-label="5 out of 5">★★★★★</div>
+                <h3>Circle Saves Time</h3>
+                <blockquote>“I find my regulars and coworkers in one tap. Less friction, more routine.”</blockquote>
+                <div class="divider" aria-hidden="true"></div>
+                <div class="author">
+                  <span class="testimonial-avatar" aria-hidden="true"><img src="Assets/avatar-mehdi.png" alt="" /></span>
+                  <span>Thomas - Driver</span>
+                </div>
+              </article>
+
+              <article class="testimonial-card">
+                <div class="stars" role="img" aria-label="5 out of 5">★★★★★</div>
+                <h3>Carpooling Without the Headache</h3>
+                <blockquote>“I share only when it fits my route. I stay in control and decline if needed.”</blockquote>
+                <div class="divider" aria-hidden="true"></div>
+                <div class="author">
+                  <span class="testimonial-avatar" aria-hidden="true"><img src="Assets/avatar-thomas.png" alt="" /></span>
+                  <span>Mehdi - Driver</span>
+                </div>
+              </article>
+            </div>
           </div>
-
-          <div style="margin-top:14px;" class="tile">
-            <strong>Suggest my corridor</strong>
-            <span>Add your axis and we’ll prioritize demand.</span>
-            <div class="row2" style="margin-top:10px;">
-              <div>
-                <label class="flabel" for="suggest-en">Suggested corridor</label>
-                <input id="suggest-en" name="corridor_suggested" form="rider-form-en" placeholder="Example: Montreuil ↔ Paris 11" />
-              </div>
-              <div>
-                <label class="flabel" for="time-en">Time window</label>
-                <input id="time-en" name="corridor_time" form="rider-form-en" placeholder="Example: 7:30-9 / 23:00-1:00" />
-              </div>
-            </div>
-            <p class="note">These fields attach to the rider waitlist.</p>
-          </div>
-        </section>
-
-        <section class="card section" id="drivers-en">
-          <div class="kicker">For drivers</div>
-          <h2 class="sectionTitle">You stay in control</h2>
-          <ul class="list">
-            <li><strong>Total control</strong>: set your detour cap and approve every match.</li>
-            <li><strong>Shared costs</strong>: transparent, no surprises.</li>
-            <li><strong>Lower stress</strong>: clear pickup, easy cancel.</li>
-          </ul>
-
-          <form class="form" id="driver-form-en" data-form="driver" method="post" autocomplete="on" data-fallback="hello@rideomw.com">
-            <input type="hidden" name="form_type" value="Driver beta (EN)" />
-            <div class="hp" aria-hidden="true">
-              <label for="company-en">Company</label>
-              <input id="company-en" name="company" tabindex="-1" autocomplete="off" />
-            </div>
-
-            <div class="row2">
-              <div>
-                <label class="flabel" for="name-driver-en">Name</label>
-                <input id="name-driver-en" name="name" placeholder="Your name" required />
-              </div>
-              <div>
-                <label class="flabel" for="email-driver-en">Email</label>
-                <input id="email-driver-en" name="email" type="email" placeholder="you@domain.com" required />
-              </div>
-            </div>
-
-            <div class="row2">
-              <div>
-                <label class="flabel" for="area-driver-en">Main route</label>
-                <input id="area-driver-en" name="route" placeholder="Example: Nanterre → Paris 8" required />
-              </div>
-              <div>
-                <label class="flabel" for="freq-driver-en">Frequency</label>
-                <select id="freq-driver-en" name="frequency" required>
-                  <option value="">Select</option>
-                  <option>Daily</option>
-                  <option>3-5x / week</option>
-                  <option>1-2x / week</option>
-                  <option>Occasionally</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="row2">
-              <div>
-                <label class="flabel" for="vehicle-en">Vehicle</label>
-                <input id="vehicle-en" name="vehicle" placeholder="Model + year" />
-              </div>
-              <div>
-                <label class="flabel" for="detour-en">Max detour</label>
-                <select id="detour-en" name="detour" required>
-                  <option value="">Select</option>
-                  <option>≤ 3 minutes</option>
-                  <option>≤ 5 minutes</option>
-                  <option>≤ 8 minutes</option>
-                  <option>Flexible</option>
-                </select>
-              </div>
-            </div>
-
-            <div>
-              <label class="flabel" for="notes-driver-en">Notes</label>
-              <textarea id="notes-driver-en" name="notes" placeholder="Hours, constraints, etc."></textarea>
-            </div>
-
-            <div class="formActions">
-              <button class="btn primary" type="submit">Submit driver application</button>
-              <span class="note">Fast response.</span>
-            </div>
-            <div class="formStatus success" role="status" aria-live="polite">Thanks. We'll get back to you soon.</div>
-            <div class="formStatus error" role="status" aria-live="polite">Something went wrong. Email us at <a href="mailto:hello@rideomw.com">hello@rideomw.com</a>.</div>
-          </form>
-        </section>
-
-        <section class="card section" id="riders-en">
-          <div class="kicker">For riders</div>
-          <h2 class="sectionTitle">A clear, reliable option</h2>
-          <ul class="list">
-            <li><strong>Reliability</strong>: pilot corridors reduce uncertainty.</li>
-            <li><strong>Predictable price</strong>: shared costs, no spikes.</li>
-            <li><strong>Safety</strong>: visible identity, easy cancel.</li>
-          </ul>
-
-          <form class="form" id="rider-form-en" data-form="rider" method="post" autocomplete="on" data-fallback="hello@rideomw.com">
-            <input type="hidden" name="form_type" value="Rider waitlist (EN)" />
-            <div class="hp" aria-hidden="true">
-              <label for="company-rider-en">Company</label>
-              <input id="company-rider-en" name="company" tabindex="-1" autocomplete="off" />
-            </div>
-
-            <div class="row2">
-              <div>
-                <label class="flabel" for="name-rider-en">Name</label>
-                <input id="name-rider-en" name="name" placeholder="Your name" required />
-              </div>
-              <div>
-                <label class="flabel" for="email-rider-en">Email</label>
-                <input id="email-rider-en" name="email" type="email" placeholder="you@domain.com" required />
-              </div>
-            </div>
-
-            <div class="row2">
-              <div>
-                <label class="flabel" for="area-rider-en">Primary area</label>
-                <input id="area-rider-en" name="area" placeholder="Example: Montreuil / Paris 11" required />
-              </div>
-              <div>
-                <label class="flabel" for="usecase-en">Main use case</label>
-                <select id="usecase-en" name="use_case" required>
-                  <option value="">Select</option>
-                  <option>Daily commute</option>
-                  <option>Late-night ride home</option>
-                  <option>Occasional</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="row2">
-              <div>
-                <label class="flabel" for="timewindow-en">Typical times</label>
-                <input id="timewindow-en" name="time_window" placeholder="Example: 7:30-9 / 23:00-1:00" />
-              </div>
-              <div>
-                <label class="flabel" for="pickup-en">Preferred pickup</label>
-                <input id="pickup-en" name="pickup" placeholder="Station, avenue, exit" />
-              </div>
-            </div>
-
-            <div>
-              <label class="flabel" for="notes-rider-en">Notes</label>
-              <textarea id="notes-rider-en" name="notes" placeholder="Constraints, expectations, etc."></textarea>
-            </div>
-
-            <div class="formActions">
-              <button class="btn primary" type="submit">Join the rider waitlist</button>
-              <span class="note">We'll notify you when your area opens.</span>
-            </div>
-            <div class="formStatus success" role="status" aria-live="polite">Thanks. We'll keep you posted.</div>
-            <div class="formStatus error" role="status" aria-live="polite">Something went wrong. Email us at <a href="mailto:hello@rideomw.com">hello@rideomw.com</a>.</div>
-          </form>
         </section>
 
         <section class="card section" id="faq-en">
-          <div class="kicker">FAQ</div>
-          <h2 class="sectionTitle">Common questions</h2>
+          <p class="kicker">FAQ</p>
+          <h2 class="sectionTitle">FAQ</h2>
 
           <div class="faq">
             <details>
-              <summary>Is this a taxi/VTC app?</summary>
-              <p>No. OMW connects people who share trip costs.</p>
+              <summary>Is OMW a taxi/VTC service?</summary>
+              <p>No. OMW is built on cost sharing between private riders and drivers.</p>
             </details>
+
             <details>
-              <summary>How much does it cost?</summary>
-              <p>Costs are shared and shown before you confirm.</p>
+              <summary>Is it instantly available everywhere?</summary>
+              <p>No. Availability depends on local community density and expands over time.</p>
             </details>
+
             <details>
-              <summary>What if pickup fails?</summary>
-              <p>You can cancel immediately and report the issue.</p>
+              <summary>How does an option / beacon work?</summary>
+              <p>You post your route and time in seconds; if a compatible driver passes, you receive a clear proposal.</p>
             </details>
+
             <details>
-              <summary>What about insurance?</summary>
-              <p>Drivers remain covered by their auto insurance. Details will be shared before wider launch.</p>
+              <summary>How is pricing calculated?</summary>
+              <p>You see an estimate before you confirm, with transparent shared contribution.</p>
+            </details>
+
+            <details>
+              <summary>How is the 5 min detour limit enforced?</summary>
+              <p>Matching only suggests rides that fit the detour cap.</p>
+            </details>
+
+            <details>
+              <summary>What about safety?</summary>
+              <p>Verified profiles, trip sharing options, and assistance are built in.</p>
+            </details>
+
+            <details>
+              <summary>How does inter-city work?</summary>
+              <p>Drivers activate longer routes and riders match on the same axis with pre-shown contribution.</p>
+            </details>
+
+            <details>
+              <summary>What is Circle for?</summary>
+              <p>Circle helps you favorite coworkers and regulars for easier repeat rides.</p>
             </details>
           </div>
         </section>
 
-        <section class="card section" id="final-en">
-          <div class="kicker">Ready to start</div>
-          <h2 class="sectionTitle">OMW starts with you</h2>
-          <p class="sectionLead">Riders and drivers make the network reliable.</p>
-          <div class="ctaBlock">
-            <a class="btn primary" href="#riders-en">Rider waitlist</a>
-            <a class="btn" href="#drivers-en">Apply as beta driver</a>
+        <section class="card section" id="beta-en">
+          <p class="kicker">Beta</p>
+          <h2 class="sectionTitle">Join the OMW beta</h2>
+          <p class="sectionLead">Choose Rider or Driver below. The forms keep the exact existing submission logic and fields.</p>
+
+          <div class="formsGrid">
+            <section class="formCard" id="drivers-en">
+              <p class="kicker">For drivers</p>
+              <h3>Your empty seat can offset your trip costs</h3>
+              <ul class="list">
+                <li><strong>Max 5 min detour:</strong> stay in control of your route.</li>
+                <li><strong>Inter-city use case:</strong> clear contribution to help with tolls and fuel.</li>
+                <li><strong>Circle:</strong> reconnect with regulars quickly.</li>
+              </ul>
+
+              <form class="form" id="driver-form-en" data-form="driver" method="post" autocomplete="on" data-fallback="hello@rideomw.com">
+                <input type="hidden" name="form_type" value="Driver beta (EN)" />
+                <div class="hp" aria-hidden="true">
+                  <label for="company-en">Company</label>
+                  <input id="company-en" name="company" tabindex="-1" autocomplete="off" />
+                </div>
+
+                <div class="row2">
+                  <div>
+                    <label class="flabel" for="name-driver-en">Name</label>
+                    <input id="name-driver-en" name="name" placeholder="Your name" required />
+                  </div>
+                  <div>
+                    <label class="flabel" for="email-driver-en">Email</label>
+                    <input id="email-driver-en" name="email" type="email" placeholder="you@domain.com" required />
+                  </div>
+                </div>
+
+                <div class="row2">
+                  <div>
+                    <label class="flabel" for="area-driver-en">Main route</label>
+                    <input id="area-driver-en" name="route" placeholder="Example: Nanterre → Paris 8" required />
+                  </div>
+                  <div>
+                    <label class="flabel" for="freq-driver-en">Frequency</label>
+                    <select id="freq-driver-en" name="frequency" required>
+                      <option value="">Select</option>
+                      <option>Daily</option>
+                      <option>3-5x / week</option>
+                      <option>1-2x / week</option>
+                      <option>Occasionally</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row2">
+                  <div>
+                    <label class="flabel" for="vehicle-en">Vehicle</label>
+                    <input id="vehicle-en" name="vehicle" placeholder="Model + year" />
+                  </div>
+                  <div>
+                    <label class="flabel" for="detour-en">Max detour</label>
+                    <select id="detour-en" name="detour" required>
+                      <option value="">Select</option>
+                      <option>≤ 3 minutes</option>
+                      <option>≤ 5 minutes</option>
+                      <option>≤ 8 minutes</option>
+                      <option>Flexible</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="flabel" for="notes-driver-en">Notes</label>
+                  <textarea id="notes-driver-en" name="notes" placeholder="Hours, constraints, etc."></textarea>
+                </div>
+
+                <div class="formActions">
+                  <button class="btn primary" type="submit">Submit driver application</button>
+                  <span class="note">Fast response.</span>
+                </div>
+                <div class="formStatus success" role="status" aria-live="polite">Thanks. We'll get back to you soon.</div>
+                <div class="formStatus error" role="status" aria-live="polite">Something went wrong. Email us at <a href="mailto:hello@rideomw.com">hello@rideomw.com</a>.</div>
+              </form>
+            </section>
+
+            <section class="formCard" id="riders-en">
+              <p class="kicker">For riders</p>
+              <h3>A practical backup when transit breaks</h3>
+              <ul class="list">
+                <li><strong>Fast option:</strong> post your beacon in seconds.</li>
+                <li><strong>Clear price:</strong> shared contribution shown before confirmation.</li>
+                <li><strong>Inter-city:</strong> useful for weekend travel too.</li>
+              </ul>
+
+              <div style="margin-top: 14px;" class="note">Suggest a corridor (attached to rider form):</div>
+              <div class="row2" style="margin-top: 8px;">
+                <div>
+                  <label class="flabel" for="suggest-en">Suggested corridor</label>
+                  <input id="suggest-en" name="corridor_suggested" form="rider-form-en" placeholder="Example: Montreuil ↔ Paris 11" />
+                </div>
+                <div>
+                  <label class="flabel" for="time-en">Time window</label>
+                  <input id="time-en" name="corridor_time" form="rider-form-en" placeholder="Example: 7:30-9 / 23:00-1:00" />
+                </div>
+              </div>
+
+              <form class="form" id="rider-form-en" data-form="rider" method="post" autocomplete="on" data-fallback="hello@rideomw.com">
+                <input type="hidden" name="form_type" value="Rider waitlist (EN)" />
+                <div class="hp" aria-hidden="true">
+                  <label for="company-rider-en">Company</label>
+                  <input id="company-rider-en" name="company" tabindex="-1" autocomplete="off" />
+                </div>
+
+                <div class="row2">
+                  <div>
+                    <label class="flabel" for="name-rider-en">Name</label>
+                    <input id="name-rider-en" name="name" placeholder="Your name" required />
+                  </div>
+                  <div>
+                    <label class="flabel" for="email-rider-en">Email</label>
+                    <input id="email-rider-en" name="email" type="email" placeholder="you@domain.com" required />
+                  </div>
+                </div>
+
+                <div class="row2">
+                  <div>
+                    <label class="flabel" for="area-rider-en">Primary area</label>
+                    <input id="area-rider-en" name="area" placeholder="Example: Montreuil / Paris 11" required />
+                  </div>
+                  <div>
+                    <label class="flabel" for="usecase-en">Main use case</label>
+                    <select id="usecase-en" name="use_case" required>
+                      <option value="">Select</option>
+                      <option>Daily commute</option>
+                      <option>Late-night ride home</option>
+                      <option>Occasional</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row2">
+                  <div>
+                    <label class="flabel" for="timewindow-en">Typical times</label>
+                    <input id="timewindow-en" name="time_window" placeholder="Example: 7:30-9 / 23:00-1:00" />
+                  </div>
+                  <div>
+                    <label class="flabel" for="pickup-en">Preferred pickup</label>
+                    <input id="pickup-en" name="pickup" placeholder="Station, avenue, exit" />
+                  </div>
+                </div>
+
+                <div>
+                  <label class="flabel" for="notes-rider-en">Notes</label>
+                  <textarea id="notes-rider-en" name="notes" placeholder="Constraints, expectations, etc."></textarea>
+                </div>
+
+                <div class="formActions">
+                  <button class="btn primary" type="submit">Join the rider waitlist</button>
+                  <span class="note">We'll notify you when your area opens.</span>
+                </div>
+                <div class="formStatus success" role="status" aria-live="polite">Thanks. We'll keep you posted.</div>
+                <div class="formStatus error" role="status" aria-live="polite">Something went wrong. Email us at <a href="mailto:hello@rideomw.com">hello@rideomw.com</a>.</div>
+              </form>
+            </section>
+          </div>
+
+          <div class="betaCta">
+            <a class="btn primary" href="#riders-en" data-scroll="riders-en">Join as Rider</a>
+            <a class="btn" href="#drivers-en" data-scroll="drivers-en">Join as Driver</a>
           </div>
         </section>
 
         <footer>
-          <div class="foot">
-            <div>© 2026 OMW — On My Way</div>
-            <div><a href="mailto:hello@rideomw.com">hello@rideomw.com</a> · <a href="#faq-en">FAQ</a></div>
-          </div>
+          <div>© 2026 OMW - On My Way</div>
+          <div><a href="mailto:hello@rideomw.com">hello@rideomw.com</a> · <a href="#faq-en" data-scroll="faq-en">FAQ</a></div>
         </footer>
       </div>
     </div>
@@ -990,51 +1963,97 @@
 
   <script src="config.js"></script>
   <script>
-    (function() {
+    (function () {
       const config = window.OMW_CONFIG || {};
       const endpoints = {
         rider: (config.riderFormEndpoint || "").trim(),
         driver: (config.driverFormEndpoint || "").trim()
       };
 
-      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-      function setCtaMode(group, mode) {
-        if (!group) return;
-        const ctas = group.querySelectorAll("[data-role]");
-        ctas.forEach((cta) => {
-          const isActive = cta.getAttribute("data-role") === mode;
-          cta.classList.toggle("primary", isActive);
+      function syncReducedClass() {
+        document.documentElement.classList.toggle("reduced-motion", prefersReduced.matches);
+      }
+
+      syncReducedClass();
+      if (typeof prefersReduced.addEventListener === "function") {
+        prefersReduced.addEventListener("change", syncReducedClass);
+      } else if (typeof prefersReduced.addListener === "function") {
+        prefersReduced.addListener(syncReducedClass);
+      }
+
+      function smoothScrollTo(id) {
+        if (!id) return;
+        const target = document.getElementById(id);
+        if (!target) return;
+        target.scrollIntoView({
+          behavior: prefersReduced.matches ? "auto" : "smooth",
+          block: "start"
         });
       }
 
-      document.querySelectorAll("[data-segment]").forEach((segment) => {
-        const hero = segment.closest(".hero");
-        const ctaGroup = hero ? hero.querySelector("[data-cta-group]") : null;
-        const buttons = segment.querySelectorAll("button[data-mode]");
+      document.querySelectorAll("[data-scroll]").forEach((anchor) => {
+        anchor.addEventListener("click", (event) => {
+          const targetId = anchor.getAttribute("data-scroll");
+          if (!targetId) return;
+          const target = document.getElementById(targetId);
+          if (!target) return;
+          event.preventDefault();
+          smoothScrollTo(targetId);
+        });
+      });
 
-        function applyMode(mode, targetId) {
-          buttons.forEach((btn) => {
-            const isPressed = btn.getAttribute("data-mode") === mode;
-            btn.setAttribute("aria-pressed", isPressed ? "true" : "false");
+      function initSplitHero(hero) {
+        const range = hero.querySelector("[data-persona-range]");
+        if (!range) return;
+
+        const switchButtons = hero.querySelectorAll("[data-switch-persona]");
+
+        function applyFromRange() {
+          const value = Number(range.value);
+          const normalized = Math.max(0, Math.min(100, value));
+          const split = 100 - normalized;
+          const commonValueText = range.getAttribute("data-common-valuetext") || "Rider and Driver";
+          let persona = "common";
+          if (normalized < 45) persona = "rider";
+          if (normalized > 55) persona = "driver";
+          const centerVisibility = Math.max(0, 1 - Math.abs(normalized - 50) / 50);
+
+          hero.style.setProperty("--split", split + "%");
+          hero.style.setProperty("--persona-progress", String(normalized));
+          hero.style.setProperty("--label-center-opacity", centerVisibility.toFixed(3));
+          hero.setAttribute("data-persona", persona);
+          range.setAttribute("aria-valuetext", persona === "common" ? commonValueText : persona === "rider" ? "Rider" : "Driver");
+
+          switchButtons.forEach((button) => {
+            const isActive = button.getAttribute("data-switch-persona") === persona;
+            button.setAttribute("aria-pressed", isActive ? "true" : "false");
           });
-          setCtaMode(ctaGroup, mode);
-          if (targetId) {
-            const target = document.getElementById(targetId);
-            if (target) {
-              target.scrollIntoView({ behavior: prefersReduced ? "auto" : "smooth", block: "start" });
-            }
-          }
         }
 
-        buttons.forEach((btn) => {
-          btn.addEventListener("click", () => {
-            applyMode(btn.getAttribute("data-mode"), btn.getAttribute("data-target"));
+        function setPersona(persona) {
+          if (persona === "driver") range.value = "100";
+          else if (persona === "common") range.value = "50";
+          else range.value = "0";
+          applyFromRange();
+        }
+
+        range.addEventListener("input", applyFromRange);
+        range.addEventListener("change", applyFromRange);
+
+        switchButtons.forEach((button) => {
+          button.addEventListener("click", () => {
+            const persona = button.getAttribute("data-switch-persona");
+            if (!persona) return;
+            setPersona(persona);
           });
         });
 
-        applyMode(segment.getAttribute("data-default") || "rider");
-      });
+        applyFromRange();
+      }
+
+      document.querySelectorAll("[data-split-hero]").forEach(initSplitHero);
 
       document.querySelectorAll("form[data-form]").forEach((form) => {
         form.addEventListener("submit", async (event) => {
@@ -1046,6 +2065,7 @@
           const endpoint = endpoints[type] || "";
           const formData = new FormData(form);
           const payload = new URLSearchParams();
+
           formData.forEach((value, key) => {
             if (typeof value === "string") payload.append(key, value);
           });
