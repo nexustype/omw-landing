@@ -95,6 +95,18 @@
       display: block;
     }
 
+    .srOnly {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
     .wrap {
       width: min(1160px, calc(100% - 40px));
       margin: 0 auto;
@@ -615,6 +627,281 @@
       max-width: 72ch;
     }
 
+    .comparisonSection {
+      text-align: center;
+    }
+
+    .comparisonSection .sectionTitle {
+      margin-top: 0;
+    }
+
+    .comparisonSection .sectionLead {
+      margin: 12px auto 0;
+      max-width: 66ch;
+    }
+
+    .comparisonControls {
+      margin-top: 24px;
+      display: grid;
+      justify-items: center;
+    }
+
+    .comparisonToggle {
+      position: relative;
+      width: min(360px, 100%);
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      align-items: center;
+      border-radius: 999px;
+      border: 1px solid rgba(136, 158, 178, 0.52);
+      background: linear-gradient(140deg, #dce7ef 0%, #cddbe8 100%);
+      box-shadow: inset 0 3px 8px rgba(106, 126, 146, 0.48), inset 0 -6px 12px rgba(255, 255, 255, 0.76);
+      padding: 6px;
+      min-height: 72px;
+      --comparison-knob-size: 56px;
+      --comparison-knob-offset: 2px;
+      user-select: none;
+      transition: background .18s ease;
+    }
+
+    .comparisonToggle[data-mode="driver"] {
+      background: linear-gradient(140deg, #cfe9df 0%, #bddfd4 100%);
+    }
+
+    .comparisonToggleBtn {
+      appearance: none;
+      border: none;
+      background: transparent;
+      color: rgba(16, 24, 42, 0.88);
+      font: inherit;
+      font-size: 16px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      line-height: 1;
+      min-height: 52px;
+      cursor: pointer;
+      transition: opacity .16s ease, color .16s ease;
+      position: relative;
+      z-index: 2;
+      opacity: 0;
+    }
+
+    .comparisonToggleBtn[aria-pressed="true"] {
+      color: rgba(16, 24, 42, 0.9);
+      opacity: 1;
+    }
+
+    .comparisonToggleBtn:focus-visible {
+      opacity: 1;
+    }
+
+    .comparisonToggleKnob {
+      position: absolute;
+      top: 50%;
+      left: var(--comparison-knob-offset);
+      width: var(--comparison-knob-size);
+      height: var(--comparison-knob-size);
+      border-radius: 999px;
+      border: 2px solid #f8fbfd;
+      background: linear-gradient(180deg, #ffffff 0%, #f4f7fb 100%);
+      box-shadow: 0 8px 18px rgba(45, 65, 91, 0.22), 0 1px 0 rgba(255, 255, 255, 0.95) inset;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transform: translate(0, -50%);
+      transition: left .18s ease;
+      z-index: 4;
+      pointer-events: auto;
+      cursor: grab;
+      touch-action: none;
+    }
+
+    .comparisonToggle[data-mode="driver"] .comparisonToggleKnob {
+      left: calc(100% - var(--comparison-knob-size) - var(--comparison-knob-offset));
+    }
+
+    .comparisonToggle.is-dragging .comparisonToggleKnob {
+      cursor: grabbing;
+    }
+
+    .comparisonToggleKnob img {
+      width: 34px;
+      height: 34px;
+      object-fit: contain;
+    }
+
+    .comparisonTableWrap {
+      margin-top: 18px;
+      overflow-x: auto;
+      border: none;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .comparisonTable {
+      width: 100%;
+      min-width: 760px;
+      border-collapse: separate;
+      border-spacing: 0;
+      table-layout: fixed;
+    }
+
+    .comparisonTable th,
+    .comparisonTable td {
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(16, 24, 42, 0.08);
+      text-align: center;
+      vertical-align: middle;
+      background: transparent;
+    }
+
+    .comparisonTable th + th,
+    .comparisonTable td + td {
+      border-left: 1px solid rgba(16, 24, 42, 0.08);
+    }
+
+    .comparisonTable thead th {
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      color: rgba(16, 24, 42, 0.9);
+      background: transparent;
+    }
+
+    .comparisonTable th:first-child,
+    .comparisonTable td:first-child {
+      position: sticky;
+      left: 0;
+      z-index: 3;
+      width: 38%;
+      min-width: 260px;
+      max-width: 420px;
+      text-align: left;
+      background: #ffffff;
+    }
+
+    .comparisonTable thead th:first-child {
+      z-index: 4;
+      background: #ffffff;
+    }
+
+    .comparisonTable tbody tr:last-child th,
+    .comparisonTable tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .comparisonFeature {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      color: rgba(16, 24, 42, 0.9);
+      line-height: 1.35;
+    }
+
+    .featureHint {
+      position: relative;
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(16, 24, 42, 0.18);
+      color: var(--muted-soft);
+      font-size: 12px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: none;
+      cursor: help;
+      user-select: none;
+    }
+
+    .featureHint::after {
+      content: attr(data-tip);
+      position: absolute;
+      left: 50%;
+      bottom: calc(100% + 8px);
+      transform: translate(-50%, 4px);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      background: rgba(16, 24, 42, 0.96);
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 600;
+      line-height: 1.3;
+      padding: 6px 8px;
+      border-radius: 8px;
+      width: max-content;
+      max-width: 180px;
+      white-space: normal;
+      text-align: center;
+      z-index: 8;
+      transition: opacity .12s ease, transform .12s ease, visibility .12s ease;
+    }
+
+    .featureHint::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: calc(100% + 2px);
+      width: 8px;
+      height: 8px;
+      background: rgba(16, 24, 42, 0.96);
+      transform: translateX(-50%) rotate(45deg);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity .12s ease, visibility .12s ease;
+      z-index: 7;
+    }
+
+    .featureHint:hover::after,
+    .featureHint:focus-visible::after,
+    .featureHint:active::after {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, 0);
+    }
+
+    .featureHint:hover::before,
+    .featureHint:focus-visible::before,
+    .featureHint:active::before {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) rotate(45deg);
+    }
+
+    .comparisonStatusIcon {
+      width: 18px;
+      height: 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      vertical-align: middle;
+    }
+
+    .comparisonStatusIcon svg {
+      width: 18px;
+      height: 18px;
+      display: block;
+    }
+
+    .comparisonStatusIcon.status-yes { color: #1f8a45; }
+    .comparisonStatusIcon.status-limit { color: #b7791f; }
+    .comparisonStatusIcon.status-no { color: #cf2e2e; }
+    .comparisonStatusIcon.status-na { color: #6b7280; }
+
+    .comparisonTable tbody {
+      transition: opacity .18s ease;
+    }
+
+    .comparisonTable tbody.is-updating {
+      opacity: .35;
+    }
+
     .proofBand {
       display: grid;
       gap: 18px;
@@ -832,31 +1119,94 @@
       display: block;
     }
 
+    .faqSection {
+      text-align: center;
+    }
+
+    .faqSection .sectionTitle {
+      margin-top: 0;
+    }
+
+    .faqSection .sectionLead {
+      margin: 12px auto 0;
+      max-width: 56ch;
+    }
+
+    .faqSection .sectionLead a {
+      color: rgba(16, 24, 42, 0.94);
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
     .faq {
-      margin-top: 16px;
+      margin: 24px auto 0;
       display: grid;
       gap: 10px;
+      width: min(940px, 100%);
+      text-align: left;
     }
 
-    details {
-      border-radius: 16px;
-      border: none;
-      background: rgba(255, 255, 255, 0.9);
-      padding: 12px 14px;
+    .faq details {
+      border-radius: 10px;
+      border: 1px solid rgba(16, 24, 42, 0.16);
+      background: rgba(255, 255, 255, 0.78);
+      padding: 0;
+      overflow: hidden;
+      transition: box-shadow .16s ease, border-color .16s ease, background-color .16s ease;
     }
 
-    summary {
+    .faq details[open] {
+      border-color: rgba(16, 24, 42, 0.24);
+      background: #ffffff;
+      box-shadow: 0 10px 24px rgba(16, 24, 42, 0.08);
+    }
+
+    .faq summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
       cursor: pointer;
-      font-weight: 700;
-      font-size: 15px;
-      line-height: 1.35;
+      font-weight: 500;
+      font-size: 1.25rem;
+      line-height: 1.25;
+      color: rgba(16, 24, 42, 0.88);
+      padding: 12px 16px;
+      list-style: none;
     }
 
-    details p {
-      margin: 10px 0 0;
+    .faq summary::marker {
+      content: "";
+    }
+
+    .faq summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .faq summary::after {
+      content: "+";
+      flex: none;
+      font-size: 26px;
+      font-weight: 300;
+      line-height: 1;
+      color: rgba(115, 128, 146, 0.84);
+      transition: transform .14s ease, color .14s ease;
+    }
+
+    .faq details[open] summary::after {
+      transform: rotate(45deg);
+      color: rgba(26, 95, 208, 0.86);
+    }
+
+    .faq details p {
+      margin: 0;
+      padding: 0 16px 14px;
       color: var(--muted);
       font-size: 14px;
       line-height: 1.58;
+      border-top: 1px solid rgba(16, 24, 42, 0.08);
+      background: #ffffff;
     }
 
     .formsGrid {
@@ -1115,6 +1465,33 @@
         width: calc(100% - 24px);
       }
 
+      .comparisonTable {
+        min-width: 680px;
+      }
+
+      .comparisonTable th,
+      .comparisonTable td {
+        padding: 12px;
+      }
+
+      .comparisonTable th:first-child,
+      .comparisonTable td:first-child {
+        min-width: 220px;
+      }
+
+      .faq summary {
+        font-size: 1.05rem;
+        padding: 11px 14px;
+      }
+
+      .faq summary::after {
+        font-size: 24px;
+      }
+
+      .faq details p {
+        padding: 0 14px 12px;
+      }
+
     }
 
     @media (max-width: 580px) {
@@ -1158,6 +1535,23 @@
       .heroSliderText.rider,
       .heroSliderText.driver {
         width: 72px;
+      }
+
+      .comparisonToggleBtn {
+        font-size: 14px;
+      }
+
+      .comparisonToggle {
+        min-height: 64px;
+        --comparison-knob-size: 50px;
+      }
+
+      .comparisonTable {
+        min-width: 640px;
+      }
+
+      .faq summary {
+        font-size: 0.98rem;
       }
     }
 
@@ -1370,9 +1764,38 @@
           </div>
         </section>
 
-        <section class="card section" id="faq-fr">
-          <p class="kicker">FAQ</p>
+        <section class="card section comparisonSection" id="comparison" data-comparison-section data-locale="fr">
+          <h2 class="sectionTitle">Tableau comparatif</h2>
+          <p class="sectionLead">Comment OMW se compare pour les trajets du quotidien — en Île-de-France et au-delà.</p>
+
+          <div class="comparisonControls">
+            <div class="comparisonToggle" role="group" aria-label="Mode de comparaison" data-mode="rider">
+              <button class="comparisonToggleBtn" type="button" data-comparison-mode="driver" aria-pressed="false">Conducteur</button>
+              <button class="comparisonToggleBtn" type="button" data-comparison-mode="rider" aria-pressed="true">Passager</button>
+              <span class="comparisonToggleKnob" aria-hidden="true"><img src="Icon.png" alt="" /></span>
+            </div>
+          </div>
+
+          <div class="comparisonTableWrap">
+            <table class="comparisonTable">
+              <caption class="srOnly">Tableau comparatif OMW pour les usages passager et conducteur</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Fonctionnalités</th>
+                  <th scope="col">OMW</th>
+                  <th scope="col">VTC/Taxi</th>
+                  <th scope="col">Transports en commun</th>
+                  <th scope="col">BlaBlaCar</th>
+                </tr>
+              </thead>
+              <tbody data-comparison-body></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="card section faqSection" id="faq-fr">
           <h2 class="sectionTitle">FAQ</h2>
+          <p class="sectionLead">Vous avez d’autres questions ? Écris-nous : <a href="mailto:hello@rideomw.com">hello@rideomw.com</a></p>
 
           <div class="faq">
             <details>
@@ -1413,6 +1836,21 @@
             <details>
               <summary>Cercle : à quoi ça sert ?</summary>
               <p>Cercle permet de garder en favoris collègues et réguliers pour retrouver plus vite des personnes de confiance.</p>
+            </details>
+
+            <details>
+              <summary>Puis-je annuler une option ou une demande de trajet ?</summary>
+              <p>Oui. Tu peux annuler avant confirmation du pickup, sans friction.</p>
+            </details>
+
+            <details>
+              <summary>Comment fonctionnent les paiements et remboursements ?</summary>
+              <p>Contribution affichée avant validation; remboursement immédiat si trajet annulé.</p>
+            </details>
+
+            <details>
+              <summary>Quelles données collectez-vous et pourquoi ?</summary>
+              <p>Données trajet minimales pour matching, sécurité et amélioration produit.</p>
             </details>
           </div>
         </section>
@@ -1738,9 +2176,38 @@
           </div>
         </section>
 
-        <section class="card section" id="faq-en">
-          <p class="kicker">FAQ</p>
+        <section class="card section comparisonSection" id="comparison-en" data-comparison-section data-locale="en">
+          <h2 class="sectionTitle">Comparison table</h2>
+          <p class="sectionLead">How OMW compares for everyday trips — in Île-de-France and beyond.</p>
+
+          <div class="comparisonControls">
+            <div class="comparisonToggle" role="group" aria-label="Comparison mode" data-mode="rider">
+              <button class="comparisonToggleBtn" type="button" data-comparison-mode="driver" aria-pressed="false">Driver</button>
+              <button class="comparisonToggleBtn" type="button" data-comparison-mode="rider" aria-pressed="true">Rider</button>
+              <span class="comparisonToggleKnob" aria-hidden="true"><img src="Icon.png" alt="" /></span>
+            </div>
+          </div>
+
+          <div class="comparisonTableWrap">
+            <table class="comparisonTable">
+              <caption class="srOnly">OMW comparison table for rider and driver use cases</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Features</th>
+                  <th scope="col">OMW</th>
+                  <th scope="col">VTC/Taxi</th>
+                  <th scope="col">Public transport</th>
+                  <th scope="col">BlaBlaCar</th>
+                </tr>
+              </thead>
+              <tbody data-comparison-body></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="card section faqSection" id="faq-en">
           <h2 class="sectionTitle">FAQ</h2>
+          <p class="sectionLead">Have more questions? Email us: <a href="mailto:hello@rideomw.com">hello@rideomw.com</a></p>
 
           <div class="faq">
             <details>
@@ -1781,6 +2248,21 @@
             <details>
               <summary>What is Circle for?</summary>
               <p>Circle helps you favorite coworkers and regulars for easier repeat rides.</p>
+            </details>
+
+            <details>
+              <summary>Can I cancel an option or ride request?</summary>
+              <p>Yes. You can cancel before pickup confirmation with no friction.</p>
+            </details>
+
+            <details>
+              <summary>How do payments and refunds work?</summary>
+              <p>Contribution is shown upfront; refunds are immediate when trips are canceled.</p>
+            </details>
+
+            <details>
+              <summary>What data do you collect and why?</summary>
+              <p>Minimal trip data for matching quality, safety operations, and product improvements.</p>
             </details>
           </div>
         </section>
@@ -2054,6 +2536,331 @@
       }
 
       document.querySelectorAll("[data-split-hero]").forEach(initSplitHero);
+
+      const COMPARISON_STATUS_ORDER = {
+        yes: 0,
+        limit: 1,
+        no: 2,
+        na: 3
+      };
+
+      const COMPARISON_STATUS_LABEL = {
+        en: { yes: "Yes", limit: "Limited", no: "No", na: "N/A" },
+        fr: { yes: "Oui", limit: "Limité", no: "Non", na: "Non applicable" }
+      };
+
+      /** @typedef {"yes" | "limit" | "no" | "na"} Status */
+      /**
+       * @typedef {Object} Row
+       * @property {string} label
+       * @property {string=} hint
+       * @property {{omw: Status, vtc: Status, transit: Status, blablacar: Status}} values
+       */
+
+      /** @type {{en: {rider: {rows: Row[]}, driver: {rows: Row[]}}, fr: {rider: {rows: Row[]}, driver: {rows: Row[]}}}} */
+      const TABLE = {
+        en: {
+          rider: {
+            rows: [
+              {
+                label: "Cheaper than a taxi",
+                values: { omw: "yes", vtc: "no", transit: "yes", blablacar: "yes" }
+              },
+              {
+                label: "Real-time pickup (minutes)",
+                hint: "Depends on drivers nearby.",
+                values: { omw: "limit", vtc: "yes", transit: "no", blablacar: "no" }
+              },
+              {
+                label: "Door-to-door",
+                hint: "Sometimes a short walk to pickup.",
+                values: { omw: "limit", vtc: "yes", transit: "limit", blablacar: "limit" }
+              },
+              {
+                label: "Backup when transit fails",
+                values: { omw: "yes", vtc: "yes", transit: "no", blablacar: "limit" }
+              },
+              {
+                label: "Predictable ETA (low detours)",
+                values: { omw: "yes", vtc: "yes", transit: "no", blablacar: "yes" }
+              },
+              {
+                label: "Commute-friendly (suburbs ↔ city)",
+                values: { omw: "yes", vtc: "no", transit: "yes", blablacar: "no" }
+              },
+              {
+                label: "Shared = lower CO₂ per trip",
+                values: { omw: "yes", vtc: "no", transit: "yes", blablacar: "yes" }
+              },
+              {
+                label: "Guaranteed availability",
+                hint: "Coverage grows with adoption.",
+                values: { omw: "limit", vtc: "yes", transit: "yes", blablacar: "limit" }
+              }
+            ]
+          },
+          driver: {
+            rows: [
+              {
+                label: "Offset fuel & tolls (cost-sharing)",
+                values: { omw: "yes", vtc: "yes", transit: "na", blablacar: "yes" }
+              },
+              {
+                label: "Share your existing route",
+                values: { omw: "yes", vtc: "no", transit: "na", blablacar: "limit" }
+              },
+              {
+                label: "Detour cap (keep your commute)",
+                values: { omw: "yes", vtc: "no", transit: "na", blablacar: "no" }
+              },
+              {
+                label: "Go on/off anytime (no shifts)",
+                values: { omw: "yes", vtc: "no", transit: "na", blablacar: "limit" }
+              },
+              {
+                label: "Choose rides (accept/decline)",
+                values: { omw: "yes", vtc: "limit", transit: "na", blablacar: "yes" }
+              },
+              {
+                label: "No professional license needed",
+                values: { omw: "yes", vtc: "no", transit: "na", blablacar: "yes" }
+              },
+              {
+                label: "Demand you can count on",
+                values: { omw: "limit", vtc: "yes", transit: "na", blablacar: "limit" }
+              },
+              {
+                label: "Insurance / incident support",
+                values: { omw: "limit", vtc: "yes", transit: "na", blablacar: "limit" }
+              }
+            ]
+          }
+        },
+        fr: {
+          rider: {
+            rows: [
+              {
+                label: "Moins cher qu’un taxi",
+                values: { omw: "yes", vtc: "no", transit: "yes", blablacar: "yes" }
+              },
+              {
+                label: "Prise en charge en temps réel (minutes)",
+                hint: "Dépend des conducteurs à proximité.",
+                values: { omw: "limit", vtc: "yes", transit: "no", blablacar: "no" }
+              },
+              {
+                label: "Porte-à-porte",
+                hint: "Parfois une courte marche jusqu’au point de prise en charge.",
+                values: { omw: "limit", vtc: "yes", transit: "limit", blablacar: "limit" }
+              },
+              {
+                label: "Plan B quand les transports lâchent",
+                values: { omw: "yes", vtc: "yes", transit: "no", blablacar: "limit" }
+              },
+              {
+                label: "ETA prévisible (peu de détours)",
+                values: { omw: "yes", vtc: "yes", transit: "no", blablacar: "yes" }
+              },
+              {
+                label: "Adapté aux trajets domicile-travail (banlieue ↔ ville)",
+                values: { omw: "yes", vtc: "no", transit: "yes", blablacar: "no" }
+              },
+              {
+                label: "Partagé = moins de CO₂ par trajet",
+                values: { omw: "yes", vtc: "no", transit: "yes", blablacar: "yes" }
+              },
+              {
+                label: "Disponibilité garantie",
+                hint: "La couverture augmente avec l’adoption.",
+                values: { omw: "limit", vtc: "yes", transit: "yes", blablacar: "limit" }
+              }
+            ]
+          },
+          driver: {
+            rows: [
+              {
+                label: "Compenser carburant et péages (partage de frais)",
+                values: { omw: "yes", vtc: "yes", transit: "na", blablacar: "yes" }
+              },
+              {
+                label: "Partager ton trajet existant",
+                values: { omw: "yes", vtc: "no", transit: "na", blablacar: "limit" }
+              },
+              {
+                label: "Cap de détour (garder ton trajet)",
+                values: { omw: "yes", vtc: "no", transit: "na", blablacar: "no" }
+              },
+              {
+                label: "Activer/désactiver quand tu veux (sans horaires imposés)",
+                values: { omw: "yes", vtc: "no", transit: "na", blablacar: "limit" }
+              },
+              {
+                label: "Choisir les courses (accepter/refuser)",
+                values: { omw: "yes", vtc: "limit", transit: "na", blablacar: "yes" }
+              },
+              {
+                label: "Aucune licence professionnelle requise",
+                values: { omw: "yes", vtc: "no", transit: "na", blablacar: "yes" }
+              },
+              {
+                label: "Demande plus prévisible",
+                values: { omw: "limit", vtc: "yes", transit: "na", blablacar: "limit" }
+              },
+              {
+                label: "Assurance / support incident",
+                values: { omw: "limit", vtc: "yes", transit: "na", blablacar: "limit" }
+              }
+            ]
+          }
+        }
+      };
+
+      const COMPARISON_ICONS = {
+        yes: '<svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="2"></circle><path d="M6.5 10.2L8.9 12.5L13.5 7.7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+        limit: '<svg viewBox="0 0 20 20" fill="none"><path d="M10 3.5L17 16.5H3L10 3.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path><path d="M10 7.5V11.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path><circle cx="10" cy="14.2" r="1" fill="currentColor"></circle></svg>',
+        no: '<svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="2"></circle><path d="M7 7L13 13M13 7L7 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>',
+        na: '<svg viewBox="0 0 20 20" fill="none"><path d="M5 10H15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"></path></svg>'
+      };
+
+      function escapeHtml(value) {
+        return String(value).replace(/[&<>"']/g, (char) => {
+          if (char === "&") return "&amp;";
+          if (char === "<") return "&lt;";
+          if (char === ">") return "&gt;";
+          if (char === '"') return "&quot;";
+          return "&#39;";
+        });
+      }
+
+      function statusCellMarkup(status, locale) {
+        const safeLocale = locale === "fr" ? "fr" : "en";
+        const labels = COMPARISON_STATUS_LABEL[safeLocale];
+        const safeStatus = Object.prototype.hasOwnProperty.call(labels, status) ? status : "na";
+        return `<span class="comparisonStatusIcon status-${safeStatus}" aria-hidden="true">${COMPARISON_ICONS[safeStatus]}</span><span class="srOnly">${labels[safeStatus]}</span>`;
+      }
+
+      function sortComparisonRows(rows) {
+        return rows
+          .map((row, index) => ({ row, index }))
+          .sort((left, right) => {
+            const leftRank = COMPARISON_STATUS_ORDER[left.row.values.omw] ?? 99;
+            const rightRank = COMPARISON_STATUS_ORDER[right.row.values.omw] ?? 99;
+            if (leftRank !== rightRank) return leftRank - rightRank;
+            return left.index - right.index;
+          })
+          .map((entry) => entry.row);
+      }
+
+      function renderComparisonRows(section, mode, locale) {
+        const tbody = section.querySelector("[data-comparison-body]");
+        const safeLocale = locale === "fr" ? "fr" : "en";
+        const localizedTable = TABLE[safeLocale];
+        const modeData = localizedTable && localizedTable[mode];
+        if (!tbody || !modeData) return;
+
+        const rows = sortComparisonRows(modeData.rows);
+        const markup = rows
+          .map((row) => {
+            const hintMarkup = row.hint
+              ? `<span class="featureHint" role="note" tabindex="0" data-tip="${escapeHtml(row.hint)}" aria-label="${safeLocale === "fr" ? "Info" : "Hint"}: ${escapeHtml(row.hint)}">?</span>`
+              : "";
+
+            return `<tr>
+              <th scope="row"><span class="comparisonFeature">${escapeHtml(row.label)}${hintMarkup}</span></th>
+              <td>${statusCellMarkup(row.values.omw, safeLocale)}</td>
+              <td>${statusCellMarkup(row.values.vtc, safeLocale)}</td>
+              <td>${statusCellMarkup(row.values.transit, safeLocale)}</td>
+              <td>${statusCellMarkup(row.values.blablacar, safeLocale)}</td>
+            </tr>`;
+          })
+          .join("");
+
+        tbody.classList.add("is-updating");
+        window.requestAnimationFrame(() => {
+          tbody.innerHTML = markup;
+          window.requestAnimationFrame(() => {
+            tbody.classList.remove("is-updating");
+          });
+        });
+      }
+
+      function initComparison(section) {
+        const buttons = section.querySelectorAll("[data-comparison-mode]");
+        const toggle = section.querySelector(".comparisonToggle");
+        const knob = section.querySelector(".comparisonToggleKnob");
+        const locale = section.getAttribute("data-locale") === "fr" ? "fr" : "en";
+        if (!buttons.length || !toggle) return;
+
+        function setMode(mode) {
+          const nextMode = mode === "driver" ? "driver" : "rider";
+          buttons.forEach((button) => {
+            const isActive = button.getAttribute("data-comparison-mode") === nextMode;
+            button.setAttribute("aria-pressed", isActive ? "true" : "false");
+          });
+          if (toggle) toggle.setAttribute("data-mode", nextMode);
+          renderComparisonRows(section, nextMode, locale);
+        }
+
+        buttons.forEach((button) => {
+          button.addEventListener("click", () => {
+            const mode = button.getAttribute("data-comparison-mode") || "rider";
+            setMode(mode);
+          });
+        });
+
+        if (knob && typeof window.PointerEvent === "function") {
+          let activePointerId = null;
+
+          function modeFromClientX(clientX) {
+            const rect = toggle.getBoundingClientRect();
+            const midpoint = rect.left + (rect.width / 2);
+            return clientX < midpoint ? "rider" : "driver";
+          }
+
+          function onPointerDown(event) {
+            if (typeof event.button === "number" && event.button !== 0) return;
+            activePointerId = event.pointerId;
+            toggle.classList.add("is-dragging");
+            if (typeof toggle.setPointerCapture === "function") {
+              try {
+                toggle.setPointerCapture(event.pointerId);
+              } catch (err) {}
+            }
+            setMode(modeFromClientX(event.clientX));
+            event.preventDefault();
+          }
+
+          function onPointerMove(event) {
+            if (activePointerId === null || event.pointerId !== activePointerId) return;
+            setMode(modeFromClientX(event.clientX));
+            event.preventDefault();
+          }
+
+          function endDrag(event) {
+            if (activePointerId === null || event.pointerId !== activePointerId) return;
+            activePointerId = null;
+            toggle.classList.remove("is-dragging");
+            if (typeof toggle.releasePointerCapture === "function") {
+              try {
+                toggle.releasePointerCapture(event.pointerId);
+              } catch (err) {}
+            }
+          }
+
+          knob.addEventListener("pointerdown", onPointerDown);
+          toggle.addEventListener("pointermove", onPointerMove);
+          toggle.addEventListener("pointerup", endDrag);
+          toggle.addEventListener("pointercancel", endDrag);
+          toggle.addEventListener("lostpointercapture", () => {
+            activePointerId = null;
+            toggle.classList.remove("is-dragging");
+          });
+        }
+
+        setMode("rider");
+      }
+
+      document.querySelectorAll("[data-comparison-section]").forEach(initComparison);
 
       document.querySelectorAll("form[data-form]").forEach((form) => {
         form.addEventListener("submit", async (event) => {
