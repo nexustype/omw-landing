@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Guide covoiturage temps réel | Blog OMW</title>
+  <meta name="description" content="Articles OMW sur le covoiturage temps réel en Île-de-France : fonctionnement, avantages conducteur et passager, limites et opportunités." />
+  <link rel="canonical" href="https://www.rideomw.com/blog/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Guide covoiturage temps réel | Blog OMW" />
+  <meta property="og:description" content="Retrouvez nos guides pour comprendre le covoiturage temps réel sans réservation en Île-de-France." />
+  <meta property="og:url" content="https://www.rideomw.com/blog/" />
+  <meta property="og:image" content="https://www.rideomw.com/hero.png" />
+  <style>
+    :root {
+      --bg: #ffffff;
+      --panel: #ffffff;
+      --stroke: rgba(18, 30, 52, 0.11);
+      --ink: #10182a;
+      --muted: rgba(16, 24, 42, 0.72);
+      --brand: #1a5fd0;
+      --brand-strong: #0f47a3;
+      --radius: 20px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--ink);
+      background: linear-gradient(180deg, #f7fbff 0%, #ffffff 38%);
+      line-height: 1.55;
+    }
+
+    .wrap {
+      width: min(920px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    header {
+      padding: 24px 0 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-weight: 800;
+      font-size: 1.15rem;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      color: var(--ink);
+    }
+
+    .nav a {
+      color: var(--muted);
+      text-decoration: none;
+      margin-left: 14px;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    h1 {
+      margin: 18px 0 0;
+      font-size: clamp(1.9rem, 4vw, 2.65rem);
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+    }
+
+    .lead {
+      margin: 12px 0 0;
+      color: var(--muted);
+      max-width: 66ch;
+    }
+
+    .list {
+      margin: 28px 0 48px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .card {
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      background: var(--panel);
+      padding: 18px;
+      text-decoration: none;
+      color: inherit;
+      display: grid;
+      gap: 8px;
+      transition: transform .14s ease, box-shadow .14s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 28px rgba(16, 24, 42, 0.1);
+    }
+
+    .card h2 {
+      margin: 0;
+      font-size: 1.35rem;
+      line-height: 1.25;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      border: 1px solid rgba(26, 95, 208, 0.24);
+      color: var(--brand-strong);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      padding: 6px 10px;
+      width: fit-content;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="../">OMW</a>
+      <nav class="nav" aria-label="Navigation blog">
+        <a href="../">Accueil</a>
+        <a href="covoiturage-temps-reel/">Guide principal</a>
+      </nav>
+    </header>
+
+    <main>
+      <h1>Blog OMW</h1>
+      <p class="lead">Ressources pour comprendre le covoiturage temps réel et choisir le bon usage selon votre profil conducteur ou passager.</p>
+
+      <section class="list" aria-label="Articles publiés">
+        <a class="card" href="covoiturage-temps-reel/">
+          <span class="tag">Guide fondateur</span>
+          <h2>Covoiturage temps réel : comment ça marche (vraiment)</h2>
+          <p>Un guide pratique sur le modèle sans réservation, les avantages concrets, les limites actuelles et les opportunités en Île-de-France.</p>
+          <p><strong>Temps de lecture :</strong> 7 minutes</p>
+        </a>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
