@@ -11,9 +11,9 @@
 
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>OMW - Le plan B quand le RER lâche</title>
-  <meta name="description" content="OMW connecte Riders et Drivers en partage de frais : option en 10 secondes, prix clair, détour max 5 min, couverture qui grandit avec la communauté." />
-  <meta name="keywords" content="covoiturage temps réel, plan B RER, partage de frais, Île-de-France, inter-city, détour max 5 min, OMW" />
+  <title>Covoiturage temps réel en Île-de-France | OMW</title>
+  <meta name="description" content="OMW propose du covoiturage temps réel en Île-de-France : sans réservation, matching en minutes, détour ≤ 5 min pour les conducteurs et prix clair en partage de frais." />
+  <meta name="keywords" content="covoiturage temps réel, covoiturage Île-de-France, sans réservation, détour ≤ 5 min, covoiturage domicile-travail, OMW" />
   <link rel="canonical" href="https://www.rideomw.com/" />
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
@@ -21,16 +21,16 @@
 
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="OMW" />
-  <meta property="og:title" content="OMW - Le plan B quand le RER lâche" />
-  <meta property="og:description" content="Option en 10 secondes, prix clair en partage de frais, détour max 5 min et couverture en croissance." />
+  <meta property="og:title" content="Covoiturage temps réel en Île-de-France | OMW" />
+  <meta property="og:description" content="Sans réservation, matching en minutes, détour ≤ 5 min côté conducteur et prix clair en partage de frais." />
   <meta property="og:url" content="https://www.rideomw.com/" />
   <meta property="og:image" content="https://www.rideomw.com/hero.png" />
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:locale:alternate" content="en_US" />
 
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="OMW - Le plan B quand le RER lâche" />
-  <meta name="twitter:description" content="Covoiturage en partage de frais : option rapide, prix clair, détour max 5 min." />
+  <meta name="twitter:title" content="Covoiturage temps réel en Île-de-France | OMW" />
+  <meta name="twitter:description" content="OMW : covoiturage temps réel sans réservation, détour ≤ 5 min et plan B fiable en Île-de-France." />
   <meta name="twitter:image" content="https://www.rideomw.com/hero.png" />
 
   <script type="application/ld+json">
@@ -49,6 +49,47 @@
     "name": "OMW",
     "url": "https://www.rideomw.com/",
     "inLanguage": ["fr", "en"]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "inLanguage": "fr-FR",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Le covoiturage temps réel OMW fonctionne-t-il sans réservation ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Oui. Tu poses une option en quelques secondes et tu reçois une proposition quand un conducteur compatible passe sur ton axe."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Comment OMW limite-t-il le détour conducteur à ≤ 5 minutes ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Le matching filtre les demandes qui dépassent le cap de détour configuré. Les conducteurs gardent le contrôle et acceptent ou refusent chaque proposition."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "OMW est-il adapté aux trajets quotidiens en Île-de-France ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Oui. Le service est pensé pour les axes domicile-travail en Île-de-France, avec des points de prise en charge simples et un temps de réponse rapide."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "OMW est-il un service taxi ou VTC ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Non. OMW repose sur le partage de frais entre particuliers, avec contribution affichée avant validation du trajet."
+        }
+      }
+    ]
   }
   </script>
 
@@ -625,6 +666,107 @@
       font-size: 16px;
       line-height: 1.6;
       max-width: 72ch;
+    }
+
+    .miniPillar {
+      border: 1px solid rgba(26, 95, 208, 0.16);
+      border-radius: 20px;
+      background: linear-gradient(145deg, rgba(232, 240, 255, 0.46) 0%, rgba(223, 243, 238, 0.52) 100%);
+      text-align: left;
+    }
+
+    .miniPillar .sectionTitle {
+      margin-top: 0;
+    }
+
+    .pillarGrid {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .pillarItem {
+      border: 1px solid rgba(16, 24, 42, 0.1);
+      border-radius: 14px;
+      padding: 14px;
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .pillarItem h3 {
+      margin: 0;
+      font-size: 1.08rem;
+      line-height: 1.28;
+      letter-spacing: -0.01em;
+    }
+
+    .pillarItem p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .guideTeaser {
+      margin-top: 18px;
+      border: 1px solid rgba(16, 24, 42, 0.12);
+      border-radius: 14px;
+      padding: 16px;
+      background: #ffffff;
+      display: grid;
+      gap: 10px;
+      align-items: start;
+    }
+
+    .guideTeaser h3 {
+      margin: 0;
+      font-size: 1.2rem;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+    }
+
+    .guideTeaser p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+      max-width: 64ch;
+    }
+
+    .idfSection {
+      text-align: left;
+    }
+
+    .idfSection .sectionTitle {
+      margin-top: 0;
+    }
+
+    .idfGrid {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .idfPoint {
+      border: 1px solid rgba(16, 24, 42, 0.1);
+      border-radius: 14px;
+      padding: 14px;
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .idfPoint h3 {
+      margin: 0;
+      font-size: 1.04rem;
+      line-height: 1.26;
+      letter-spacing: -0.01em;
+    }
+
+    .idfPoint p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
     }
 
     .comparisonSection {
@@ -1440,7 +1582,9 @@
       }
 
       .featureGrid,
-      .row2 {
+      .row2,
+      .pillarGrid,
+      .idfGrid {
         grid-template-columns: 1fr 1fr;
       }
 
@@ -1496,7 +1640,9 @@
 
     @media (max-width: 580px) {
       .featureGrid,
-      .row2 {
+      .row2,
+      .pillarGrid,
+      .idfGrid {
         grid-template-columns: 1fr;
       }
 
@@ -1593,15 +1739,15 @@
       </a>
 
       <nav class="navlinks fr" aria-label="Navigation FR">
-        <a href="#features-fr">Fonctionnalités</a>
-        <a href="#testimonials-fr">Témoignages</a>
+        <a href="#realtime-fr">Covoiturage temps réel</a>
         <a href="#faq-fr">FAQ</a>
+        <a href="blog/">Blog</a>
       </nav>
 
       <nav class="navlinks en" aria-label="Navigation EN">
-        <a href="#features-en">Features</a>
-        <a href="#testimonials-en">Testimonials</a>
+        <a href="#realtime-en">Real-time carpool</a>
         <a href="#faq-en">FAQ</a>
+        <a href="blog/">Blog</a>
       </nav>
 
       <div class="right">
@@ -1628,33 +1774,33 @@
                   <span class="heroBadge riderBadge">Passager</span>
                   <span class="heroBadge driverBadge">Conducteur</span>
                 </div>
-                <h1 class="heroTitle">Bougez, sans payer le prix fort.</h1>
-                <p class="heroSub">Pose une option ou active ton trajet : matching sur ton axe, contribution claire — et des économies pour les deux.</p>
+                <h1 class="heroTitle">Covoiturage temps réel en Île-de-France, sans réservation.</h1>
+                <p class="heroSub">OMW priorise les conducteurs du quotidien : active ton trajet, garde un détour ≤ 5 min, et prends des passagers sur ton axe en quelques minutes.</p>
                 <div class="heroActions">
-                  <a class="btn primary" href="#beta-fr" data-scroll="beta-fr">Rejoindre la bêta</a>
+                  <a class="btn primary" href="#drivers-fr" data-scroll="drivers-fr">Devenir test driver (IDF)</a>
                 </div>
               </article>
 
               <article class="heroCopy rider" data-copy-persona="rider" aria-label="Message Rider">
-                <span class="heroBadge"> Passager</span>
-                <h1 class="heroTitle">Le plan B quand tout le reste lâche — sans payer 40€ de VTC.</h1>
-                <p class="heroSub">Pose une option en 10 secondes. Quand un conducteur passe sur ton axe, tu reçois une proposition à prix clair (partage de frais). Couverture en croissance.</p>
+                <span class="heroBadge">Passager</span>
+                <h2 class="heroTitle">Trouver un trajet maintenant, pas demain.</h2>
+                <p class="heroSub">Tu poses une option sans réservation. Si un conducteur compatible passe près de toi, tu reçois une proposition claire en partage de frais.</p>
                 <div class="heroActions">
-                  <a class="btn primary" href="#beta-fr" data-scroll="beta-fr">Rejoindre la bêta</a>
+                  <a class="btn primary" href="#riders-fr" data-scroll="riders-fr">Rejoindre la bêta passager</a>
                   <button class="btn" type="button" data-switch-persona="driver" aria-pressed="false">Je suis Driver</button>
                 </div>
-                <p class="heroTiny">Fonctionne aussi pour les trajets inter-city du week-end, souvent moins cher que train ou bus.</p>
+                <p class="heroTiny">Idéal en sortie de gare, en panne de RER, ou pour un retour tardif.</p>
               </article>
 
               <article class="heroCopy driver" data-copy-persona="driver" aria-label="Message Driver">
-                <span class="heroBadge"> Conducteur</span>
-                <h1 class="heroTitle">Ton siège vide peut payer tes péages.</h1>
-                <p class="heroSub">Active ton trajet (quotidien ou inter-city). Match sur ton axe, détour max 5 min, contribution claire. Ajoute tes réguliers à ton Cercle.</p>
+                <span class="heroBadge">Conducteur</span>
+                <h2 class="heroTitle">Rentabilise ton trajet quotidien sans jouer au taxi.</h2>
+                <p class="heroSub">Tu partages ton itinéraire existant, tu gardes la main sur les demandes, et tu limites le détour à ≤ 5 min.</p>
                 <div class="heroActions">
-                  <a class="btn primary" href="#beta-fr" data-scroll="beta-fr">Rejoindre la bêta</a>
+                  <a class="btn primary" href="#drivers-fr" data-scroll="drivers-fr">Devenir test driver (IDF)</a>
                   <button class="btn" type="button" data-switch-persona="rider" aria-pressed="false">Je suis Rider</button>
                 </div>
-                <p class="heroTiny">Détour limité, prix transparent, et Cercle pour retrouver collègues et passagers réguliers.</p>
+                <p class="heroTiny">Pensé pour les trajets domicile-travail en Île-de-France.</p>
               </article>
             </div>
           </div>
@@ -1676,6 +1822,36 @@
               <span class="heroSliderText driver" aria-hidden="true">Driver</span>
               <input class="personaRange" type="range" min="0" max="100" value="50" step="1" data-persona-range data-common-valuetext="Rider et Driver" aria-label="Basculer entre Rider et Driver" aria-valuetext="Rider et Driver" aria-controls="hero-copy-fr" />
             </div>
+          </div>
+        </section>
+
+        <section class="card section miniPillar" id="realtime-fr">
+          <p class="kicker">Mini-pilier SEO</p>
+          <h2 class="sectionTitle">Qu’est-ce que le covoiturage temps réel ?</h2>
+          <p class="sectionLead">Le covoiturage temps réel connecte un conducteur déjà en route et un passager proche, sans réservation 24h à l’avance. Le matching se fait sur un axe réel, avec contribution affichée avant confirmation.</p>
+          <div class="guideTeaser">
+            <a class="btn primary" href="blog/covoiturage-temps-reel/">Lire le guide (7 min)</a>
+          </div>
+        </section>
+
+        <section class="card section idfSection" id="idf-fr">
+          <p class="kicker">Déploiement local</p>
+          <h2 class="sectionTitle">Pensé pour l’Île-de-France</h2>
+          <p class="sectionLead">OMW cible d’abord les trajets domicile-travail et retours tardifs en banlieue et première couronne, là où le besoin de plan B est le plus fréquent.</p>
+
+          <div class="idfGrid">
+            <article class="idfPoint">
+              <h3>Axes utiles au quotidien</h3>
+              <p>Connexions banlieue → pôles d’emploi, sorties de gare, zones d’activité et trajets retour en soirée.</p>
+            </article>
+            <article class="idfPoint">
+              <h3>Conducteur au centre</h3>
+              <p>Le matching privilégie des détours courts et des prises en charge cohérentes avec ton itinéraire de base.</p>
+            </article>
+            <article class="idfPoint">
+              <h3>Réseau qui densifie</h3>
+              <p>Plus la communauté locale grandit, plus la probabilité de match augmente sur les corridors les plus demandés.</p>
+            </article>
           </div>
         </section>
 
@@ -1764,9 +1940,9 @@
           </div>
         </section>
 
-        <section class="card section comparisonSection" id="comparison" data-comparison-section data-locale="fr">
-          <h2 class="sectionTitle">Tableau comparatif</h2>
-          <p class="sectionLead">Comment OMW se compare pour les trajets du quotidien — en Île-de-France et au-delà.</p>
+        <section class="card section comparisonSection" id="comparison-fr" data-comparison-section data-locale="fr">
+          <h2 class="sectionTitle">Comparatif conducteur/passager : OMW vs BlaBlaCar Daily</h2>
+          <p class="sectionLead">Bascule entre Conducteur et Passager pour voir où OMW apporte plus de valeur sur les trajets du quotidien.</p>
 
           <div class="comparisonControls">
             <div class="comparisonToggle" role="group" aria-label="Mode de comparaison" data-mode="rider">
@@ -1778,14 +1954,12 @@
 
           <div class="comparisonTableWrap">
             <table class="comparisonTable">
-              <caption class="srOnly">Tableau comparatif OMW pour les usages passager et conducteur</caption>
+              <caption class="srOnly">Tableau comparatif OMW vs BlaBlaCar Daily pour les usages passager et conducteur</caption>
               <thead>
                 <tr>
-                  <th scope="col">Fonctionnalités</th>
+                  <th scope="col">Fonctionnalité</th>
                   <th scope="col">OMW</th>
-                  <th scope="col">VTC/Taxi</th>
-                  <th scope="col">Transports en commun</th>
-                  <th scope="col">BlaBlaCar</th>
+                  <th scope="col">BlaBlaCar Daily</th>
                 </tr>
               </thead>
               <tbody data-comparison-body></tbody>
@@ -2040,33 +2214,33 @@
                   <span class="heroBadge riderBadge">Rider</span>
                   <span class="heroBadge driverBadge">Driver</span>
                 </div>
-                <h1 class="heroTitle">Move, without paying the big price.</h1>
-                <p class="heroSub">Post an option or activate your route: matching on your axis, clear contribution - and savings for both.</p>
+                <h1 class="heroTitle">Real-time carpooling in Île-de-France, no booking required.</h1>
+                <p class="heroSub">OMW is driver-first: activate your existing route, keep detours ≤ 5 minutes, and match riders on your axis in minutes.</p>
                 <div class="heroActions">
-                  <a class="btn primary" href="#beta-en" data-scroll="beta-en">Join beta</a>
+                  <a class="btn primary" href="#drivers-en" data-scroll="drivers-en">Become a test driver</a>
                 </div>
               </article>
 
               <article class="heroCopy rider" data-copy-persona="rider" aria-label="Rider message">
                 <span class="heroBadge">Rider</span>
-                <h1 class="heroTitle">The backup plan when all else fails.</h1>
-                <p class="heroSub">Drop an option in 10 seconds. When a driver crosses your axis, you get a clear shared-cost offer. Coverage grows with the community.</p>
+                <h2 class="heroTitle">Get a ride now, not tomorrow.</h2>
+                <p class="heroSub">Post an option without booking ahead. If a compatible driver passes nearby, you receive a clear cost-sharing proposal.</p>
                 <div class="heroActions">
-                  <a class="btn primary" href="#beta-en" data-scroll="beta-en">Join beta</a>
+                  <a class="btn primary" href="#riders-en" data-scroll="riders-en">Join rider beta</a>
                   <button class="btn" type="button" data-switch-persona="driver" aria-pressed="false">I'm Driver</button>
                 </div>
-                <p class="heroTiny">Also useful for inter-city weekend trips, often cheaper than train or coach.</p>
+                <p class="heroTiny">Useful after transit disruptions, station exits, and late-night returns.</p>
               </article>
 
               <article class="heroCopy driver" data-copy-persona="driver" aria-label="Driver message">
                 <span class="heroBadge">Driver</span>
-                <h1 class="heroTitle">Your empty seat can cover your tolls.</h1>
-                <p class="heroSub">Activate your route (daily or inter-city). Match on your axis, max 5 min detour, clear contribution. Add regulars to your Circle.</p>
+                <h2 class="heroTitle">Offset daily commute costs without becoming a taxi.</h2>
+                <p class="heroSub">Share your existing route, stay in control of requests, and keep your detour cap at ≤ 5 minutes.</p>
                 <div class="heroActions">
-                  <a class="btn primary" href="#beta-en" data-scroll="beta-en">Join beta</a>
+                  <a class="btn primary" href="#drivers-en" data-scroll="drivers-en">Become a test driver</a>
                   <button class="btn" type="button" data-switch-persona="rider" aria-pressed="false">I'm Rider</button>
                 </div>
-                <p class="heroTiny">Limited detour, transparent contribution, and Circle for recurring riders.</p>
+                <p class="heroTiny">Designed for suburb-to-city commutes in Île-de-France.</p>
               </article>
             </div>
           </div>
@@ -2088,6 +2262,36 @@
               <span class="heroSliderText driver" aria-hidden="true">Driver</span>
               <input class="personaRange" type="range" min="0" max="100" value="50" step="1" data-persona-range data-common-valuetext="Rider and Driver" aria-label="Switch between Rider and Driver" aria-valuetext="Rider and Driver" aria-controls="hero-copy-en" />
             </div>
+          </div>
+        </section>
+
+        <section class="card section miniPillar" id="realtime-en">
+          <p class="kicker">SEO mini pillar</p>
+          <h2 class="sectionTitle">What is real-time carpooling?</h2>
+          <p class="sectionLead">Real-time carpooling connects a driver already on the road with a nearby rider, without day-ahead booking. Matching happens on a live corridor with upfront cost-sharing.</p>
+          <div class="guideTeaser">
+            <a class="btn primary" href="blog/covoiturage-temps-reel/">Read the guide (7 min)</a>
+          </div>
+        </section>
+
+        <section class="card section idfSection" id="idf-en">
+          <p class="kicker">Local rollout</p>
+          <h2 class="sectionTitle">Built for Île-de-France</h2>
+          <p class="sectionLead">OMW starts with commute and late-return corridors across suburbs and first-ring areas, where a practical backup is needed most.</p>
+
+          <div class="idfGrid">
+            <article class="idfPoint">
+              <h3>Commute-first corridors</h3>
+              <p>Suburb-to-employment routes, station exits, business districts, and evening returns.</p>
+            </article>
+            <article class="idfPoint">
+              <h3>Driver-first routing</h3>
+              <p>Matching prioritizes short detours and pickup points that remain coherent with the driver’s existing route.</p>
+            </article>
+            <article class="idfPoint">
+              <h3>Density improves availability</h3>
+              <p>As local adoption grows, match probability increases on the corridors people use most.</p>
+            </article>
           </div>
         </section>
 
@@ -2177,8 +2381,8 @@
         </section>
 
         <section class="card section comparisonSection" id="comparison-en" data-comparison-section data-locale="en">
-          <h2 class="sectionTitle">Comparison table</h2>
-          <p class="sectionLead">How OMW compares for everyday trips — in Île-de-France and beyond.</p>
+          <h2 class="sectionTitle">Driver/Rider comparison: OMW vs BlaBlaCar Daily</h2>
+          <p class="sectionLead">Switch between Driver and Rider to compare where OMW creates more value for daily mobility.</p>
 
           <div class="comparisonControls">
             <div class="comparisonToggle" role="group" aria-label="Comparison mode" data-mode="rider">
@@ -2190,14 +2394,12 @@
 
           <div class="comparisonTableWrap">
             <table class="comparisonTable">
-              <caption class="srOnly">OMW comparison table for rider and driver use cases</caption>
+              <caption class="srOnly">OMW vs BlaBlaCar Daily comparison for rider and driver use cases</caption>
               <thead>
                 <tr>
-                  <th scope="col">Features</th>
+                  <th scope="col">Feature</th>
                   <th scope="col">OMW</th>
-                  <th scope="col">VTC/Taxi</th>
-                  <th scope="col">Public transport</th>
-                  <th scope="col">BlaBlaCar</th>
+                  <th scope="col">BlaBlaCar Daily</th>
                 </tr>
               </thead>
               <tbody data-comparison-body></tbody>
@@ -2554,7 +2756,7 @@
        * @typedef {Object} Row
        * @property {string} label
        * @property {string=} hint
-       * @property {{omw: Status, vtc: Status, transit: Status, blablacar: Status}} values
+       * @property {{omw: Status, blablacarDaily: Status}} values
        */
 
       /** @type {{en: {rider: {rows: Row[]}, driver: {rows: Row[]}}, fr: {rider: {rows: Row[]}, driver: {rows: Row[]}}}} */
@@ -2563,75 +2765,66 @@
           rider: {
             rows: [
               {
-                label: "Cheaper than a taxi",
-                values: { omw: "yes", vtc: "no", transit: "yes", blablacar: "yes" }
+                label: "Instant option without advance booking",
+                values: { omw: "yes", blablacarDaily: "limit" }
               },
               {
-                label: "Real-time pickup (minutes)",
-                hint: "Depends on drivers nearby.",
-                values: { omw: "limit", vtc: "yes", transit: "no", blablacar: "no" }
+                label: "Driver detour cap (≤ 5 minutes target)",
+                values: { omw: "yes", blablacarDaily: "limit" }
               },
               {
-                label: "Door-to-door",
-                hint: "Sometimes a short walk to pickup.",
-                values: { omw: "limit", vtc: "yes", transit: "limit", blablacar: "limit" }
+                label: "Pickup close to real commute corridors",
+                values: { omw: "yes", blablacarDaily: "limit" }
               },
               {
-                label: "Backup when transit fails",
-                values: { omw: "yes", vtc: "yes", transit: "no", blablacar: "limit" }
+                label: "Backup when transit breaks down",
+                values: { omw: "yes", blablacarDaily: "limit" }
               },
               {
-                label: "Predictable ETA (low detours)",
-                values: { omw: "yes", vtc: "yes", transit: "no", blablacar: "yes" }
+                label: "Clear upfront cost-sharing",
+                values: { omw: "yes", blablacarDaily: "yes" }
               },
               {
-                label: "Commute-friendly (suburbs ↔ city)",
-                values: { omw: "yes", vtc: "no", transit: "yes", blablacar: "no" }
+                label: "Availability in your area",
+                hint: "Depends on local driver density.",
+                values: { omw: "limit", blablacarDaily: "limit" }
               },
               {
-                label: "Shared = lower CO₂ per trip",
-                values: { omw: "yes", vtc: "no", transit: "yes", blablacar: "yes" }
-              },
-              {
-                label: "Guaranteed availability",
-                hint: "Coverage grows with adoption.",
-                values: { omw: "limit", vtc: "yes", transit: "yes", blablacar: "limit" }
+                label: "Daily suburb-to-city suitability",
+                values: { omw: "yes", blablacarDaily: "limit" }
               }
             ]
           },
           driver: {
             rows: [
               {
-                label: "Offset fuel & tolls (cost-sharing)",
-                values: { omw: "yes", vtc: "yes", transit: "na", blablacar: "yes" }
+                label: "Share existing route without becoming a taxi",
+                values: { omw: "yes", blablacarDaily: "limit" }
               },
               {
-                label: "Share your existing route",
-                values: { omw: "yes", vtc: "no", transit: "na", blablacar: "limit" }
+                label: "Configurable detour cap",
+                hint: "OMW is built around short detours (≤ 5 min target).",
+                values: { omw: "yes", blablacarDaily: "limit" }
               },
               {
-                label: "Detour cap (keep your commute)",
-                values: { omw: "yes", vtc: "no", transit: "na", blablacar: "no" }
+                label: "Go online only when you want",
+                values: { omw: "yes", blablacarDaily: "limit" }
               },
               {
-                label: "Go on/off anytime (no shifts)",
-                values: { omw: "yes", vtc: "no", transit: "na", blablacar: "limit" }
+                label: "Accept or decline each request",
+                values: { omw: "yes", blablacarDaily: "limit" }
               },
               {
-                label: "Choose rides (accept/decline)",
-                values: { omw: "yes", vtc: "limit", transit: "na", blablacar: "yes" }
+                label: "No professional driving workflow",
+                values: { omw: "yes", blablacarDaily: "limit" }
               },
               {
-                label: "No professional license needed",
-                values: { omw: "yes", vtc: "no", transit: "na", blablacar: "yes" }
+                label: "Offset toll and fuel costs",
+                values: { omw: "yes", blablacarDaily: "yes" }
               },
               {
-                label: "Demand you can count on",
-                values: { omw: "limit", vtc: "yes", transit: "na", blablacar: "limit" }
-              },
-              {
-                label: "Insurance / incident support",
-                values: { omw: "limit", vtc: "yes", transit: "na", blablacar: "limit" }
+                label: "Recurring riders on commute corridors",
+                values: { omw: "yes", blablacarDaily: "limit" }
               }
             ]
           }
@@ -2640,75 +2833,66 @@
           rider: {
             rows: [
               {
-                label: "Moins cher qu’un taxi",
-                values: { omw: "yes", vtc: "no", transit: "yes", blablacar: "yes" }
+                label: "Option immédiate sans réservation à l’avance",
+                values: { omw: "yes", blablacarDaily: "limit" }
               },
               {
-                label: "Prise en charge en temps réel (minutes)",
-                hint: "Dépend des conducteurs à proximité.",
-                values: { omw: "limit", vtc: "yes", transit: "no", blablacar: "no" }
+                label: "Cap de détour conducteur (objectif ≤ 5 min)",
+                values: { omw: "yes", blablacarDaily: "limit" }
               },
               {
-                label: "Porte-à-porte",
-                hint: "Parfois une courte marche jusqu’au point de prise en charge.",
-                values: { omw: "limit", vtc: "yes", transit: "limit", blablacar: "limit" }
+                label: "Prise en charge proche des axes quotidiens",
+                values: { omw: "yes", blablacarDaily: "limit" }
               },
               {
-                label: "Plan B quand les transports lâchent",
-                values: { omw: "yes", vtc: "yes", transit: "no", blablacar: "limit" }
+                label: "Plan B quand le RER/Transilien est perturbé",
+                values: { omw: "yes", blablacarDaily: "limit" }
               },
               {
-                label: "ETA prévisible (peu de détours)",
-                values: { omw: "yes", vtc: "yes", transit: "no", blablacar: "yes" }
+                label: "Partage de frais affiché avant validation",
+                values: { omw: "yes", blablacarDaily: "yes" }
               },
               {
-                label: "Adapté aux trajets domicile-travail (banlieue ↔ ville)",
-                values: { omw: "yes", vtc: "no", transit: "yes", blablacar: "no" }
+                label: "Disponibilité dans ta zone",
+                hint: "Dépend de la densité locale de conducteurs.",
+                values: { omw: "limit", blablacarDaily: "limit" }
               },
               {
-                label: "Partagé = moins de CO₂ par trajet",
-                values: { omw: "yes", vtc: "no", transit: "yes", blablacar: "yes" }
-              },
-              {
-                label: "Disponibilité garantie",
-                hint: "La couverture augmente avec l’adoption.",
-                values: { omw: "limit", vtc: "yes", transit: "yes", blablacar: "limit" }
+                label: "Adapté aux trajets banlieue ↔ ville",
+                values: { omw: "yes", blablacarDaily: "limit" }
               }
             ]
           },
           driver: {
             rows: [
               {
-                label: "Compenser carburant et péages (partage de frais)",
-                values: { omw: "yes", vtc: "yes", transit: "na", blablacar: "yes" }
+                label: "Partager ton trajet existant sans faire le taxi",
+                values: { omw: "yes", blablacarDaily: "limit" }
               },
               {
-                label: "Partager ton trajet existant",
-                values: { omw: "yes", vtc: "no", transit: "na", blablacar: "limit" }
+                label: "Cap de détour paramétrable",
+                hint: "OMW est pensé pour des détours courts (objectif ≤ 5 min).",
+                values: { omw: "yes", blablacarDaily: "limit" }
               },
               {
-                label: "Cap de détour (garder ton trajet)",
-                values: { omw: "yes", vtc: "no", transit: "na", blablacar: "no" }
+                label: "Activer uniquement quand tu veux",
+                values: { omw: "yes", blablacarDaily: "limit" }
               },
               {
-                label: "Activer/désactiver quand tu veux (sans horaires imposés)",
-                values: { omw: "yes", vtc: "no", transit: "na", blablacar: "limit" }
+                label: "Accepter ou refuser chaque demande",
+                values: { omw: "yes", blablacarDaily: "limit" }
               },
               {
-                label: "Choisir les courses (accepter/refuser)",
-                values: { omw: "yes", vtc: "limit", transit: "na", blablacar: "yes" }
+                label: "Sans logique de course professionnelle",
+                values: { omw: "yes", blablacarDaily: "limit" }
               },
               {
-                label: "Aucune licence professionnelle requise",
-                values: { omw: "yes", vtc: "no", transit: "na", blablacar: "yes" }
+                label: "Compenser péages et carburant",
+                values: { omw: "yes", blablacarDaily: "yes" }
               },
               {
-                label: "Demande plus prévisible",
-                values: { omw: "limit", vtc: "yes", transit: "na", blablacar: "limit" }
-              },
-              {
-                label: "Assurance / support incident",
-                values: { omw: "limit", vtc: "yes", transit: "na", blablacar: "limit" }
+                label: "Retrouver des réguliers sur ton axe",
+                values: { omw: "yes", blablacarDaily: "limit" }
               }
             ]
           }
@@ -2768,9 +2952,7 @@
             return `<tr>
               <th scope="row"><span class="comparisonFeature">${escapeHtml(row.label)}${hintMarkup}</span></th>
               <td>${statusCellMarkup(row.values.omw, safeLocale)}</td>
-              <td>${statusCellMarkup(row.values.vtc, safeLocale)}</td>
-              <td>${statusCellMarkup(row.values.transit, safeLocale)}</td>
-              <td>${statusCellMarkup(row.values.blablacar, safeLocale)}</td>
+              <td>${statusCellMarkup(row.values.blablacarDaily, safeLocale)}</td>
             </tr>`;
           })
           .join("");

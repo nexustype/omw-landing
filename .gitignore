@@ -1,3 +1,5 @@
 api/mail-config.php
 .env
 .env.*
+.DS_Store
+node_modules/
