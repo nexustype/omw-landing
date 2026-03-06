@@ -714,6 +714,134 @@
       text-align: center;
     }
 
+    .comparisonHead {
+      text-align: center;
+    }
+
+    .comparisonLead {
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 38ch;
+    }
+
+    .comparisonToggleWrap {
+      margin-top: 18px;
+      display: grid;
+      justify-items: center;
+      gap: 10px;
+    }
+
+    .comparisonToggle {
+      width: min(420px, 100%);
+      border-radius: 999px;
+      border: 1px solid rgba(16, 24, 42, 0.1);
+      background: rgba(16, 24, 42, 0.05);
+      padding: 4px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 4px;
+    }
+
+    .comparisonToggleBtn {
+      appearance: none;
+      border: none;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--muted);
+      font: inherit;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 9px 10px;
+      cursor: pointer;
+      transition: background-color .16s ease, color .16s ease;
+    }
+
+    .comparisonToggleBtn.is-active {
+      background: rgba(255, 255, 255, 0.94);
+      color: var(--ink);
+      box-shadow: 0 8px 16px rgba(16, 24, 42, 0.08);
+    }
+
+    .comparisonLegend {
+      margin: 0;
+      font-size: 13px;
+      color: var(--muted-soft);
+      letter-spacing: 0.01em;
+    }
+
+    .comparisonGrid {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      opacity: 1;
+      transition: opacity .22s ease;
+    }
+
+    .comparisonGrid.is-updating {
+      opacity: .46;
+    }
+
+    .comparisonCard {
+      border-radius: 18px;
+      border: 1px solid rgba(16, 24, 42, 0.1);
+      background: rgba(255, 255, 255, 0.86);
+      padding: 14px;
+      min-height: 100%;
+    }
+
+    .comparisonCardTitle {
+      margin: 0;
+      font-size: 17px;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+
+    .comparisonList {
+      list-style: none;
+      margin: 12px 0 0;
+      padding: 0;
+      display: grid;
+      gap: 8px;
+    }
+
+    .comparisonItem {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      border-radius: 10px;
+      border: 1px solid rgba(16, 24, 42, 0.07);
+      background: rgba(16, 24, 42, 0.03);
+      padding: 8px 9px;
+      min-height: 42px;
+    }
+
+    .comparisonStatusIcon {
+      width: 18px;
+      height: 18px;
+      flex: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .comparisonStatusIcon svg {
+      width: 18px;
+      height: 18px;
+      display: block;
+    }
+
+    .comparisonStatusIcon--yes { color: #1f8d52; }
+    .comparisonStatusIcon--limit { color: #c37c18; }
+    .comparisonStatusIcon--no { color: #c74646; }
+
+    .comparisonItemLabel {
+      color: var(--ink);
+      font-size: 13px;
+      line-height: 1.32;
+      letter-spacing: -0.002em;
+    }
+
     .faq {
       margin-top: 16px;
       display: grid;
@@ -917,6 +1045,10 @@
       .formsGrid {
         grid-template-columns: 1fr;
       }
+
+      .comparisonGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
     }
 
     @media (max-width: 940px) {
@@ -970,6 +1102,10 @@
       .featureGrid,
       .voiceGrid,
       .row2 {
+        grid-template-columns: 1fr;
+      }
+
+      .comparisonGrid {
         grid-template-columns: 1fr;
       }
 
@@ -1241,6 +1377,8 @@
             </details>
           </div>
         </section>
+
+        <section class="card section" id="comparison" data-comparison-section data-comparison-locale="fr"></section>
 
         <section class="card section" id="beta-fr">
           <p class="kicker">Bêta</p>
@@ -1608,6 +1746,8 @@
           </div>
         </section>
 
+        <section class="card section" id="comparison-en" data-comparison-section data-comparison-locale="en"></section>
+
         <section class="card section" id="beta-en">
           <p class="kicker">Beta</p>
           <h2 class="sectionTitle">Join the OMW beta</h2>
@@ -1784,6 +1924,7 @@
     </div>
   </main>
 
+  <script src="comparison-section.js"></script>
   <script src="config.js"></script>
   <script>
     (function () {
@@ -1804,6 +1945,10 @@
         prefersReduced.addEventListener("change", syncReducedClass);
       } else if (typeof prefersReduced.addListener === "function") {
         prefersReduced.addListener(syncReducedClass);
+      }
+
+      if (window.OMWComparisonSection && typeof window.OMWComparisonSection.mountAll === "function") {
+        window.OMWComparisonSection.mountAll(document);
       }
 
       function smoothScrollTo(id) {
