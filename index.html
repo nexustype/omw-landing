@@ -301,8 +301,7 @@
     }
 
     .heroSplit[data-persona="rider"] .heroCopy.rider,
-    .heroSplit[data-persona="driver"] .heroCopy.driver,
-    .heroSplit[data-persona="common"] .heroCopy.common {
+    .heroSplit[data-persona="driver"] .heroCopy.driver {
       opacity: 1;
       transform: translateY(0);
       pointer-events: auto;
@@ -321,42 +320,11 @@
       margin-bottom: 12px;
     }
 
-    .heroBadgeStack {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 12px;
-    }
-
-    .heroBadgeStack .heroBadge {
-      margin-bottom: 0;
-    }
-
     .heroBadge::before {
       content: "";
       width: 8px;
       height: 8px;
       border-radius: 999px;
-      background: var(--accent);
-      box-shadow: 0 0 0 5px rgba(12, 163, 137, 0.18);
-    }
-
-    .heroCopy.rider .heroBadge::before {
-      background: var(--brand);
-      box-shadow: 0 0 0 5px rgba(26, 95, 208, 0.18);
-    }
-
-    .heroCopy.driver .heroBadge::before {
-      background: var(--accent);
-      box-shadow: 0 0 0 5px rgba(12, 163, 137, 0.18);
-    }
-
-    .heroBadge.riderBadge::before {
-      background: var(--brand);
-      box-shadow: 0 0 0 5px rgba(26, 95, 208, 0.18);
-    }
-
-    .heroBadge.driverBadge::before {
       background: var(--accent);
       box-shadow: 0 0 0 5px rgba(12, 163, 137, 0.18);
     }
@@ -431,110 +399,97 @@
       pointer-events: none;
     }
 
+    .heroVisualLabels {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .heroVisualLabels span {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid rgba(16, 24, 42, 0.12);
+      color: rgba(16, 24, 42, 0.74);
+      padding: 6px 10px;
+      box-shadow: 0 8px 16px rgba(16, 24, 42, 0.08);
+    }
+
     .heroSlider {
       position: absolute;
       left: 50%;
       bottom: 0;
       transform: translate(-50%, 40%);
       width: min(700px, calc(100% - 28px));
+      border-radius: 999px;
       border: none;
-      background: transparent;
-      box-shadow: none;
-      padding: 0 clamp(14px, 6vw, 54px);
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: 0 20px 36px rgba(16, 24, 42, 0.14);
+      padding: 14px 18px;
+      display: grid;
+      grid-template-columns: auto minmax(120px, 1fr) auto;
+      align-items: center;
+      gap: 10px;
       z-index: 4;
     }
 
-    .heroSliderTrack {
-      position: relative;
-      height: 64px;
-      border-radius: 999px;
-      border: 1px solid rgba(136, 158, 178, 0.58);
-      background: linear-gradient(140deg, #dce7ef 0%, #cedce8 100%);
-      box-shadow: inset 0 3px 8px rgba(106, 126, 146, 0.48), inset 0 -6px 12px rgba(255, 255, 255, 0.76), inset 0 10px 14px rgba(95, 115, 136, 0.16), inset 0 -1px 0 rgba(255, 255, 255, 0.84);
-      --knob-size: 52px;
-    }
-
-    .heroSliderTrack::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      background: linear-gradient(140deg, #d1ebe4 0%, #c3ddd5 100%);
-      opacity: calc(var(--persona-progress, 50) / 100);
-      transition: opacity .16s linear;
-      z-index: 0;
-    }
-
-    .heroSliderText {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 9;
-      pointer-events: none;
-      font-size: 16px;
+    .heroSliderLabel {
+      font-size: 12px;
       font-weight: 800;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
-      color: rgba(109, 130, 149, 0.74);
-      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
-      opacity: var(--label-center-opacity, 1);
-      transition: opacity .16s linear;
+      color: var(--muted);
     }
 
-    .heroSliderText.rider {
-      left: 22px;
-      width: 86px;
-      text-align: center;
-    }
-
-    .heroSliderText.driver {
-      right: 22px;
-      width: 86px;
-      text-align: center;
+    .heroSliderTrack {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      position: relative;
     }
 
     .rangeKnobIcon {
       position: absolute;
       top: 50%;
-      left: calc((var(--persona-progress, 50) * (100% - var(--knob-size))) / 100 + (var(--knob-size) / 2));
+      left: 50%;
       transform: translate(-50%, -50%);
-      width: var(--knob-size);
-      height: var(--knob-size);
+      width: 52px;
+      height: 52px;
       border-radius: 999px;
-      border: 2px solid #f8fbfd;
-      background: linear-gradient(180deg, #ffffff 0%, #f4f7fb 100%);
-      box-shadow: 0 8px 18px rgba(45, 65, 91, 0.22), 0 1px 0 rgba(255, 255, 255, 0.95) inset;
+      border: 2px solid #ffffff;
+      background: #ffffff;
+      box-shadow: 0 10px 20px rgba(16, 24, 42, 0.24);
       display: inline-flex;
       align-items: center;
       justify-content: center;
       pointer-events: none;
-      z-index: 8;
-      transition: left .1s linear;
+      z-index: 3;
     }
 
     .rangeKnobIcon img {
-      width: 36px;
-      height: 36px;
+      width: 24px;
+      height: 24px;
       object-fit: contain;
     }
 
     .personaRange {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: calc(var(--knob-size) / 2);
-      right: calc(var(--knob-size) / 2);
-      width: auto;
+      width: 100%;
       margin: 0;
+      height: 52px;
       background: transparent;
-      border: none;
-      color: transparent;
-      accent-color: transparent;
-      opacity: 0.001;
       -webkit-appearance: none;
       appearance: none;
       cursor: pointer;
-      z-index: 7;
     }
 
     .personaRange:focus {
@@ -543,16 +498,17 @@
 
     .personaRange::-webkit-slider-runnable-track {
       -webkit-appearance: none;
-      height: 64px;
-      background: transparent;
-      border: none;
+      height: 10px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(12, 163, 137, 0.4), rgba(26, 95, 208, 0.4));
+      border: 1px solid rgba(16, 24, 42, 0.11);
     }
     .personaRange::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
-      margin-top: 6px;
-      width: var(--knob-size);
-      height: var(--knob-size);
+      margin-top: -21px;
+      width: 52px;
+      height: 52px;
       border-radius: 999px;
       border: none;
       background: transparent;
@@ -560,18 +516,14 @@
       cursor: grab;
     }
     .personaRange::-moz-range-track {
-      height: 64px;
-      background: transparent;
-      border: none;
-    }
-    .personaRange::-moz-range-progress {
-      height: 64px;
-      background: transparent;
-      border: none;
+      height: 10px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(12, 163, 137, 0.4), rgba(26, 95, 208, 0.4));
+      border: 1px solid rgba(16, 24, 42, 0.11);
     }
     .personaRange::-moz-range-thumb {
-      width: var(--knob-size);
-      height: var(--knob-size);
+      width: 52px;
+      height: 52px;
       border-radius: 999px;
       border: none;
       background: transparent;
@@ -640,11 +592,10 @@
     }
 
     .featureGrid {
-      margin-top: 52px;
+      margin-top: 20px;
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 54px 48px;
-      align-items: start;
+      gap: 14px;
     }
 
     .featureCard {
@@ -653,65 +604,34 @@
       background: transparent;
       padding: 0;
       box-shadow: none;
-      max-width: 370px;
-      margin: 0 auto;
-      text-align: center;
     }
 
     .featureIcon {
-      width: 42px;
-      height: 42px;
-      border-radius: 0;
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      border: none;
-      background: transparent;
-      color: inherit;
-      margin: 0 auto 16px;
-      padding: 0;
-    }
-
-    .featureIcon img {
-      width: 36px;
-      height: 36px;
-      object-fit: contain;
-      opacity: 0.76;
+      border: 1px solid rgba(16, 24, 42, 0.12);
+      background: #ffffff;
+      color: var(--brand);
+      margin-bottom: 10px;
+      font-size: 15px;
+      font-weight: 800;
     }
 
     .featureCard h3 {
       margin: 0;
-      font-size: clamp(1.45rem, 1.7vw, 1.95rem);
-      letter-spacing: -0.02em;
-      line-height: 1.18;
-      color: rgba(16, 24, 42, 0.95);
+      font-size: 18px;
+      letter-spacing: -0.01em;
     }
 
     .featureCard p {
-      margin: 12px auto 0;
-      color: rgba(16, 24, 42, 0.72);
-      font-size: clamp(0.95rem, 1.12vw, 1.22rem);
-      line-height: 1.58;
-      max-width: 33ch;
-    }
-
-    .featuresShowcase {
-      text-align: center;
-    }
-
-    .featuresShowcase .sectionTitle {
-      margin-top: 0;
-      font-size: clamp(2rem, 3.6vw, 3.2rem);
-      letter-spacing: -0.03em;
-      line-height: 1.06;
-    }
-
-    .featuresShowcase .sectionLead {
-      margin: 16px auto 0;
-      max-width: 980px;
-      font-size: clamp(1.08rem, 1.5vw, 1.6rem);
-      line-height: 1.42;
-      color: rgba(16, 24, 42, 0.72);
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.52;
     }
 
     .featureNote {
@@ -724,96 +644,35 @@
       border-radius: 10px;
     }
 
-    .testimonials-section {
-      padding-top: 40px;
-    }
-
-    .testimonials-section .container {
-      width: min(1160px, 100%);
-      margin: 0 auto;
-    }
-
-    .testimonials-section .sectionTitle {
-      margin: 0;
-      font-size: clamp(3.3rem, 6vw, 4rem);
-      line-height: 1.02;
-      letter-spacing: -0.035em;
-      color: rgba(16, 24, 42, 0.96);
-      max-width: 18ch;
-    }
-
-    .testimonials-section .sectionLead {
-      margin: 18px 0 0;
-      max-width: 56ch;
-      font-size: clamp(1.12rem, 2vw, 1.32rem);
-      line-height: 1.5;
-      color: rgba(16, 24, 42, 0.72);
-    }
-
-    .testimonial-grid {
-      margin-top: 34px;
+    .voiceGrid {
+      margin-top: 18px;
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 30px;
+      gap: 14px;
     }
 
-    .testimonial-card {
-      background: #ffffff;
-      border: 1px solid #e5e7eb;
-      border-radius: 16px;
-      padding: 30px;
-      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
-      display: flex;
-      flex-direction: column;
-      min-height: 100%;
+    .voiceCard {
+      border: none;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 16px;
+      box-shadow: 0 12px 22px rgba(16, 24, 42, 0.06);
     }
 
-    .stars {
-      display: inline-flex;
-      color: #2f6bff;
-      font-size: 19px;
-      letter-spacing: 0.18em;
-      line-height: 1;
-      margin-bottom: 20px;
-    }
-
-    .testimonial-card h3 {
-      margin: 0;
-      font-size: clamp(1.5rem, 2.3vw, 1.72rem);
-      letter-spacing: -0.02em;
-      line-height: 1.2;
-      color: rgba(16, 24, 42, 0.94);
-    }
-
-    .testimonial-card blockquote {
-      margin: 14px 0 0;
-      color: rgba(16, 24, 42, 0.72);
-      font-size: 1.03rem;
-      line-height: 1.62;
-    }
-
-    .divider {
-      margin: 24px 0 18px;
-      border-top: 1px solid #e8ebf0;
-    }
-
-    .author {
+    .voiceHead {
       display: flex;
       align-items: center;
-      gap: 12px;
-      color: rgba(16, 24, 42, 0.78);
-      font-size: 1.04rem;
-      font-weight: 500;
-      line-height: 1.3;
+      gap: 10px;
+      margin-bottom: 10px;
     }
 
-    .testimonial-avatar {
+    .avatar {
       width: 36px;
       height: 36px;
       border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.45);
-      background: linear-gradient(140deg, #eff4ff 0%, #e6edf9 100%);
-      color: rgba(26, 95, 208, 0.88);
+      border: 1px solid rgba(16, 24, 42, 0.16);
+      background: linear-gradient(120deg, rgba(26, 95, 208, 0.22), rgba(12, 163, 137, 0.2));
+      color: rgba(16, 24, 42, 0.82);
       font-size: 13px;
       font-weight: 800;
       line-height: 1;
@@ -821,15 +680,38 @@
       align-items: center;
       justify-content: center;
       flex: none;
-      overflow: hidden;
     }
 
-    .testimonial-avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      display: block;
+    .voiceRole {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted-soft);
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .voiceCard h3 {
+      margin: 0;
+      font-size: 16px;
+      letter-spacing: -0.01em;
+    }
+
+    .voiceCard p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .statusRow {
+      margin-top: 16px;
+      border: none;
+      border-radius: 0;
+      background: transparent;
+      padding: 0;
+      font-size: 13px;
+      color: var(--muted);
+      text-align: center;
     }
 
     .faq {
@@ -1043,26 +925,6 @@
       }
     }
 
-    @media (max-width: 900px) {
-      .testimonial-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 600px) {
-      .testimonial-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .testimonial-card {
-        padding: 24px;
-      }
-
-      .stars {
-        font-size: 18px;
-      }
-    }
-
     @media (max-width: 780px) {
       .wrap {
         width: min(1160px, calc(100% - 24px));
@@ -1090,57 +952,25 @@
       }
 
       .featureGrid,
+      .voiceGrid,
       .row2 {
         grid-template-columns: 1fr 1fr;
-      }
-
-      .featureGrid {
-        gap: 34px 22px;
-      }
-
-      .featuresShowcase .sectionLead {
-        font-size: 0.98rem;
-        line-height: 1.5;
-      }
-
-      .featureCard h3 {
-        font-size: 1.38rem;
-      }
-
-      .featureCard p {
-        font-size: 0.9rem;
       }
 
       .heroSlider {
         width: calc(100% - 24px);
       }
 
+      .heroSliderLabel {
+        font-size: 11px;
+      }
     }
 
     @media (max-width: 580px) {
       .featureGrid,
+      .voiceGrid,
       .row2 {
         grid-template-columns: 1fr;
-      }
-
-      .featureGrid {
-        gap: 28px;
-      }
-
-      .featuresShowcase .sectionTitle {
-        font-size: clamp(1.8rem, 8vw, 2.35rem);
-      }
-
-      .featuresShowcase .sectionLead {
-        font-size: 0.92rem;
-      }
-
-      .featureCard h3 {
-        font-size: 1.28rem;
-      }
-
-      .featureCard p {
-        font-size: 0.88rem;
       }
 
       .heroCopyDeck {
@@ -1148,16 +978,13 @@
       }
 
       .heroSlider {
-        padding: 0 12px;
+        grid-template-columns: 1fr;
+        gap: 8px;
+        text-align: center;
       }
 
-      .heroSliderText {
-        font-size: 13px;
-      }
-
-      .heroSliderText.rider,
-      .heroSliderText.driver {
-        width: 72px;
+      .heroSliderTrack {
+        justify-content: center;
       }
     }
 
@@ -1226,27 +1053,15 @@
   <main id="top">
     <div class="content fr" id="content-fr">
       <div class="wrap">
-        <section class="card heroSplit" data-split-hero data-persona="common" id="hero-fr" aria-label="Hero OMW FR">
+        <section class="card heroSplit" data-split-hero data-persona="rider" id="hero-fr" aria-label="Hero OMW FR">
           <div class="heroContent">
             <div class="heroCopyDeck" id="hero-copy-fr">
-              <article class="heroCopy common" data-copy-persona="common" aria-label="Message commun">
-                <div class="heroBadgeStack">
-                  <span class="heroBadge riderBadge">Passager</span>
-                  <span class="heroBadge driverBadge">Conducteur</span>
-                </div>
-                <h1 class="heroTitle">Promesse commune : “Bouger sans payer le prix fort.”</h1>
-                <p class="heroSub">Pose une option ou active ton trajet : matching sur ton axe, contribution claire — et des économies pour les deux.</p>
-                <div class="heroActions">
-                  <a class="btn primary" href="#beta-fr" data-scroll="beta-fr">Rejoindre la bêta</a>
-                </div>
-              </article>
-
               <article class="heroCopy rider" data-copy-persona="rider" aria-label="Message Rider">
                 <span class="heroBadge"> Passager</span>
-                <h1 class="heroTitle">Le plan B quand tout le reste lâche — sans payer 40€ de VTC.</h1>
+                <h1 class="heroTitle">Le plan B abordable quand les transports lâchent.</h1>
                 <p class="heroSub">Pose une option en 10 secondes. Quand un conducteur passe sur ton axe, tu reçois une proposition à prix clair (partage de frais). Couverture en croissance.</p>
                 <div class="heroActions">
-                  <a class="btn primary" href="#beta-fr" data-scroll="beta-fr">Rejoindre la bêta</a>
+                  <a class="btn primary" href="#riders-fr" data-scroll="riders-fr">Rejoindre la bêta — Rider</a>
                   <button class="btn" type="button" data-switch-persona="driver" aria-pressed="false">Je suis Driver</button>
                 </div>
                 <p class="heroTiny">Fonctionne aussi pour les trajets inter-city du week-end, souvent moins cher que train ou bus.</p>
@@ -1257,7 +1072,7 @@
                 <h1 class="heroTitle">Ton siège vide peut payer tes péages.</h1>
                 <p class="heroSub">Active ton trajet (quotidien ou inter-city). Match sur ton axe, détour max 5 min, contribution claire. Ajoute tes réguliers à ton Cercle.</p>
                 <div class="heroActions">
-                  <a class="btn primary" href="#beta-fr" data-scroll="beta-fr">Rejoindre la bêta</a>
+                  <a class="btn primary" href="#drivers-fr" data-scroll="drivers-fr">Rejoindre la bêta — Driver</a>
                   <button class="btn" type="button" data-switch-persona="rider" aria-pressed="false">Je suis Rider</button>
                 </div>
                 <p class="heroTiny">Détour limité, prix transparent, et Cercle pour retrouver collègues et passagers réguliers.</p>
@@ -1266,6 +1081,10 @@
           </div>
 
           <div class="heroVisual" aria-hidden="true">
+            <div class="heroVisualLabels">
+              <span>Rider</span>
+              <span>Driver</span>
+            </div>
             <div class="heroLayer rider">
               <img src="Assets/Hero-rider.png" alt="" />
             </div>
@@ -1276,98 +1095,104 @@
           </div>
 
           <div class="heroSlider" role="group" aria-label="Controle hero Rider Driver">
+            <span class="heroSliderLabel">Rider</span>
             <div class="heroSliderTrack">
-              <span class="heroSliderText rider" aria-hidden="true">Rider</span>
               <span class="rangeKnobIcon" aria-hidden="true"><img src="Icon.png" alt="" /></span>
-              <span class="heroSliderText driver" aria-hidden="true">Driver</span>
-              <input class="personaRange" type="range" min="0" max="100" value="50" step="1" data-persona-range data-common-valuetext="Rider et Driver" aria-label="Basculer entre Rider et Driver" aria-valuetext="Rider et Driver" aria-controls="hero-copy-fr" />
+              <input class="personaRange" type="range" min="0" max="100" value="50" step="1" data-persona-range aria-label="Basculer entre Rider et Driver" aria-valuetext="Rider" aria-controls="hero-copy-fr" />
             </div>
+            <span class="heroSliderLabel">Driver</span>
           </div>
         </section>
 
-        <section class="card section featuresShowcase" id="features-fr">
-          <h2 class="sectionTitle">Fonctionnalités clés de On My Way</h2>
-          <p class="sectionLead">Découvre ce qui fait de On My Way un choix décisif pour les navetteurs et ride-hailers en Île-de-France.<br />Nos fonctionnalités améliorent tes trajets en priorisant sécurité, simplicité et budget.</p>
+        <section class="card section" id="features-fr">
+          <p class="kicker">Fonctionnalités</p>
+          <h2 class="sectionTitle">Caractéristiques principales de OMW</h2>
+          <p class="sectionLead">Un produit simple et réaliste pour les pannes transport, les retours tardifs et les trajets inter-city à coût partagé.</p>
+          <div class="proofBand">
+            <p class="kicker">Conçu pour l’Île-de-France (et inter-city)</p>
+            <ul class="proofList">
+              <li><strong>Prix clair:</strong> contribution annoncée avant validation.</li>
+              <li><strong>Détour limité:</strong> cap max 5 min pour garder un trajet prévisible.</li>
+              <li><strong>Cercle:</strong> ajoute tes collègues et réguliers pour des rides plus fluides.</li>
+            </ul>
+          </div>
 
           <div class="featureGrid">
             <article class="featureCard">
-              <span class="featureIcon" aria-hidden="true"><img src="Assets/navigation.svg" alt="" /></span>
-              <h3>Navigation native</h3>
-              <p>OMW est construit sur la navigation : ETA en direct, point de rendez-vous clair et moins de messages. Tu sais toujours où te retrouver et quand tu arrives.</p>
+              <span class="featureIcon" aria-hidden="true">€</span>
+              <h3>Rentable</h3>
+              <p>Moins cher que VTC/taxi (partage de frais).</p>
             </article>
 
             <article class="featureCard">
-              <span class="featureIcon" aria-hidden="true"><img src="Assets/bolt.svg" alt="" /></span>
-              <h3>Matching en temps réel</h3>
-              <p>Obtiens un driver ou un rider confirmé en quelques minutes, pas en heures. OMW te connecte avec des personnes déjà sur ton axe, tout simplement.</p>
+              <span class="featureIcon" aria-hidden="true">-></span>
+              <h3>Connexions faciles</h3>
+              <p>Pose une option, accepte en 1 geste.</p>
             </article>
 
             <article class="featureCard">
-              <span class="featureIcon" aria-hidden="true"><img src="Assets/verified_user.svg" alt="" /></span>
-              <h3>Trajet sécurisé</h3>
-              <p>Profils vérifiés + notes, confirmation mutuelle au pickup, et réassurance type “partage de trajet”. Pensé pour rassurer riders et drivers.</p>
+              <span class="featureIcon" aria-hidden="true">S</span>
+              <h3>Trajets sécurisés</h3>
+              <p>Profils vérifiés, partage du trajet, assistance.</p>
             </article>
 
             <article class="featureCard">
-              <span class="featureIcon" aria-hidden="true"><img src="Assets/handshake.svg" alt="" /></span>
-              <h3>Cercle de favoris</h3>
-              <p>Sauvegarde tes personnes préférées : collègues, voisins, amis d’amis. Idéal pour les trajets récurrents et les matchs répétés.</p>
+              <span class="featureIcon" aria-hidden="true">C</span>
+              <h3>Cercle (amis & collègues)</h3>
+              <p>Retrouve tes réguliers plus vite.</p>
             </article>
 
             <article class="featureCard">
-              <span class="featureIcon" aria-hidden="true"><img src="Assets/euro_symbol.svg" alt="" /></span>
-              <h3>Partage de frais transparent</h3>
-              <p>Réduis tes dépenses trajet avec un système de contribution clair et des rides partagés, pour voyager sans payer le prix fort.</p>
+              <span class="featureIcon" aria-hidden="true">◉</span>
+              <h3>Prix clair</h3>
+              <p>Estimation avant validation, contribution transparente.</p>
             </article>
 
             <article class="featureCard">
-              <span class="featureIcon" aria-hidden="true"><img src="Assets/route.svg" alt="" /></span>
-              <h3>Pas de longs détours</h3>
-              <p>Pas de détour interminable. Les matchs sont limités à de petits écarts (ex : ≤ 5 minutes), pour garder drivers à l’heure et riders sereins.</p>
+              <span class="featureIcon" aria-hidden="true">V</span>
+              <h3>Révolution verte</h3>
+              <p>Un siège vide en moins, moins d’émissions.</p>
             </article>
           </div>
+
+          <p class="featureNote">Disponibilité variable selon la zone — la couverture augmente avec la communauté.</p>
         </section>
 
-        <section class="card section testimonials-section" id="testimonials-fr">
-          <div class="container">
-            <h2 class="sectionTitle">Ce que disent nos utilisateurs</h2>
-            <p class="sectionLead">Des retours courts et concrets de Riders et Drivers. (Bêta — la communauté grandit chaque semaine.)</p>
+        <section class="card section" id="testimonials-fr">
+          <p class="kicker">Témoignages</p>
+          <h2 class="sectionTitle">Ce qu'en disent nos utilisateurs</h2>
+          <p class="sectionLead">Pourquoi ils s’inscrivent à la bêta.</p>
 
-            <div class="testimonial-grid">
-              <article class="testimonial-card">
-                <div class="stars" role="img" aria-label="5 sur 5">★★★★★</div>
-                <h3>Fini le VTC à 40€</h3>
-                <blockquote>“Quand le RER lâche, je pose une option et j’évite le VTC hors de prix. Simple et clair.”</blockquote>
-                <div class="divider" aria-hidden="true"></div>
-                <div class="author">
-                  <span class="testimonial-avatar" aria-hidden="true"><img src="Assets/avatar-claire.png" alt="" /></span>
-                  <span>Claire — Rider (Grande couronne)</span>
-                </div>
-              </article>
+          <div class="voiceGrid">
+            <article class="voiceCard">
+              <div class="voiceHead">
+                <span class="avatar" aria-hidden="true">R</span>
+                <span class="voiceRole">Rider - grande couronne</span>
+              </div>
+              <h3>"Mon plan B quand le RER saute"</h3>
+              <p>Je veux juste une option rapide avec un prix clair, sans tomber sur un VTC a 40EUR+.</p>
+            </article>
 
-              <article class="testimonial-card">
-                <div class="stars" role="img" aria-label="5 sur 5">★★★★★</div>
-                <h3>Le Cercle fait gagner du temps</h3>
-                <blockquote>“Je retrouve mes réguliers et collègues en 1 geste. Moins de friction, plus d’habitude.”</blockquote>
-                <div class="divider" aria-hidden="true"></div>
-                <div class="author">
-                  <span class="testimonial-avatar" aria-hidden="true"><img src="Assets/avatar-mehdi.png" alt="" /></span>
-                  <span>Thomas — Driver</span>
-                </div>
-              </article>
+            <article class="voiceCard">
+              <div class="voiceHead">
+                <span class="avatar" aria-hidden="true">D</span>
+                <span class="voiceRole">Driver - quotidien IDF</span>
+              </div>
+              <h3>"Je fais déjà ce trajet"</h3>
+              <p>Si un passager est sur mon axe sans me faire perdre du temps, autant partager les frais.</p>
+            </article>
 
-              <article class="testimonial-card">
-                <div class="stars" role="img" aria-label="5 sur 5">★★★★★</div>
-                <h3>Enfin du covoit sans prise de tête</h3>
-                <blockquote>“Je partage quand ça colle à mon itinéraire. Je garde le contrôle, je décline si besoin.”</blockquote>
-                <div class="divider" aria-hidden="true"></div>
-                <div class="author">
-                  <span class="testimonial-avatar" aria-hidden="true"><img src="Assets/avatar-thomas.png" alt="" /></span>
-                  <span>Mehdi — Driver</span>
-                </div>
-              </article>
-            </div>
+            <article class="voiceCard">
+              <div class="voiceHead">
+                <span class="avatar" aria-hidden="true">D</span>
+                <span class="voiceRole">Driver - inter-city</span>
+              </div>
+              <h3>"L'inter-city est un vrai cas"</h3>
+              <p>Sur les trajets week-end, remplir un siège aide vraiment à couvrir péages et carburant.</p>
+            </article>
           </div>
+
+          <div class="statusRow">Bêta en cours — retours utilisateurs bientôt.</div>
         </section>
 
         <section class="card section" id="faq-fr">
@@ -1594,27 +1419,15 @@
 
     <div class="content en" id="content-en">
       <div class="wrap">
-        <section class="card heroSplit" data-split-hero data-persona="common" id="hero-en" aria-label="OMW Hero EN">
+        <section class="card heroSplit" data-split-hero data-persona="rider" id="hero-en" aria-label="OMW Hero EN">
           <div class="heroContent">
             <div class="heroCopyDeck" id="hero-copy-en">
-              <article class="heroCopy common" data-copy-persona="common" aria-label="Shared message">
-                <div class="heroBadgeStack">
-                  <span class="heroBadge riderBadge">Rider</span>
-                  <span class="heroBadge driverBadge">Driver</span>
-                </div>
-                <h1 class="heroTitle">Shared promise: "Move without paying full price."</h1>
-                <p class="heroSub">Post an option or activate your route: matching on your axis, clear contribution - and savings for both.</p>
-                <div class="heroActions">
-                  <a class="btn primary" href="#beta-en" data-scroll="beta-en">Join beta</a>
-                </div>
-              </article>
-
               <article class="heroCopy rider" data-copy-persona="rider" aria-label="Rider message">
                 <span class="heroBadge">Rider</span>
                 <h1 class="heroTitle">The backup plan when all else fails.</h1>
                 <p class="heroSub">Drop an option in 10 seconds. When a driver crosses your axis, you get a clear shared-cost offer. Coverage grows with the community.</p>
                 <div class="heroActions">
-                  <a class="btn primary" href="#beta-en" data-scroll="beta-en">Join beta</a>
+                  <a class="btn primary" href="#riders-en" data-scroll="riders-en">Join beta - Rider</a>
                   <button class="btn" type="button" data-switch-persona="driver" aria-pressed="false">I'm Driver</button>
                 </div>
                 <p class="heroTiny">Also useful for inter-city weekend trips, often cheaper than train or coach.</p>
@@ -1625,7 +1438,7 @@
                 <h1 class="heroTitle">Your empty seat can cover your tolls.</h1>
                 <p class="heroSub">Activate your route (daily or inter-city). Match on your axis, max 5 min detour, clear contribution. Add regulars to your Circle.</p>
                 <div class="heroActions">
-                  <a class="btn primary" href="#beta-en" data-scroll="beta-en">Join beta</a>
+                  <a class="btn primary" href="#drivers-en" data-scroll="drivers-en">Join beta - Driver</a>
                   <button class="btn" type="button" data-switch-persona="rider" aria-pressed="false">I'm Rider</button>
                 </div>
                 <p class="heroTiny">Limited detour, transparent contribution, and Circle for recurring riders.</p>
@@ -1634,6 +1447,10 @@
           </div>
 
           <div class="heroVisual" aria-hidden="true">
+            <div class="heroVisualLabels">
+              <span>Rider</span>
+              <span>Driver</span>
+            </div>
             <div class="heroLayer rider">
               <img src="Assets/Hero-rider.png" alt="" />
             </div>
@@ -1644,98 +1461,104 @@
           </div>
 
           <div class="heroSlider" role="group" aria-label="Rider Driver hero control">
+            <span class="heroSliderLabel">Rider</span>
             <div class="heroSliderTrack">
-              <span class="heroSliderText rider" aria-hidden="true">Rider</span>
               <span class="rangeKnobIcon" aria-hidden="true"><img src="Icon.png" alt="" /></span>
-              <span class="heroSliderText driver" aria-hidden="true">Driver</span>
-              <input class="personaRange" type="range" min="0" max="100" value="50" step="1" data-persona-range data-common-valuetext="Rider and Driver" aria-label="Switch between Rider and Driver" aria-valuetext="Rider and Driver" aria-controls="hero-copy-en" />
+              <input class="personaRange" type="range" min="0" max="100" value="50" step="1" data-persona-range aria-label="Switch between Rider and Driver" aria-valuetext="Rider" aria-controls="hero-copy-en" />
             </div>
+            <span class="heroSliderLabel">Driver</span>
           </div>
         </section>
 
-        <section class="card section featuresShowcase" id="features-en">
-          <h2 class="sectionTitle">Key Features of On My Way</h2>
-          <p class="sectionLead">Discover what makes On My Way the right choice for commuters and ride-hailers in Ile-de-France.<br />Our features improve every trip by prioritizing safety, convenience, and affordability.</p>
+        <section class="card section" id="features-en">
+          <p class="kicker">Features</p>
+          <h2 class="sectionTitle">OMW Core Features</h2>
+          <p class="sectionLead">A simple and realistic product for transit failures, late returns, and inter-city shared-cost rides.</p>
+          <div class="proofBand">
+            <p class="kicker">Built for Ile-de-France (and inter-city)</p>
+            <ul class="proofList">
+              <li><strong>Clear pricing:</strong> transparent contribution before confirmation.</li>
+              <li><strong>Limited detour:</strong> max 5 min cap keeps routes predictable.</li>
+              <li><strong>Circle:</strong> favorite colleagues and regular riders for repeat trips.</li>
+            </ul>
+          </div>
 
           <div class="featureGrid">
             <article class="featureCard">
-              <span class="featureIcon" aria-hidden="true"><img src="Assets/navigation.svg" alt="" /></span>
-              <h3>Navigation-Native</h3>
-              <p>OMW is built on navigation: live ETA, clear pickup point, and fewer messages. Always know where to meet and when you arrive.</p>
+              <span class="featureIcon" aria-hidden="true">EUR</span>
+              <h3>Cost-efficient</h3>
+              <p>Cheaper than taxi/VTC via cost sharing.</p>
             </article>
 
             <article class="featureCard">
-              <span class="featureIcon" aria-hidden="true"><img src="Assets/bolt.svg" alt="" /></span>
-              <h3>Real-Time Matching</h3>
-              <p>Get a confirmed driver or rider in minutes, not hours. OMW matches you with people already going your way.</p>
+              <span class="featureIcon" aria-hidden="true">-></span>
+              <h3>Easy matching</h3>
+              <p>Post an option and accept in one tap.</p>
             </article>
 
             <article class="featureCard">
-              <span class="featureIcon" aria-hidden="true"><img src="Assets/verified_user.svg" alt="" /></span>
-              <h3>Safe Journey</h3>
-              <p>Verified profiles + ratings, mutual pickup confirmation, and simple trip-sharing reassurance. Built to feel safe for riders and drivers.</p>
+              <span class="featureIcon" aria-hidden="true">S</span>
+              <h3>Safer trips</h3>
+              <p>Verified profiles, trip sharing, and assistance.</p>
             </article>
 
             <article class="featureCard">
-              <span class="featureIcon" aria-hidden="true"><img src="Assets/handshake.svg" alt="" /></span>
-              <h3>Circle of Favorites</h3>
-              <p>Save preferred people and ride with familiar faces: coworkers, neighbors, and friends-of-friends. Great for recurring commutes.</p>
+              <span class="featureIcon" aria-hidden="true">C</span>
+              <h3>Circle (friends & coworkers)</h3>
+              <p>Find your regulars faster.</p>
             </article>
 
             <article class="featureCard">
-              <span class="featureIcon" aria-hidden="true"><img src="Assets/euro_symbol.svg" alt="" /></span>
-              <h3>Upfront Cost-Sharing</h3>
-              <p>Reduce commute and travel costs with transparent contributions and shared rides, making everyday mobility more affordable.</p>
+              <span class="featureIcon" aria-hidden="true">OE</span>
+              <h3>Clear price</h3>
+              <p>Estimate before confirmation, transparent contribution.</p>
             </article>
 
             <article class="featureCard">
-              <span class="featureIcon" aria-hidden="true"><img src="Assets/route.svg" alt="" /></span>
-              <h3>No Long Detours</h3>
-              <p>No endless detours. Matches stay constrained to small route offsets (ex: ≤ 5 minutes) so drivers stay on schedule.</p>
+              <span class="featureIcon" aria-hidden="true">V</span>
+              <h3>Greener impact</h3>
+              <p>One less empty seat, fewer emissions.</p>
             </article>
           </div>
+
+          <p class="featureNote">Availability varies by area - coverage grows with community density.</p>
         </section>
 
-        <section class="card section testimonials-section" id="testimonials-en">
-          <div class="container">
-            <h2 class="sectionTitle">What Our Users Say</h2>
-            <p class="sectionLead">Short, concrete feedback from riders and drivers. (Beta - the community is growing every week.)</p>
+        <section class="card section" id="testimonials-en">
+          <p class="kicker">Testimonials</p>
+          <h2 class="sectionTitle">What users say</h2>
+          <p class="sectionLead">Why they join the beta.</p>
 
-            <div class="testimonial-grid">
-              <article class="testimonial-card">
-                <div class="stars" role="img" aria-label="5 out of 5">★★★★★</div>
-                <h3>No More 40EUR Ride-Hails</h3>
-                <blockquote>“When the train breaks down, I post an option and avoid overpriced ride-hails. Simple and clear.”</blockquote>
-                <div class="divider" aria-hidden="true"></div>
-                <div class="author">
-                  <span class="testimonial-avatar" aria-hidden="true"><img src="Assets/avatar-claire.png" alt="" /></span>
-                  <span>Claire - Rider (Outer suburbs)</span>
-                </div>
-              </article>
+          <div class="voiceGrid">
+            <article class="voiceCard">
+              <div class="voiceHead">
+                <span class="avatar" aria-hidden="true">R</span>
+                <span class="voiceRole">Rider - outer suburbs</span>
+              </div>
+              <h3>"I just need a reliable backup"</h3>
+              <p>When trains fail, I want a clear-cost option and not a 40EUR+ surge ride.</p>
+            </article>
 
-              <article class="testimonial-card">
-                <div class="stars" role="img" aria-label="5 out of 5">★★★★★</div>
-                <h3>Circle Saves Time</h3>
-                <blockquote>“I find my regulars and coworkers in one tap. Less friction, more routine.”</blockquote>
-                <div class="divider" aria-hidden="true"></div>
-                <div class="author">
-                  <span class="testimonial-avatar" aria-hidden="true"><img src="Assets/avatar-mehdi.png" alt="" /></span>
-                  <span>Thomas - Driver</span>
-                </div>
-              </article>
+            <article class="voiceCard">
+              <div class="voiceHead">
+                <span class="avatar" aria-hidden="true">D</span>
+                <span class="voiceRole">Driver - daily commute</span>
+              </div>
+              <h3>"I'm already driving this route"</h3>
+              <p>If someone matches my axis without wasting time, sharing costs makes sense.</p>
+            </article>
 
-              <article class="testimonial-card">
-                <div class="stars" role="img" aria-label="5 out of 5">★★★★★</div>
-                <h3>Carpooling Without the Headache</h3>
-                <blockquote>“I share only when it fits my route. I stay in control and decline if needed.”</blockquote>
-                <div class="divider" aria-hidden="true"></div>
-                <div class="author">
-                  <span class="testimonial-avatar" aria-hidden="true"><img src="Assets/avatar-thomas.png" alt="" /></span>
-                  <span>Mehdi - Driver</span>
-                </div>
-              </article>
-            </div>
+            <article class="voiceCard">
+              <div class="voiceHead">
+                <span class="avatar" aria-hidden="true">D</span>
+                <span class="voiceRole">Driver - inter-city</span>
+              </div>
+              <h3>"Inter-city is where it helps most"</h3>
+              <p>Filling one seat on weekend trips helps offset tolls and fuel.</p>
+            </article>
           </div>
+
+          <div class="statusRow">Beta running - user feedback snapshots coming soon.</div>
         </section>
 
         <section class="card section" id="faq-en">
@@ -2009,33 +1832,29 @@
         if (!range) return;
 
         const switchButtons = hero.querySelectorAll("[data-switch-persona]");
+        const knob = hero.querySelector(".rangeKnobIcon");
 
         function applyFromRange() {
           const value = Number(range.value);
-          const normalized = Math.max(0, Math.min(100, value));
-          const split = 100 - normalized;
-          const commonValueText = range.getAttribute("data-common-valuetext") || "Rider and Driver";
-          let persona = "common";
-          if (normalized < 45) persona = "rider";
-          if (normalized > 55) persona = "driver";
-          const centerVisibility = Math.max(0, 1 - Math.abs(normalized - 50) / 50);
+          const split = Math.max(0, Math.min(100, 100 - value));
+          const persona = value <= 50 ? "rider" : "driver";
 
           hero.style.setProperty("--split", split + "%");
-          hero.style.setProperty("--persona-progress", String(normalized));
-          hero.style.setProperty("--label-center-opacity", centerVisibility.toFixed(3));
           hero.setAttribute("data-persona", persona);
-          range.setAttribute("aria-valuetext", persona === "common" ? commonValueText : persona === "rider" ? "Rider" : "Driver");
+          range.setAttribute("aria-valuetext", persona === "rider" ? "Rider" : "Driver");
 
           switchButtons.forEach((button) => {
             const isActive = button.getAttribute("data-switch-persona") === persona;
             button.setAttribute("aria-pressed", isActive ? "true" : "false");
           });
+
+          if (knob) {
+            knob.style.left = value + "%";
+          }
         }
 
         function setPersona(persona) {
-          if (persona === "driver") range.value = "100";
-          else if (persona === "common") range.value = "50";
-          else range.value = "0";
+          range.value = persona === "driver" ? "100" : "0";
           applyFromRange();
         }
 
