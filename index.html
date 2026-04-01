@@ -1505,6 +1505,28 @@
       .testimonialLayout {
         grid-template-columns: 1fr;
       }
+
+      .comparisonTable {
+        min-width: 0;
+      }
+
+      .comparisonTable thead th {
+        letter-spacing: 0.08em;
+      }
+
+      .comparisonTable th:nth-child(2),
+      .comparisonTable th:nth-child(3),
+      .comparisonTable td:nth-child(2),
+      .comparisonTable td:nth-child(3) {
+        width: 27.5%;
+        min-width: 160px;
+      }
+
+      .comparisonTable th:first-child,
+      .comparisonTable td:first-child {
+        width: 45%;
+        min-width: 0;
+      }
     }
 
     @media (max-width: 940px) {
@@ -2461,13 +2483,13 @@
             },
             comparison: {
               kicker: "Comparatif",
-              title: "OMW vs. Applications Covoiturage",
+              title: "OMW vs. Appli. Covoiturage",
               lead: "Le sujet ici n'est pas seulement le covoit, mais la friction côté conducteur sur un trajet habituel.",
-              caption: "Comparatif OMW versus applications de covoiturage pour les conducteurs",
+              caption: "Comparatif OMW versus appli. de covoiturage pour les conducteurs",
               columns: {
                 label: "Fonctionnalité",
                 omw: "OMW",
-                other: "Applications covoiturage"
+                other: "App. Covoiturage"
               },
               rows: [
                 { label: "Organiser un trajet en moins de 2 minutes", omw: true, other: false },
