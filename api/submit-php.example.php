@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 // Replace these placeholder banner URLs with your hosted email-safe image URLs.
-const ENGLISH_BANNER_URL = 'https://YOUR-DOMAIN.com/path/to/omw-banner-en.png';
-const FRENCH_BANNER_URL = 'https://YOUR-DOMAIN.com/path/to/omw-banner-fr.png';
+const ENGLISH_BANNER_URL = 'https://www.rideomw.com/Assets/CTA%20reply%20English.png';
+const FRENCH_BANNER_URL = 'https://www.rideomw.com/Assets/CTA%20reply%20French.png';
 
 header('Content-Type: application/json; charset=utf-8');
 
