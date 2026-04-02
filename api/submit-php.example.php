@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+// Replace these placeholder banner URLs with your hosted email-safe image URLs.
+const ENGLISH_BANNER_URL = 'https://YOUR-DOMAIN.com/path/to/omw-banner-en.png';
+const FRENCH_BANNER_URL = 'https://YOUR-DOMAIN.com/path/to/omw-banner-fr.png';
+
 header('Content-Type: application/json; charset=utf-8');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -62,17 +66,25 @@ try {
     smtp_send($config, $toEmail, $subject, $body, $fromEmail, $fromName, $replyTo);
 
     $autoReplySent = false;
-    $autoReply = build_auto_reply($_POST);
+    $lang = resolve_locale($_POST);
+    $firstName = extract_first_name((string)($_POST['name'] ?? ''));
+    $autoReply = filter_var($senderEmail, FILTER_VALIDATE_EMAIL)
+        ? get_auto_reply_email([
+            'firstName' => $firstName,
+            'lang' => $lang,
+        ])
+        : null;
     if ($autoReply !== null) {
         try {
             smtp_send(
                 $config,
-                $autoReply['to'],
+                $senderEmail,
                 $autoReply['subject'],
-                $autoReply['body'],
+                $autoReply['text'],
                 $fromEmail,
                 $fromName,
-                $fromEmail
+                $fromEmail,
+                $autoReply['html']
             );
             $autoReplySent = true;
         } catch (RuntimeException $err) {
@@ -90,10 +102,11 @@ function smtp_send(
     array $config,
     string $to,
     string $subject,
-    string $body,
+    string $textBody,
     string $fromEmail,
     string $fromName,
-    string $replyTo
+    string $replyTo,
+    ?string $htmlBody = null
 ): void {
     $host = (string)($config['host'] ?? '');
     $port = (int)($config['port'] ?? 0);
@@ -142,11 +155,32 @@ function smtp_send(
         'To: ' . $to,
         'Subject: ' . smtp_encode_header($subject),
         'MIME-Version: 1.0',
-        'Content-Type: text/plain; charset=UTF-8',
-        'Content-Transfer-Encoding: 8bit',
     ];
 
-    $message = implode("\r\n", $headers) . "\r\n\r\n" . $body;
+    if ($htmlBody !== null && $htmlBody !== '') {
+        $boundary = 'omw_' . md5(uniqid((string)mt_rand(), true));
+        $headers[] = 'Content-Type: multipart/alternative; boundary="' . $boundary . '"';
+
+        $messageBody = [];
+        $messageBody[] = '--' . $boundary;
+        $messageBody[] = 'Content-Type: text/plain; charset=UTF-8';
+        $messageBody[] = 'Content-Transfer-Encoding: base64';
+        $messageBody[] = '';
+        $messageBody[] = chunk_split(base64_encode($textBody), 76, "\r\n");
+        $messageBody[] = '--' . $boundary;
+        $messageBody[] = 'Content-Type: text/html; charset=UTF-8';
+        $messageBody[] = 'Content-Transfer-Encoding: base64';
+        $messageBody[] = '';
+        $messageBody[] = chunk_split(base64_encode($htmlBody), 76, "\r\n");
+        $messageBody[] = '--' . $boundary . '--';
+
+        $message = implode("\r\n", $headers) . "\r\n\r\n" . implode("\r\n", $messageBody);
+    } else {
+        $headers[] = 'Content-Type: text/plain; charset=UTF-8';
+        $headers[] = 'Content-Transfer-Encoding: 8bit';
+        $message = implode("\r\n", $headers) . "\r\n\r\n" . $textBody;
+    }
+
     $message = str_replace("\r\n.\r\n", "\r\n..\r\n", $message);
 
     fwrite($socket, $message . "\r\n.\r\n");
@@ -198,55 +232,68 @@ function smtp_encode_header(string $value): string {
     return '=?UTF-8?B?' . base64_encode($value) . '?=';
 }
 
-function build_auto_reply(array $payload): ?array {
-    $senderEmail = trim((string)($payload['email'] ?? ''));
-    if (!filter_var($senderEmail, FILTER_VALIDATE_EMAIL)) {
-        return null;
-    }
-
-    $locale = resolve_locale($payload);
-    $firstName = extract_first_name((string)($payload['name'] ?? ''));
-    $greeting = $firstName !== ''
-        ? ($locale === 'fr' ? 'Bonjour ' . $firstName . ',' : 'Hi ' . $firstName . ',')
-        : ($locale === 'fr' ? 'Bonjour,' : 'Hi,');
+function get_auto_reply_email(array $options): array {
+    $lang = (string)($options['lang'] ?? 'en');
+    $locale = $lang === 'fr' ? 'fr' : 'en';
+    $firstName = trim((string)($options['firstName'] ?? ''));
 
     if ($locale === 'fr') {
-        return [
-            'to' => $senderEmail,
-            'subject' => 'Merci — ton retour aide à façonner OMW',
-            'body' => implode("\n", [
-                $greeting,
-                '',
-                "Merci d'avoir partagé tes informations.",
-                '',
-                "OMW en est encore à ses débuts, et c'est précisément pour ça que ton retour compte. On ne lance pas une application publique parfaitement aboutie demain : on construit avec soin autour de vrais problèmes de mobilité, une étape après l'autre.",
-                '',
-                "Des réponses comme la tienne nous aident à comprendre où le besoin est le plus fort, ce que les gens attendent vraiment d'un service comme celui-ci, et comment préparer un premier pilote vraiment utile.",
-                '',
-                "Tu auras peut-être de nos nouvelles plus tard pour une mise à jour pertinente, une courte demande de feedback, ou un accès anticipé aux premiers tests quand nous serons prêts. D'ici là, merci de faire partie du tout début.",
-                '',
-                '— Daniel',
-                'Fondateur, OMW',
-            ]),
+        $content = [
+            'subject' => 'Merci pour votre contribution — OMW',
+            'bannerUrl' => FRENCH_BANNER_URL,
+            'bannerAlt' => 'OMW — Premier contributeur',
+            'headline' => 'Merci d’être là dès le début',
+            'bodyLines' => [
+                'Votre contribution nous aide à construire OMW à partir de vrais besoins de mobilité, pas d’hypothèses.',
+                'OMW est encore en phase de développement, et des retours comme le vôtre aident à préparer les premiers tests.',
+            ],
+            'signoffLines' => ['— Daniel', 'OMW'],
+        ];
+    } else {
+        $content = [
+            'subject' => 'Thanks for your input — OMW',
+            'bannerUrl' => ENGLISH_BANNER_URL,
+            'bannerAlt' => 'OMW — Early contributor',
+            'headline' => 'Thanks for being early',
+            'bodyLines' => [
+                'Your input helps us build OMW around real commuting needs, not assumptions.',
+                'We’re still in early development, and responses like yours help shape the first pilots.',
+            ],
+            'signoffLines' => ['— Daniel', 'OMW'],
         ];
     }
 
+    $greeting = '';
+    if ($firstName !== '') {
+        $greeting = $locale === 'fr' ? 'Bonjour ' . $firstName . ',' : 'Hi ' . $firstName . ',';
+    }
+
+    $textLines = [];
+    if ($greeting !== '') {
+        $textLines[] = $greeting;
+        $textLines[] = '';
+    }
+    $textLines[] = $content['headline'] . '.';
+    $textLines[] = '';
+    foreach ($content['bodyLines'] as $line) {
+        $textLines[] = $line;
+    }
+    $textLines[] = '';
+    foreach ($content['signoffLines'] as $line) {
+        $textLines[] = $line;
+    }
+
     return [
-        'to' => $senderEmail,
-        'subject' => 'Thanks — your input helps shape OMW',
-        'body' => implode("\n", [
-            $greeting,
-            '',
-            'Thanks for sharing your details.',
-            '',
-            "OMW is still in an early stage, and that's exactly why your input matters. We're not launching a polished public app tomorrow — we're building carefully around real-world mobility problems, one step at a time.",
-            '',
-            'Responses like yours help us understand where the strongest need is, what people actually expect from a service like this, and how to prepare the first meaningful pilot.',
-            '',
-            "You may hear from us later for a relevant update, a quick feedback request, or early testing access when we're ready. Until then, thanks for being part of the very beginning.",
-            '',
-            '— Daniel',
-            'Founder, OMW',
+        'subject' => $content['subject'],
+        'text' => implode("\n", $textLines),
+        'html' => build_auto_reply_html([
+            'lang' => $locale,
+            'bannerUrl' => $content['bannerUrl'],
+            'bannerAlt' => $content['bannerAlt'],
+            'greeting' => $greeting,
+            'headline' => $content['headline'],
+            'bodyLines' => $content['bodyLines'],
+            'signoffLines' => $content['signoffLines'],
         ]),
     ];
 }
@@ -277,4 +324,74 @@ function extract_first_name(string $name): string {
     $parts = explode(' ', $normalized);
     $firstChunk = $parts[0] ?? '';
     return (string)preg_replace("/^[^\p{L}\p{N}'-]+|[^\p{L}\p{N}'-]+$/u", '', $firstChunk);
+}
+
+function build_auto_reply_html(array $content): string {
+    $lang = (string)($content['lang'] ?? 'en');
+    $bannerUrl = (string)($content['bannerUrl'] ?? '');
+    $bannerAlt = (string)($content['bannerAlt'] ?? '');
+    $greeting = (string)($content['greeting'] ?? '');
+    $headline = (string)($content['headline'] ?? '');
+    $bodyLines = is_array($content['bodyLines'] ?? null) ? $content['bodyLines'] : [];
+    $signoffLines = is_array($content['signoffLines'] ?? null) ? $content['signoffLines'] : [];
+
+    $greetingHtml = '';
+    if ($greeting !== '') {
+        $greetingHtml = '<p style="margin: 0 0 18px; font-family: Arial, Helvetica, sans-serif; font-size: 16px; line-height: 24px; color: #24405f;">' . escape_html($greeting) . '</p>';
+    }
+
+    $bodyHtml = '';
+    foreach ($bodyLines as $line) {
+        $bodyHtml .= '<p style="margin: 0 0 12px; font-family: Arial, Helvetica, sans-serif; font-size: 16px; line-height: 26px; color: #4d637b;">' . escape_html((string)$line) . '</p>';
+    }
+
+    $escapedSignoff = array_map(
+        static fn($line): string => escape_html((string)$line),
+        $signoffLines
+    );
+    $signoffHtml = implode('<br />', $escapedSignoff);
+
+    return implode("\n", [
+        '<!doctype html>',
+        '<html lang="' . escape_html($lang) . '">',
+        '<head>',
+        '  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />',
+        '  <meta name="viewport" content="width=device-width, initial-scale=1.0" />',
+        '  <title>OMW</title>',
+        '</head>',
+        '<body style="margin: 0; padding: 0; background-color: #f3f7fb;">',
+        '  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="width: 100%; border-collapse: collapse; background-color: #f3f7fb;">',
+        '    <tr>',
+        '      <td align="center" style="padding: 24px 12px;">',
+        '        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="width: 100%; max-width: 600px; border-collapse: separate;">',
+        '          <tr>',
+        '            <td style="background-color: #ffffff; border: 1px solid #e4edf6; border-radius: 24px; overflow: hidden;">',
+        '              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="width: 100%; border-collapse: separate;">',
+        '                <tr>',
+        '                  <td style="background-color: #eef5fb; padding: 0;">',
+        '                    <img src="' . escape_html($bannerUrl) . '" alt="' . escape_html($bannerAlt) . '" width="600" style="display: block; width: 100%; max-width: 600px; height: auto; border: 0; background-color: #eef5fb; font-family: Arial, Helvetica, sans-serif; font-size: 18px; line-height: 26px; color: #24405f;" />',
+        '                  </td>',
+        '                </tr>',
+        '                <tr>',
+        '                  <td style="padding: 36px 40px 40px;">',
+        '                    ' . $greetingHtml,
+        '                    <h1 style="margin: 0 0 18px; font-family: Arial, Helvetica, sans-serif; font-size: 30px; line-height: 36px; font-weight: 700; color: #1f3554;">' . escape_html($headline) . '</h1>',
+        '                    ' . $bodyHtml,
+        '                    <p style="margin: 24px 0 0; font-family: Arial, Helvetica, sans-serif; font-size: 16px; line-height: 24px; color: #24405f;">' . $signoffHtml . '</p>',
+        '                  </td>',
+        '                </tr>',
+        '              </table>',
+        '            </td>',
+        '          </tr>',
+        '        </table>',
+        '      </td>',
+        '    </tr>',
+        '  </table>',
+        '</body>',
+        '</html>',
+    ]);
+}
+
+function escape_html(string $value): string {
+    return htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 }

@@ -1,6 +1,10 @@
 const nodemailer = require('nodemailer');
 const querystring = require('querystring');
 
+// Replace these placeholder banner URLs with your hosted email-safe image URLs.
+const ENGLISH_BANNER_URL = 'https://YOUR-DOMAIN.com/path/to/omw-banner-en.png';
+const FRENCH_BANNER_URL = 'https://YOUR-DOMAIN.com/path/to/omw-banner-fr.png';
+
 module.exports = async (req, res) => {
   if (req.method !== 'POST') {
     res.statusCode = 405;
@@ -86,7 +90,11 @@ module.exports = async (req, res) => {
   });
 
   const replyTo = isValidEmail(senderEmail) ? senderEmail : fromEmail;
-  const autoReply = buildAutoReply(payload, senderEmail);
+  const lang = resolveLocale(payload);
+  const firstName = extractFirstName(String(payload.name || '').trim());
+  const autoReply = isValidEmail(senderEmail)
+    ? getAutoReplyEmail({ firstName, lang })
+    : null;
 
   try {
     await transporter.sendMail({
@@ -102,10 +110,11 @@ module.exports = async (req, res) => {
       try {
         await transporter.sendMail({
           from: `${encodeName(fromName)} <${fromEmail}>`,
-          to: autoReply.to,
+          to: senderEmail,
           replyTo: fromEmail,
           subject: autoReply.subject,
-          text: autoReply.text
+          text: autoReply.text,
+          html: autoReply.html
         });
         autoReplySent = true;
       } catch (autoReplyError) {
@@ -142,53 +151,54 @@ function encodeName(name) {
   return '=?UTF-8?B?' + Buffer.from(name, 'utf8').toString('base64') + '?=';
 }
 
-function buildAutoReply(payload, senderEmail) {
-  if (!isValidEmail(senderEmail)) return null;
+function getAutoReplyEmail({ firstName, lang }) {
+  const locale = lang === 'fr' ? 'fr' : 'en';
+  const content = locale === 'fr'
+    ? {
+        subject: 'Merci pour votre contribution — OMW',
+        bannerUrl: FRENCH_BANNER_URL,
+        bannerAlt: 'OMW — Premier contributeur',
+        headline: 'Merci d’être là dès le début',
+        bodyLines: [
+          'Votre contribution nous aide à construire OMW à partir de vrais besoins de mobilité, pas d’hypothèses.',
+          'OMW est encore en phase de développement, et des retours comme le vôtre aident à préparer les premiers tests.'
+        ],
+        signoffLines: ['— Daniel', 'OMW']
+      }
+    : {
+        subject: 'Thanks for your input — OMW',
+        bannerUrl: ENGLISH_BANNER_URL,
+        bannerAlt: 'OMW — Early contributor',
+        headline: 'Thanks for being early',
+        bodyLines: [
+          'Your input helps us build OMW around real commuting needs, not assumptions.',
+          'We’re still in early development, and responses like yours help shape the first pilots.'
+        ],
+        signoffLines: ['— Daniel', 'OMW']
+      };
 
-  const locale = resolveLocale(payload);
-  const firstName = extractFirstName(String(payload.name || '').trim());
   const greeting = firstName
     ? (locale === 'fr' ? `Bonjour ${firstName},` : `Hi ${firstName},`)
-    : (locale === 'fr' ? 'Bonjour,' : 'Hi,');
+    : '';
 
-  if (locale === 'fr') {
-    return {
-      to: senderEmail,
-      subject: 'Merci — ton retour aide à façonner OMW',
-      text: [
-        greeting,
-        '',
-        "Merci d'avoir partagé tes informations.",
-        '',
-        "OMW en est encore à ses débuts, et c'est précisément pour ça que ton retour compte. On ne lance pas une application publique parfaitement aboutie demain : on construit avec soin autour de vrais problèmes de mobilité, une étape après l'autre.",
-        '',
-        "Des réponses comme la tienne nous aident à comprendre où le besoin est le plus fort, ce que les gens attendent vraiment d'un service comme celui-ci, et comment préparer un premier pilote vraiment utile.",
-        '',
-        "Tu auras peut-être de nos nouvelles plus tard pour une mise à jour pertinente, une courte demande de feedback, ou un accès anticipé aux premiers tests quand nous serons prêts. D'ici là, merci de faire partie du tout début.",
-        '',
-        '— Daniel',
-        'Fondateur, OMW'
-      ].join('\n')
-    };
+  const textLines = [];
+  if (greeting) {
+    textLines.push(greeting, '');
   }
+  textLines.push(`${content.headline}.`, '', ...content.bodyLines, '', ...content.signoffLines);
 
   return {
-    to: senderEmail,
-    subject: 'Thanks — your input helps shape OMW',
-    text: [
+    subject: content.subject,
+    text: textLines.join('\n'),
+    html: buildAutoReplyHtml({
+      lang: locale,
+      bannerUrl: content.bannerUrl,
+      bannerAlt: content.bannerAlt,
       greeting,
-      '',
-      'Thanks for sharing your details.',
-      '',
-      "OMW is still in an early stage, and that's exactly why your input matters. We're not launching a polished public app tomorrow — we're building carefully around real-world mobility problems, one step at a time.",
-      '',
-      'Responses like yours help us understand where the strongest need is, what people actually expect from a service like this, and how to prepare the first meaningful pilot.',
-      '',
-      "You may hear from us later for a relevant update, a quick feedback request, or early testing access when we're ready. Until then, thanks for being part of the very beginning.",
-      '',
-      '— Daniel',
-      'Founder, OMW'
-    ].join('\n')
+      headline: content.headline,
+      bodyLines: content.bodyLines,
+      signoffLines: content.signoffLines
+    })
   };
 }
 
@@ -212,4 +222,63 @@ function extractFirstName(name) {
 
   const firstChunk = normalized.split(' ')[0];
   return firstChunk.replace(/^[^A-Za-zÀ-ÖØ-öø-ÿ0-9'-]+|[^A-Za-zÀ-ÖØ-öø-ÿ0-9'-]+$/g, '');
+}
+
+function buildAutoReplyHtml({ lang, bannerUrl, bannerAlt, greeting, headline, bodyLines, signoffLines }) {
+  const greetingHtml = greeting
+    ? `<p style="margin: 0 0 18px; font-family: Arial, Helvetica, sans-serif; font-size: 16px; line-height: 24px; color: #24405f;">${escapeHtml(greeting)}</p>`
+    : '';
+  const bodyHtml = bodyLines
+    .map((line) => `<p style="margin: 0 0 12px; font-family: Arial, Helvetica, sans-serif; font-size: 16px; line-height: 26px; color: #4d637b;">${escapeHtml(line)}</p>`)
+    .join('');
+  const signoffHtml = signoffLines.map((line) => escapeHtml(line)).join('<br />');
+
+  return [
+    '<!doctype html>',
+    `<html lang="${escapeHtml(lang)}">`,
+    '<head>',
+    '  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />',
+    '  <meta name="viewport" content="width=device-width, initial-scale=1.0" />',
+    '  <title>OMW</title>',
+    '</head>',
+    '<body style="margin: 0; padding: 0; background-color: #f3f7fb;">',
+    '  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="width: 100%; border-collapse: collapse; background-color: #f3f7fb;">',
+    '    <tr>',
+    '      <td align="center" style="padding: 24px 12px;">',
+    '        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="width: 100%; max-width: 600px; border-collapse: separate;">',
+    '          <tr>',
+    '            <td style="background-color: #ffffff; border: 1px solid #e4edf6; border-radius: 24px; overflow: hidden;">',
+    '              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="width: 100%; border-collapse: separate;">',
+    '                <tr>',
+    '                  <td style="background-color: #eef5fb; padding: 0;">',
+    `                    <img src="${escapeHtml(bannerUrl)}" alt="${escapeHtml(bannerAlt)}" width="600" style="display: block; width: 100%; max-width: 600px; height: auto; border: 0; background-color: #eef5fb; font-family: Arial, Helvetica, sans-serif; font-size: 18px; line-height: 26px; color: #24405f;" />`,
+    '                  </td>',
+    '                </tr>',
+    '                <tr>',
+    '                  <td style="padding: 36px 40px 40px;">',
+    `                    ${greetingHtml}`,
+    `                    <h1 style="margin: 0 0 18px; font-family: Arial, Helvetica, sans-serif; font-size: 30px; line-height: 36px; font-weight: 700; color: #1f3554;">${escapeHtml(headline)}</h1>`,
+    `                    ${bodyHtml}`,
+    `                    <p style="margin: 24px 0 0; font-family: Arial, Helvetica, sans-serif; font-size: 16px; line-height: 24px; color: #24405f;">${signoffHtml}</p>`,
+    '                  </td>',
+    '                </tr>',
+    '              </table>',
+    '            </td>',
+    '          </tr>',
+    '        </table>',
+    '      </td>',
+    '    </tr>',
+    '  </table>',
+    '</body>',
+    '</html>'
+  ].join('\n');
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }
