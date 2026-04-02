@@ -8,6 +8,10 @@ Open `index.html` (no build step). `<!doctype html>.html` is kept in sync as a l
 ## Configure lead capture (Vercel serverless)
 Forms post to a Vercel serverless function that sends via SMTP.
 
+Each successful submission sends:
+- an internal notification to `MAIL_TO`
+- a plain-text auto-reply to the submitter in French or English, inferred from the submitted form (`(FR)` / `(EN)` in `form_type`, with `locale` / `lang` also supported if you add those fields later)
+
 - Keep `config.js` endpoints pointing to `/api/submit` (default).
 - Set these Environment Variables in Vercel:
   - `SMTP_HOST`
@@ -33,3 +37,4 @@ If you want to use Hostinger PHP instead, copy `api/submit-php.example.php` to `
 ## Notes
 - Forms include a honeypot field for basic spam protection.
 - Success and error states are handled client-side.
+- Auto-reply failures are logged server-side but do not flip the frontend form into an error state after the internal notification has already been sent.

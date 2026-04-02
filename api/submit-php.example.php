@@ -60,7 +60,27 @@ $replyTo = filter_var($senderEmail, FILTER_VALIDATE_EMAIL) ? $senderEmail : $fro
 
 try {
     smtp_send($config, $toEmail, $subject, $body, $fromEmail, $fromName, $replyTo);
-    echo json_encode(['ok' => true]);
+
+    $autoReplySent = false;
+    $autoReply = build_auto_reply($_POST);
+    if ($autoReply !== null) {
+        try {
+            smtp_send(
+                $config,
+                $autoReply['to'],
+                $autoReply['subject'],
+                $autoReply['body'],
+                $fromEmail,
+                $fromName,
+                $fromEmail
+            );
+            $autoReplySent = true;
+        } catch (RuntimeException $err) {
+            error_log('OMW auto-reply failed: ' . $err->getMessage());
+        }
+    }
+
+    echo json_encode(['ok' => true, 'autoReplySent' => $autoReplySent]);
 } catch (RuntimeException $err) {
     http_response_code(500);
     echo json_encode(['ok' => false, 'error' => $err->getMessage()]);
@@ -120,7 +140,7 @@ function smtp_send(
         'From: ' . $encodedFromName . ' <' . $fromEmail . '>',
         'Reply-To: ' . $replyTo,
         'To: ' . $to,
-        'Subject: ' . $subject,
+        'Subject: ' . smtp_encode_header($subject),
         'MIME-Version: 1.0',
         'Content-Type: text/plain; charset=UTF-8',
         'Content-Transfer-Encoding: 8bit',
@@ -168,5 +188,93 @@ function smtp_encode_name(string $name): string {
     if ($name === '') {
         return $name;
     }
-    return '=?UTF-8?B?' . base64_encode($name) . '?=';
+    return smtp_encode_header($name);
+}
+
+function smtp_encode_header(string $value): string {
+    if ($value === '') {
+        return $value;
+    }
+    return '=?UTF-8?B?' . base64_encode($value) . '?=';
+}
+
+function build_auto_reply(array $payload): ?array {
+    $senderEmail = trim((string)($payload['email'] ?? ''));
+    if (!filter_var($senderEmail, FILTER_VALIDATE_EMAIL)) {
+        return null;
+    }
+
+    $locale = resolve_locale($payload);
+    $firstName = extract_first_name((string)($payload['name'] ?? ''));
+    $greeting = $firstName !== ''
+        ? ($locale === 'fr' ? 'Bonjour ' . $firstName . ',' : 'Hi ' . $firstName . ',')
+        : ($locale === 'fr' ? 'Bonjour,' : 'Hi,');
+
+    if ($locale === 'fr') {
+        return [
+            'to' => $senderEmail,
+            'subject' => 'Merci — ton retour aide à façonner OMW',
+            'body' => implode("\n", [
+                $greeting,
+                '',
+                "Merci d'avoir partagé tes informations.",
+                '',
+                "OMW en est encore à ses débuts, et c'est précisément pour ça que ton retour compte. On ne lance pas une application publique parfaitement aboutie demain : on construit avec soin autour de vrais problèmes de mobilité, une étape après l'autre.",
+                '',
+                "Des réponses comme la tienne nous aident à comprendre où le besoin est le plus fort, ce que les gens attendent vraiment d'un service comme celui-ci, et comment préparer un premier pilote vraiment utile.",
+                '',
+                "Tu auras peut-être de nos nouvelles plus tard pour une mise à jour pertinente, une courte demande de feedback, ou un accès anticipé aux premiers tests quand nous serons prêts. D'ici là, merci de faire partie du tout début.",
+                '',
+                '— Daniel',
+                'Fondateur, OMW',
+            ]),
+        ];
+    }
+
+    return [
+        'to' => $senderEmail,
+        'subject' => 'Thanks — your input helps shape OMW',
+        'body' => implode("\n", [
+            $greeting,
+            '',
+            'Thanks for sharing your details.',
+            '',
+            "OMW is still in an early stage, and that's exactly why your input matters. We're not launching a polished public app tomorrow — we're building carefully around real-world mobility problems, one step at a time.",
+            '',
+            'Responses like yours help us understand where the strongest need is, what people actually expect from a service like this, and how to prepare the first meaningful pilot.',
+            '',
+            "You may hear from us later for a relevant update, a quick feedback request, or early testing access when we're ready. Until then, thanks for being part of the very beginning.",
+            '',
+            '— Daniel',
+            'Founder, OMW',
+        ]),
+    ];
+}
+
+function resolve_locale(array $payload): string {
+    $localeCandidate = strtolower(trim((string)($payload['locale'] ?? $payload['lang'] ?? $payload['language'] ?? '')));
+    if (strpos($localeCandidate, 'fr') === 0) {
+        return 'fr';
+    }
+    if (strpos($localeCandidate, 'en') === 0) {
+        return 'en';
+    }
+
+    $formType = strtolower(trim((string)($payload['form_type'] ?? '')));
+    if (strpos($formType, '(fr)') !== false || preg_match('/\bfr\b/i', $formType) === 1) {
+        return 'fr';
+    }
+
+    return 'en';
+}
+
+function extract_first_name(string $name): string {
+    $normalized = trim((string)preg_replace('/\s+/u', ' ', trim($name)));
+    if ($normalized === '') {
+        return '';
+    }
+
+    $parts = explode(' ', $normalized);
+    $firstChunk = $parts[0] ?? '';
+    return (string)preg_replace("/^[^\p{L}\p{N}'-]+|[^\p{L}\p{N}'-]+$/u", '', $firstChunk);
 }
