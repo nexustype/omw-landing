@@ -1467,6 +1467,13 @@
       line-height: 1.4;
     }
 
+    .formStatusDetail {
+      display: block;
+      margin-top: 4px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      white-space: pre-wrap;
+    }
+
     .formStatus.success { color: #0f6f5d; }
     .formStatus.error { color: #9f3030; }
 
@@ -1914,7 +1921,10 @@
                     <span class="note" data-panel-submit-note></span>
                   </div>
                   <div class="formStatus success" role="status" aria-live="polite">Merci. On te tient au courant.</div>
-                  <div class="formStatus error" role="status" aria-live="polite">Oups, échec. Écris-nous à <a href="mailto:hello@rideomw.com">hello@rideomw.com</a>.</div>
+                  <div class="formStatus error" role="status" aria-live="polite">
+                    <span>Oups, échec. Écris-nous à <a href="mailto:hello@rideomw.com">hello@rideomw.com</a>.</span>
+                    <span class="formStatusDetail" data-form-error-detail hidden></span>
+                  </div>
                 </form>
               </section>
 
@@ -1984,7 +1994,10 @@
                     <span class="note" data-panel-submit-note></span>
                   </div>
                   <div class="formStatus success" role="status" aria-live="polite">Merci. Nous revenons vite vers toi.</div>
-                  <div class="formStatus error" role="status" aria-live="polite">Oups, échec. Écris-nous à <a href="mailto:hello@rideomw.com">hello@rideomw.com</a>.</div>
+                  <div class="formStatus error" role="status" aria-live="polite">
+                    <span>Oups, échec. Écris-nous à <a href="mailto:hello@rideomw.com">hello@rideomw.com</a>.</span>
+                    <span class="formStatusDetail" data-form-error-detail hidden></span>
+                  </div>
                 </form>
               </section>
             </div>
@@ -2189,7 +2202,10 @@
                     <span class="note" data-panel-submit-note></span>
                   </div>
                   <div class="formStatus success" role="status" aria-live="polite">Thanks. We'll keep you posted.</div>
-                  <div class="formStatus error" role="status" aria-live="polite">Something went wrong. Email us at <a href="mailto:hello@rideomw.com">hello@rideomw.com</a>.</div>
+                  <div class="formStatus error" role="status" aria-live="polite">
+                    <span>Something went wrong. Email us at <a href="mailto:hello@rideomw.com">hello@rideomw.com</a>.</span>
+                    <span class="formStatusDetail" data-form-error-detail hidden></span>
+                  </div>
                 </form>
               </section>
 
@@ -2259,7 +2275,10 @@
                     <span class="note" data-panel-submit-note></span>
                   </div>
                   <div class="formStatus success" role="status" aria-live="polite">Thanks. We'll get back to you soon.</div>
-                  <div class="formStatus error" role="status" aria-live="polite">Something went wrong. Email us at <a href="mailto:hello@rideomw.com">hello@rideomw.com</a>.</div>
+                  <div class="formStatus error" role="status" aria-live="polite">
+                    <span>Something went wrong. Email us at <a href="mailto:hello@rideomw.com">hello@rideomw.com</a>.</span>
+                    <span class="formStatusDetail" data-form-error-detail hidden></span>
+                  </div>
                 </form>
               </section>
             </div>
@@ -3441,10 +3460,11 @@
             if (typeof value === "string") payload.append(key, value);
           });
 
+          resetFormErrorDetail(form);
           form.setAttribute("data-state", "loading");
 
           if (!endpoint) {
-            form.setAttribute("data-state", "error");
+            setFormError(form, "");
             return;
           }
 
@@ -3458,17 +3478,55 @@
               body: payload.toString()
             });
 
-            if (response.ok) {
+            const responseText = await response.text();
+            let responsePayload = null;
+            if (responseText) {
+              try {
+                responsePayload = JSON.parse(responseText);
+              } catch (err) {
+                responsePayload = null;
+              }
+            }
+
+            if (response.ok && (!responsePayload || responsePayload.ok !== false)) {
               form.reset();
+              resetFormErrorDetail(form);
               form.setAttribute("data-state", "success");
             } else {
-              form.setAttribute("data-state", "error");
+              const errorMessage = responsePayload && typeof responsePayload.error === "string"
+                ? responsePayload.error
+                : [response.status, response.statusText].filter(Boolean).join(" ");
+              setFormError(form, errorMessage);
             }
           } catch (err) {
-            form.setAttribute("data-state", "error");
+            const errorMessage = err && typeof err.message === "string" ? err.message : "";
+            setFormError(form, errorMessage);
           }
         });
       });
+
+      function setFormError(form, message) {
+        const detail = form.querySelector("[data-form-error-detail]");
+        if (detail) {
+          const prefix = isFrenchForm(form) ? "Détail serveur : " : "Server detail: ";
+          const cleanMessage = typeof message === "string" ? message.trim() : "";
+          detail.textContent = cleanMessage ? prefix + cleanMessage : "";
+          detail.hidden = !cleanMessage;
+        }
+
+        form.setAttribute("data-state", "error");
+      }
+
+      function resetFormErrorDetail(form) {
+        const detail = form.querySelector("[data-form-error-detail]");
+        if (!detail) return;
+        detail.textContent = "";
+        detail.hidden = true;
+      }
+
+      function isFrenchForm(form) {
+        return form.id.endsWith("-fr");
+      }
     })();
   </script>
 </body>
