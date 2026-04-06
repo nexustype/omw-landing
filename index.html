@@ -115,6 +115,11 @@
       --pill-h: 74px;
       --pill-offset: clamp(48px, 12svh, 120px);
       --pill-clearance: 132px;
+      --mobile-safe-top: env(safe-area-inset-top);
+      --mobile-safe-bottom: env(safe-area-inset-bottom);
+      --mobile-topbar-h: 0px;
+      --mobile-bottomdock-h: 0px;
+      --mobile-visible-content-h: 100svh;
     }
 
     * {
@@ -191,6 +196,7 @@
       position: fixed;
       inset: 0 0 auto;
       z-index: 80;
+      padding-top: env(safe-area-inset-top);
       backdrop-filter: blur(14px);
       background: rgba(255, 255, 255, 0.78);
       border-bottom: 1px solid var(--stroke);
@@ -217,11 +223,30 @@
       border-radius: 11px;
     }
 
-    .brand span {
+    .brandWordmark {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 6px;
+      min-width: 0;
+      white-space: nowrap;
+    }
+
+    .brandWordmark strong,
+    .brandWordmark em {
+      font-style: normal;
+      letter-spacing: 0.02em;
+    }
+
+    .brandWordmark strong {
       font-size: clamp(1rem, 2vw, 1.25rem);
       font-weight: 800;
-      letter-spacing: 0.02em;
-      white-space: nowrap;
+      color: var(--ink);
+    }
+
+    .brandWordmark em {
+      font-size: clamp(0.92rem, 1.7vw, 1.06rem);
+      font-weight: 700;
+      color: var(--muted);
     }
 
     .right {
@@ -518,6 +543,10 @@
       backdrop-filter: blur(12px);
     }
 
+    .heroKicker {
+      display: none;
+    }
+
     .heroBadge::before {
       content: "";
       width: 8px;
@@ -560,6 +589,7 @@
     }
 
     .heroTiny {
+      display: none;
       margin-top: 14px;
       color: rgba(255, 255, 255, 0.72);
       font-size: 13px;
@@ -663,6 +693,7 @@
       transform: translateX(-50%);
       z-index: 70;
       pointer-events: none;
+      transition: transform 0.18s ease, opacity 0.18s ease;
     }
 
     .personaDockInner {
@@ -1276,6 +1307,65 @@
       border-color: rgba(192, 52, 52, 0.18);
     }
 
+    .comparisonCards {
+      display: none;
+    }
+
+    .comparisonCard {
+      border: 1px solid rgba(16, 24, 42, 0.08);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: 0 12px 24px rgba(16, 24, 42, 0.06);
+      padding: 16px 18px;
+    }
+
+    .comparisonCardHeader {
+      margin: 0 0 12px;
+      font-size: 15px;
+      font-weight: 800;
+      line-height: 1.4;
+      color: rgba(16, 24, 42, 0.94);
+    }
+
+    .comparisonCardRows {
+      display: grid;
+      gap: 8px;
+    }
+
+    .comparisonCardRow {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(244, 247, 251, 0.9);
+    }
+
+    .comparisonCardRow--omw {
+      background: linear-gradient(120deg, rgba(26, 95, 208, 0.11), rgba(12, 163, 137, 0.06));
+    }
+
+    .comparisonCardBrand {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      line-height: 1;
+      text-transform: uppercase;
+      color: var(--muted-soft);
+    }
+
+    .comparisonCardValue {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: rgba(16, 24, 42, 0.88);
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.2;
+      text-align: right;
+    }
+
     .faq {
       margin: 24px 0 0;
       display: grid;
@@ -1505,6 +1595,28 @@
       .testimonialLayout {
         grid-template-columns: 1fr;
       }
+
+      .comparisonTable {
+        min-width: 0;
+      }
+
+      .comparisonTable thead th {
+        letter-spacing: 0.08em;
+      }
+
+      .comparisonTable th:nth-child(2),
+      .comparisonTable th:nth-child(3),
+      .comparisonTable td:nth-child(2),
+      .comparisonTable td:nth-child(3) {
+        width: 27.5%;
+        min-width: 160px;
+      }
+
+      .comparisonTable th:first-child,
+      .comparisonTable td:first-child {
+        width: 45%;
+        min-width: 0;
+      }
     }
 
     @media (max-width: 940px) {
@@ -1631,6 +1743,557 @@
       }
     }
 
+    @media (max-width: 768px) {
+      :root {
+        --mobile-frame-gap: 0px;
+        --mobile-visible-content-h: calc(100svh - var(--mobile-topbar-h) - var(--mobile-bottomdock-h));
+      }
+
+      html,
+      body {
+        height: auto;
+        min-height: 100%;
+      }
+
+      body {
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+
+      header {
+        box-shadow: 0 10px 22px rgba(16, 24, 42, 0.08);
+      }
+
+      .wrap {
+        width: min(100%, calc(100% - 16px));
+      }
+
+      .nav {
+        gap: 8px;
+        padding: 10px 0;
+        flex-wrap: nowrap;
+        min-height: 56px;
+      }
+
+      .brand {
+        gap: 8px;
+        flex: 1 1 auto;
+      }
+
+      .brand img {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        flex: none;
+      }
+
+      .brandWordmark {
+        gap: 0;
+        min-width: 0;
+        overflow: hidden;
+      }
+
+      .brandWordmark strong {
+        display: none;
+      }
+
+      .brandWordmark em {
+        display: block;
+        overflow: hidden;
+        color: var(--ink);
+        font-size: clamp(0.74rem, 3.1vw, 0.84rem);
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        text-overflow: ellipsis;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+
+      .right {
+        gap: 6px;
+        flex-wrap: nowrap;
+        flex: 0 0 auto;
+      }
+
+      .right .cta {
+        order: 2;
+        align-items: center;
+        justify-content: center;
+        height: 40px;
+        min-height: 40px;
+        padding: 0 12px;
+        font-size: 12px;
+      }
+
+      .langToggle {
+        order: 1;
+        display: inline-flex;
+        align-items: stretch;
+        height: 40px;
+        box-shadow: none;
+      }
+
+      .langToggle label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 40px;
+        min-width: 38px;
+        padding: 0 10px;
+        text-align: center;
+      }
+
+      main {
+        height: auto;
+        min-height: 100%;
+        overflow: visible;
+        scroll-snap-type: none;
+        overscroll-behavior-y: auto;
+        -webkit-overflow-scrolling: auto;
+        padding-top: var(--mobile-topbar-h);
+        padding-bottom: calc(var(--mobile-bottomdock-h) + 24px);
+      }
+
+      .content.fr,
+      .content.en {
+        min-height: 0;
+      }
+
+      .landingSection {
+        min-height: auto;
+        padding: 0 0 18px;
+        scroll-snap-align: none;
+        scroll-snap-stop: normal;
+        scroll-margin-top: calc(var(--mobile-topbar-h) + 20px);
+      }
+
+      .sectionShell {
+        min-height: auto;
+        display: block;
+      }
+
+      .sectionSurface {
+        padding: 18px;
+        border-radius: 22px;
+      }
+
+      .kicker {
+        font-size: 11px;
+        letter-spacing: 0.12em;
+      }
+
+      .sectionTitle {
+        margin-top: 8px;
+        font-size: clamp(1.55rem, 7vw, 2.05rem);
+        line-height: 1.08;
+      }
+
+      .sectionLead {
+        margin-top: 10px;
+        max-width: 34ch;
+        font-size: 14px;
+        line-height: 1.56;
+      }
+
+      .heroSection {
+        min-height: calc(var(--mobile-visible-content-h) - 4px);
+        padding-bottom: 16px;
+      }
+
+      .heroSection .sectionShell,
+      .heroSection .sectionSurface {
+        min-height: calc(var(--mobile-visible-content-h) - 4px);
+      }
+
+      .heroSection .sectionSurface {
+        padding: 0 0 18px;
+        border: none;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+        backdrop-filter: none;
+      }
+
+      .heroSplit {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        min-height: 100%;
+      }
+
+      .heroVisual {
+        position: relative;
+        inset: auto;
+        order: 1;
+        min-height: 0;
+        height: clamp(300px, 50svh, 430px);
+        border-radius: 0;
+        box-shadow: 0 20px 40px rgba(16, 24, 42, 0.12);
+      }
+
+      .heroVisual::after {
+        content: none;
+      }
+
+      .heroSplit[data-persona="rider"] .heroLayer.rider img {
+        object-position: 72% 38%;
+      }
+
+      .heroSplit[data-persona="driver"] .heroLayer.driver img {
+        object-position: 60% 32%;
+      }
+
+      .heroSection .heroContent {
+        order: 2;
+        position: relative;
+        width: 100%;
+        min-height: auto;
+        margin: 0;
+        padding: 18px 6px 0;
+        border: none;
+        background: transparent;
+        box-shadow: none;
+      }
+
+      .heroKicker {
+        display: none;
+      }
+
+      .heroBadge {
+        display: none;
+      }
+
+      .heroTitle {
+        position: absolute;
+        left: 14px;
+        right: 14px;
+        bottom: calc(100% + 30px);
+        margin: 0;
+        max-width: 10ch;
+        font-size: clamp(1.74rem, 8.3vw, 2.3rem);
+        color: #ffffff;
+        text-shadow: 0 10px 28px rgba(8, 14, 27, 0.58);
+      }
+
+      .heroSub {
+        margin-top: 0;
+        max-width: none;
+        width: 100%;
+        color: var(--muted);
+        font-size: 14.5px;
+        line-height: 1.5;
+        text-shadow: none;
+        padding: 0 6px;
+      }
+
+      .heroActions {
+        margin-top: 12px;
+        width: 100%;
+        padding: 0 6px;
+      }
+
+      .heroActions .btn {
+        width: 100%;
+        min-height: 44px;
+        padding: 12px 16px;
+        font-size: 14px;
+      }
+
+      .heroTiny {
+        display: none;
+      }
+
+      .personaHint {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        bottom: calc(100% + 10px);
+        padding: 9px 12px;
+        border-radius: 12px;
+        border: 1px solid rgba(205, 171, 62, 0.52);
+        background: linear-gradient(180deg, #fff3b8 0%, #ffe58d 100%);
+        box-shadow:
+          0 8px 18px rgba(16, 24, 42, 0.12),
+          0 1px 0 rgba(255, 255, 255, 0.72);
+        color: #604d14;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        line-height: 1.1;
+        text-transform: uppercase;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transform: translate(-50%, 8px) rotate(-1.4deg);
+      }
+
+      .personaHint::after {
+        bottom: -5px;
+        width: 9px;
+        height: 9px;
+        border-right: 1px solid rgba(205, 171, 62, 0.52);
+        border-bottom: 1px solid rgba(205, 171, 62, 0.52);
+        background: #ffe58d;
+      }
+
+      .personaHint.is-visible {
+        opacity: 1;
+        visibility: visible;
+        transform: translate(-50%, 0) rotate(-1.4deg);
+        transition-delay: 0s;
+      }
+
+      .personaDock {
+        left: 0;
+        right: 0;
+        bottom: 0;
+        transform: none;
+        padding: 6px 0 calc(var(--mobile-safe-bottom) + 6px);
+        background:
+          linear-gradient(180deg, rgba(247, 249, 252, 0) 0%, rgba(247, 249, 252, 0.78) 22%, rgba(247, 249, 252, 0.95) 58%, rgba(247, 249, 252, 0.98) 100%);
+        backdrop-filter: blur(18px);
+        border-top: 1px solid rgba(16, 24, 42, 0.06);
+      }
+
+      .personaDockInner {
+        width: min(100%, calc(100% - 16px));
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+      }
+
+      .comparisonToggle {
+        --toggle-knob: 36px;
+        width: min(220px, 100%);
+        min-height: 50px;
+        border-color: rgba(193, 205, 219, 0.96);
+        background: rgba(255, 255, 255, 0.92);
+        box-shadow:
+          0 8px 18px rgba(16, 24, 42, 0.12),
+          inset 0 1px 0 rgba(255, 255, 255, 0.72);
+      }
+
+      .comparisonToggle::before {
+        inset: 3px;
+      }
+
+      .comparisonToggleBtn {
+        min-height: 50px;
+      }
+
+      .comparisonToggleLabel {
+        width: calc(100% - var(--toggle-knob) - 14px);
+        padding: 0 6px;
+      }
+
+      .toggleModeLabel {
+        font-size: clamp(0.64rem, 2.5vw, 0.8rem);
+        letter-spacing: 0.05em;
+      }
+
+      .comparisonToggleKnob {
+        left: 5px;
+        width: var(--toggle-knob);
+        height: var(--toggle-knob);
+        box-shadow:
+          0 4px 12px rgba(46, 54, 66, 0.18),
+          inset 0 1px 0 rgba(255, 255, 255, 0.98),
+          inset 0 -3px 8px rgba(198, 206, 217, 0.36);
+      }
+
+      .comparisonToggle[data-mode="driver"] .comparisonToggleKnob {
+        left: calc(100% - var(--toggle-knob) - 5px);
+      }
+
+      .featureGrid {
+        margin-top: 20px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .featureCard {
+        min-height: 0;
+        padding: 14px 12px;
+        border-radius: 18px;
+        text-align: left;
+      }
+
+      .featureIcon {
+        width: 34px;
+        height: 34px;
+        margin: 0 0 10px;
+      }
+
+      .featureIcon img {
+        width: 24px;
+        height: 24px;
+      }
+
+      .featureCard h3 {
+        font-size: 0.98rem;
+        line-height: 1.28;
+      }
+
+      .featureCard p {
+        margin-top: 6px;
+        font-size: 13px;
+        line-height: 1.45;
+      }
+
+      .featureSectionAction {
+        margin-top: 18px;
+      }
+
+      .featureGuideBtn {
+        min-width: 100%;
+        padding: 13px 18px;
+        font-size: 14px;
+      }
+
+      .testimonialLayout {
+        margin-top: 20px;
+        gap: 0;
+      }
+
+      .testimonial-card,
+      .testimonial-card--featured {
+        padding: 20px;
+        border-radius: 18px;
+      }
+
+      .testimonial-card:not(.testimonial-card--featured) {
+        display: none;
+      }
+
+      .stars {
+        margin-bottom: 14px;
+        font-size: 17px;
+      }
+
+      .testimonial-card h3 {
+        font-size: 1.28rem;
+      }
+
+      .testimonial-card blockquote {
+        margin-top: 12px;
+        font-size: 0.97rem;
+        line-height: 1.6;
+      }
+
+      .divider {
+        margin: 18px 0 14px;
+      }
+
+      .author {
+        gap: 10px;
+        font-size: 0.92rem;
+      }
+
+      .comparisonTableWrap {
+        display: none;
+      }
+
+      .comparisonCards {
+        display: grid;
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .comparisonCard {
+        padding: 14px;
+        border-radius: 18px;
+      }
+
+      .comparisonCardHeader {
+        margin-bottom: 10px;
+        font-size: 14px;
+      }
+
+      .comparisonCardRow {
+        padding: 10px 12px;
+      }
+
+      .comparisonCardValue .comparisonMark {
+        width: 28px;
+        height: 28px;
+        font-size: 15px;
+      }
+
+      .faq {
+        margin-top: 18px;
+        gap: 8px;
+      }
+
+      .faq summary {
+        padding: 14px 15px;
+        font-size: 0.95rem;
+      }
+
+      .faq details p {
+        padding: 0 15px 14px;
+        font-size: 13px;
+      }
+
+      .formsGrid {
+        gap: 12px;
+      }
+
+      .formCard {
+        padding: 18px;
+        border-radius: 18px;
+      }
+
+      .formCard h3 {
+        font-size: 1.35rem;
+      }
+
+      input,
+      select,
+      textarea {
+        min-height: 44px;
+      }
+
+      textarea {
+        min-height: 88px;
+      }
+
+      .formActions {
+        align-items: stretch;
+      }
+
+      .formActions .btn {
+        width: 100%;
+        min-height: 46px;
+      }
+
+      .betaFooterWrap {
+        position: static;
+        margin-top: 16px;
+      }
+
+      .siteFooter {
+        margin-top: 0;
+        padding-top: 18px;
+        font-size: 12px;
+        gap: 8px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .featureGrid {
+        grid-template-columns: 1fr;
+      }
+
+      .right .cta {
+        padding: 0 10px;
+      }
+
+      .comparisonToggle {
+        width: min(calc(100vw - 24px), 196px);
+      }
+    }
+
     #lang-fr:checked ~ .personaDock .comparisonToggle[data-mode="rider"] .toggleModeLabel.rider.fr,
     #lang-fr:checked ~ .personaDock .comparisonToggle[data-mode="driver"] .toggleModeLabel.driver.fr,
     #lang-en:checked ~ .personaDock .comparisonToggle[data-mode="rider"] .toggleModeLabel.rider.en,
@@ -1672,7 +2335,7 @@
     <div class="wrap nav">
       <a class="brand" href="#top" aria-label="OMW - On My Way accueil">
         <img src="Icon.png" alt="Logo OMW" />
-        <span>OMW - On My Way</span>
+        <span class="brandWordmark"><strong>OMW</strong><em>On My Way</em></span>
       </a>
 
       <div class="right">
@@ -1690,8 +2353,8 @@
   <div class="personaDock" aria-hidden="false">
     <div class="personaDockInner">
       <div class="personaHint" data-persona-hint aria-hidden="true">
-        <span class="hintText fr">Essayez-moi</span>
-        <span class="hintText en">Try me</span>
+        <span class="hintText fr">Choisis ton profil</span>
+        <span class="hintText en">Choose profile</span>
       </div>
       <div class="comparisonToggle" role="group" aria-label="Basculer entre passager et conducteur" data-persona-toggle data-mode="rider">
         <span class="comparisonToggleLabel" aria-hidden="true">
@@ -1731,12 +2394,14 @@
           <div class="sectionSurface dynamicSwap" data-dynamic-section="hero">
             <div class="heroSplit" data-split-hero data-persona="rider">
               <div class="heroContent">
+                <p class="kicker heroKicker" data-hero-kicker></p>
                 <span class="heroBadge" data-hero-badge></span>
                 <h1 class="heroTitle" data-hero-title></h1>
                 <p class="heroSub" data-hero-description></p>
                 <div class="heroActions">
                   <a class="btn primary" href="#beta-fr" data-hero-cta></a>
                 </div>
+                <p class="heroTiny" data-hero-note></p>
               </div>
 
               <div class="heroVisual" aria-hidden="true">
@@ -1823,6 +2488,7 @@
                 <tbody data-comparison-body></tbody>
               </table>
             </div>
+            <div class="comparisonCards" data-comparison-cards></div>
           </div>
         </div>
       </section>
@@ -2006,12 +2672,14 @@
           <div class="sectionSurface dynamicSwap" data-dynamic-section="hero">
             <div class="heroSplit" data-split-hero data-persona="rider">
               <div class="heroContent">
+                <p class="kicker heroKicker" data-hero-kicker></p>
                 <span class="heroBadge" data-hero-badge></span>
                 <h1 class="heroTitle" data-hero-title></h1>
                 <p class="heroSub" data-hero-description></p>
                 <div class="heroActions">
                   <a class="btn primary" href="#beta-en" data-hero-cta></a>
                 </div>
+                <p class="heroTiny" data-hero-note></p>
               </div>
 
               <div class="heroVisual" aria-hidden="true">
@@ -2098,6 +2766,7 @@
                 <tbody data-comparison-body></tbody>
               </table>
             </div>
+            <div class="comparisonCards" data-comparison-cards></div>
           </div>
         </div>
       </section>
@@ -2286,6 +2955,7 @@
       };
 
       const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+      const mobileLayoutQuery = window.matchMedia("(max-width: 768px)");
       const main = document.querySelector("main");
       const header = document.querySelector("header");
       const personaDock = document.querySelector(".personaDock");
@@ -2461,13 +3131,13 @@
             },
             comparison: {
               kicker: "Comparatif",
-              title: "OMW vs. Applications Covoiturage",
+              title: "OMW vs. Appli. Covoiturage",
               lead: "Le sujet ici n'est pas seulement le covoit, mais la friction côté conducteur sur un trajet habituel.",
-              caption: "Comparatif OMW versus applications de covoiturage pour les conducteurs",
+              caption: "Comparatif OMW versus appli. de covoiturage pour les conducteurs",
               columns: {
                 label: "Fonctionnalité",
                 omw: "OMW",
-                other: "Applications covoiturage"
+                other: "App. Covoiturage"
               },
               rows: [
                 { label: "Organiser un trajet en moins de 2 minutes", omw: true, other: false },
@@ -2768,11 +3438,19 @@
         } catch (err) {}
       }
 
-      const shouldRunPersonaIntro = !prefersReduced.matches && !initialHash && !hasSeenPersonaIntro();
+      const shouldRunPersonaIntro = !mobileLayoutQuery.matches && !prefersReduced.matches && !initialHash && !hasSeenPersonaIntro();
       let currentPersona = shouldRunPersonaIntro ? "driver" : "rider";
       let personaIntroTimer = 0;
       let personaIntroActive = false;
       let detachPersonaIntroCancels = null;
+      let mobilePersonaInitialTimer = 0;
+      let mobilePersonaIdleTimer = 0;
+      let mobilePersonaHintTimer = 0;
+      let detachMobilePersonaAutomation = null;
+
+      function isMobileLayout() {
+        return mobileLayoutQuery.matches;
+      }
 
       function syncReducedClass() {
         document.documentElement.classList.toggle("reduced-motion", prefersReduced.matches);
@@ -2786,16 +3464,36 @@
         document.documentElement.lang = getCurrentLocale() === "fr" ? "fr" : "en";
       }
 
+      function getScrollMetrics() {
+        if (isMobileLayout()) {
+          const scrollingElement = document.scrollingElement || document.documentElement;
+          return {
+            top: window.scrollY || scrollingElement.scrollTop || 0,
+            clientHeight: window.innerHeight || document.documentElement.clientHeight || 0,
+            scrollHeight: Math.max(scrollingElement.scrollHeight, document.body.scrollHeight)
+          };
+        }
+
+        return {
+          top: main ? main.scrollTop : 0,
+          clientHeight: main ? main.clientHeight : (window.innerHeight || 0),
+          scrollHeight: main ? main.scrollHeight : document.documentElement.scrollHeight
+        };
+      }
+
       function syncLayoutVars() {
         const headerHeight = header ? header.offsetHeight : 84;
-        const pillHeight = personaDock ? personaDock.offsetHeight : 74;
+        const mobile = isMobileLayout();
+        const pillHeight = personaDock ? personaDock.offsetHeight : (mobile ? 56 : 74);
         const viewportHeight = window.innerHeight || 900;
-        const pillOffset = Math.max(Math.min(Math.round(viewportHeight * 0.12), 120), 48);
-        const pillClearance = pillOffset + pillHeight + 40;
+        const pillOffset = mobile ? 12 : Math.max(Math.min(Math.round(viewportHeight * 0.12), 120), 48);
+        const pillClearance = pillOffset + pillHeight + (mobile ? 28 : 40);
         document.documentElement.style.setProperty("--header-h", headerHeight + "px");
         document.documentElement.style.setProperty("--pill-h", pillHeight + "px");
         document.documentElement.style.setProperty("--pill-offset", pillOffset + "px");
         document.documentElement.style.setProperty("--pill-clearance", pillClearance + "px");
+        document.documentElement.style.setProperty("--mobile-topbar-h", mobile ? (headerHeight + "px") : "0px");
+        document.documentElement.style.setProperty("--mobile-bottomdock-h", mobile ? (pillHeight + "px") : "0px");
       }
 
       function scheduleLayoutSync() {
@@ -2821,6 +3519,21 @@
         personaIntroTimer = 0;
       }
 
+      function clearMobilePersonaTimers() {
+        if (mobilePersonaInitialTimer) {
+          window.clearTimeout(mobilePersonaInitialTimer);
+          mobilePersonaInitialTimer = 0;
+        }
+        if (mobilePersonaIdleTimer) {
+          window.clearTimeout(mobilePersonaIdleTimer);
+          mobilePersonaIdleTimer = 0;
+        }
+        if (mobilePersonaHintTimer) {
+          window.clearTimeout(mobilePersonaHintTimer);
+          mobilePersonaHintTimer = 0;
+        }
+      }
+
       function cancelPersonaIntro() {
         clearPersonaIntroTimer();
         if (typeof detachPersonaIntroCancels === "function") {
@@ -2829,6 +3542,75 @@
         }
         personaIntroActive = false;
         hidePersonaHint();
+      }
+
+      function hasFocusedFormField() {
+        const active = document.activeElement;
+        return active instanceof Element && active.matches("input, select, textarea");
+      }
+
+      function runMobilePersonaAutoToggle() {
+        if (!isMobileLayout() || prefersReduced.matches || document.hidden || hasFocusedFormField()) return;
+        setPersona(currentPersona === "rider" ? "driver" : "rider", { source: "mobile-auto" });
+      }
+
+      function scheduleMobilePersonaIdleToggle(delay) {
+        if (mobilePersonaIdleTimer) {
+          window.clearTimeout(mobilePersonaIdleTimer);
+          mobilePersonaIdleTimer = 0;
+        }
+        if (!isMobileLayout() || prefersReduced.matches) return;
+
+        mobilePersonaIdleTimer = window.setTimeout(() => {
+          mobilePersonaIdleTimer = 0;
+          runMobilePersonaAutoToggle();
+        }, typeof delay === "number" ? delay : 5000);
+      }
+
+      function stopMobilePersonaAutomation() {
+        clearMobilePersonaTimers();
+        hidePersonaHint();
+        if (typeof detachMobilePersonaAutomation === "function") {
+          detachMobilePersonaAutomation();
+          detachMobilePersonaAutomation = null;
+        }
+      }
+
+      function initMobilePersonaAutomation() {
+        stopMobilePersonaAutomation();
+        if (!isMobileLayout() || prefersReduced.matches) return;
+
+        showPersonaHint();
+        mobilePersonaHintTimer = window.setTimeout(() => {
+          mobilePersonaHintTimer = 0;
+          hidePersonaHint();
+        }, 30000);
+
+        const armIdleToggle = () => {
+          if (mobilePersonaInitialTimer) {
+            window.clearTimeout(mobilePersonaInitialTimer);
+            mobilePersonaInitialTimer = 0;
+          }
+          scheduleMobilePersonaIdleToggle(5000);
+        };
+
+        ["pointerdown", "keydown", "wheel", "touchstart"].forEach((eventName) => {
+          window.addEventListener(eventName, armIdleToggle, false);
+        });
+        window.addEventListener("scroll", armIdleToggle, { passive: true });
+
+        detachMobilePersonaAutomation = () => {
+          ["pointerdown", "keydown", "wheel", "touchstart"].forEach((eventName) => {
+            window.removeEventListener(eventName, armIdleToggle, false);
+          });
+          window.removeEventListener("scroll", armIdleToggle, { passive: true });
+        };
+
+        mobilePersonaInitialTimer = window.setTimeout(() => {
+          mobilePersonaInitialTimer = 0;
+          runMobilePersonaAutoToggle();
+          scheduleMobilePersonaIdleToggle(5000);
+        }, 1400);
       }
 
       function scheduleScrollRailSync() {
@@ -2840,7 +3622,7 @@
       }
 
       function showScrollDockTemporarily(delay) {
-        if (!scrollDock || scrollDock.hidden) return;
+        if (!scrollDock || scrollDock.hidden || isMobileLayout()) return;
         scrollDock.classList.add("is-visible");
         if (scrollDockHideTimer) window.clearTimeout(scrollDockHideTimer);
         scrollDockHideTimer = window.setTimeout(() => {
@@ -2852,31 +3634,61 @@
       }
 
       function smoothScrollTo(id) {
-        if (!main) return;
+        const behavior = prefersReduced.matches ? "auto" : "smooth";
 
         if (!id || id === "top") {
-          main.scrollTo({
-            top: 0,
-            behavior: prefersReduced.matches ? "auto" : "smooth"
-          });
+          if (isMobileLayout()) {
+            window.scrollTo({
+              top: 0,
+              behavior
+            });
+          } else if (main) {
+            main.scrollTo({
+              top: 0,
+              behavior
+            });
+          }
           return;
         }
 
         const target = document.getElementById(id);
         if (!target) return;
+
+        if (isMobileLayout()) {
+          const frameGap = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--mobile-frame-gap")) || 0;
+          const headerOffset = (header ? header.offsetHeight : 0) + frameGap + 18;
+          const targetTop = Math.max(window.scrollY + target.getBoundingClientRect().top - headerOffset, 0);
+          window.scrollTo({
+            top: targetTop,
+            behavior
+          });
+          return;
+        }
+
         target.scrollIntoView({
-          behavior: prefersReduced.matches ? "auto" : "smooth",
+          behavior,
           block: "start"
         });
       }
 
       function scrollMainToProgress(progress, behavior) {
-        if (!main) return;
-        const maxScroll = Math.max(main.scrollHeight - main.clientHeight, 0);
+        const metrics = getScrollMetrics();
+        const maxScroll = Math.max(metrics.scrollHeight - metrics.clientHeight, 0);
         const safeProgress = Math.min(Math.max(progress, 0), 1);
+        const scrollBehavior = behavior || (prefersReduced.matches ? "auto" : "smooth");
+
+        if (isMobileLayout()) {
+          window.scrollTo({
+            top: maxScroll * safeProgress,
+            behavior: scrollBehavior
+          });
+          return;
+        }
+
+        if (!main) return;
         main.scrollTo({
           top: maxScroll * safeProgress,
-          behavior: behavior || (prefersReduced.matches ? "auto" : "smooth")
+          behavior: scrollBehavior
         });
       }
 
@@ -2995,16 +3807,26 @@
         });
       }
 
-      function comparisonMarkMarkup(value, locale) {
+      function comparisonStatusLabel(value, locale) {
         const safeLocale = locale === "fr" ? "fr" : "en";
         const isYes = value === true;
-        const srLabel = safeLocale === "fr"
+        return safeLocale === "fr"
           ? (isYes ? "Oui" : "Non")
           : (isYes ? "Yes" : "No");
+      }
+
+      function comparisonMarkIconMarkup(value) {
+        const isYes = value === true;
         const symbol = isYes ? "&#10003;" : "&#10005;";
 
+        return "<span class=\"comparisonMark comparisonMark--" + (isYes ? "yes" : "no") + "\" aria-hidden=\"true\">" + symbol + "</span>";
+      }
+
+      function comparisonMarkMarkup(value, locale) {
+        const srLabel = comparisonStatusLabel(value, locale);
+
         return "<span class=\"comparisonCellStatus\">" +
-          "<span class=\"comparisonMark comparisonMark--" + (isYes ? "yes" : "no") + "\" aria-hidden=\"true\">" + symbol + "</span>" +
+          comparisonMarkIconMarkup(value) +
           "<span class=\"srOnly\">" + srLabel + "</span>" +
         "</span>";
       }
@@ -3029,6 +3851,25 @@
                 "<td>" + comparisonMarkMarkup(row.omw, locale) + "</td>" +
                 "<td>" + comparisonMarkMarkup(row.other, locale) + "</td>" +
               "</tr>"
+            )).join("");
+          }
+
+          const cards = section.querySelector("[data-comparison-cards]");
+          if (cards) {
+            cards.innerHTML = comparisonData.rows.map((row) => (
+              "<article class=\"comparisonCard\">" +
+                "<h3 class=\"comparisonCardHeader\">" + escapeHtml(row.label) + "</h3>" +
+                "<div class=\"comparisonCardRows\">" +
+                  "<div class=\"comparisonCardRow comparisonCardRow--omw\">" +
+                    "<span class=\"comparisonCardBrand\">" + escapeHtml(comparisonData.columns.omw) + "</span>" +
+                    "<span class=\"comparisonCardValue\">" + comparisonMarkIconMarkup(row.omw) + "<span>" + escapeHtml(comparisonStatusLabel(row.omw, locale)) + "</span></span>" +
+                  "</div>" +
+                  "<div class=\"comparisonCardRow\">" +
+                    "<span class=\"comparisonCardBrand\">" + escapeHtml(comparisonData.columns.other) + "</span>" +
+                    "<span class=\"comparisonCardValue\">" + comparisonMarkIconMarkup(row.other) + "<span>" + escapeHtml(comparisonStatusLabel(row.other, locale)) + "</span></span>" +
+                  "</div>" +
+                "</div>" +
+              "</article>"
             )).join("");
           }
         });
@@ -3127,7 +3968,7 @@
       }
 
       function startPersonaIntro() {
-        if (!shouldRunPersonaIntro) return;
+        if (!shouldRunPersonaIntro || isMobileLayout()) return;
 
         function schedulePersonaIntroSwitch() {
           if (!personaIntroActive) return;
@@ -3238,16 +4079,22 @@
 
       function updateScrollRail() {
         if (!main || !scrollDock || !scrollRail || !scrollThumb) return;
+        if (isMobileLayout()) {
+          scrollDock.hidden = true;
+          scrollDock.classList.remove("is-visible");
+          return;
+        }
 
-        const maxScroll = Math.max(main.scrollHeight - main.clientHeight, 0);
+        const metrics = getScrollMetrics();
+        const maxScroll = Math.max(metrics.scrollHeight - metrics.clientHeight, 0);
         const railInset = 4;
         const trackHeight = Math.max(scrollRail.clientHeight - (railInset * 2), 1);
-        const viewportRatio = main.clientHeight / Math.max(main.scrollHeight, 1);
+        const viewportRatio = metrics.clientHeight / Math.max(metrics.scrollHeight, 1);
         const thumbHeight = maxScroll > 0
           ? Math.max(52, Math.min(trackHeight, Math.round(trackHeight * viewportRatio)))
           : trackHeight;
         const maxThumbTravel = Math.max(trackHeight - thumbHeight, 0);
-        const progress = maxScroll > 0 ? (main.scrollTop / maxScroll) : 0;
+        const progress = maxScroll > 0 ? (metrics.top / maxScroll) : 0;
         const thumbTop = railInset + (maxThumbTravel * progress);
         const safeLocale = getCurrentLocale();
 
@@ -3266,7 +4113,7 @@
         );
 
         if (scrollTopButton) {
-          scrollTopButton.disabled = main.scrollTop <= 4;
+          scrollTopButton.disabled = metrics.top <= 4;
         }
       }
 
@@ -3387,12 +4234,39 @@
         prefersReduced.addListener(syncReducedClass);
       }
 
+      const handleMobileLayoutChange = () => {
+        if (isMobileLayout()) {
+          cancelPersonaIntro();
+          initMobilePersonaAutomation();
+        } else {
+          stopMobilePersonaAutomation();
+        }
+        scheduleLayoutSync();
+        scheduleScrollRailSync();
+      };
+
+      if (typeof mobileLayoutQuery.addEventListener === "function") {
+        mobileLayoutQuery.addEventListener("change", handleMobileLayoutChange);
+      } else if (typeof mobileLayoutQuery.addListener === "function") {
+        mobileLayoutQuery.addListener(handleMobileLayoutChange);
+      }
+
       document.querySelectorAll("a[href^=\"#\"]").forEach((anchor) => {
         anchor.addEventListener("click", handleHashLink);
       });
 
+      document.addEventListener("visibilitychange", () => {
+        if (!isMobileLayout() || prefersReduced.matches) return;
+        if (document.hidden) {
+          clearMobilePersonaTimers();
+        } else {
+          scheduleMobilePersonaIdleToggle(5000);
+        }
+      });
+
       personaToggles.forEach(initPersonaToggle);
       initScrollRail();
+      initMobilePersonaAutomation();
 
       langInputs.forEach((input) => {
         input.addEventListener("change", () => {
