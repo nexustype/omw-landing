@@ -3,3 +3,4 @@ api/mail-config.php
 .env.*
 .DS_Store
 node_modules/
+.vercel
