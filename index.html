@@ -108,12 +108,13 @@
       --accent: #0ca389;
       --accent-soft: #dff3ee;
       --shadow: 0 24px 60px rgba(16, 24, 42, 0.12);
+      --frame-surface: #ffffff;
       --radius-xl: 32px;
       --radius-lg: 24px;
       --radius-md: 16px;
       --header-h: 84px;
       --pill-h: 74px;
-      --pill-offset: clamp(48px, 12svh, 120px);
+      --pill-offset: clamp(48px, 12svh, 500px);
       --pill-clearance: 132px;
       --mobile-safe-top: env(safe-area-inset-top);
       --mobile-safe-bottom: env(safe-area-inset-bottom);
@@ -198,7 +199,7 @@
       z-index: 80;
       padding-top: env(safe-area-inset-top);
       backdrop-filter: blur(14px);
-      background: rgba(255, 255, 255, 0.78);
+      background: var(--frame-surface);
       border-bottom: 1px solid var(--stroke);
     }
 
@@ -287,19 +288,23 @@
     .toggleText.fr,
     .toggleText.en,
     .hintText.fr,
-    .hintText.en {
+    .hintText.en,
+    .personaDockFaq.fr,
+    .personaDockFaq.en {
       display: none;
     }
 
     #lang-fr:checked ~ header .cta.fr,
     #lang-fr:checked ~ .personaDock .toggleText.fr,
-    #lang-fr:checked ~ .personaDock .hintText.fr {
+    #lang-fr:checked ~ .personaDock .hintText.fr,
+    #lang-fr:checked ~ .personaDock .personaDockFaq.fr {
       display: inline-flex;
     }
 
     #lang-en:checked ~ header .cta.en,
     #lang-en:checked ~ .personaDock .toggleText.en,
-    #lang-en:checked ~ .personaDock .hintText.en {
+    #lang-en:checked ~ .personaDock .hintText.en,
+    #lang-en:checked ~ .personaDock .personaDockFaq.en {
       display: inline-flex;
     }
 
@@ -427,6 +432,53 @@
 
     .heroSection .wrap {
       width: 100%;
+    }
+
+    .simulationSection {
+      min-height: auto;
+      padding: calc(var(--header-h) + 24px) 0 calc(var(--pill-clearance) + 28px);
+      scroll-snap-stop: normal;
+    }
+
+    .simulationSection .sectionShell {
+      min-height: auto;
+      display: block;
+    }
+
+    .simulationFrame {
+      position: relative;
+      width: 100%;
+      min-height: 1260px;
+      height: clamp(1260px, 140svh, 1480px);
+      overflow: hidden;
+      border: 0;
+      border-radius: var(--radius-xl);
+      background: rgba(255, 255, 255, 0.76);
+      box-shadow: 0 24px 60px rgba(16, 24, 42, 0.1);
+    }
+
+    .simulationFrame iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 10;
+      width: 100%;
+      height: 100%;
+      min-height: 1260px;
+      display: block;
+      border: 0;
+      background: transparent;
+    }
+
+    @media (max-width: 1080px) {
+      .simulationFrame {
+        min-height: 1100px;
+        height: clamp(1100px, 128svh, 1320px);
+      }
+
+      .simulationFrame iframe {
+        min-height: 1100px;
+      }
     }
 
     .heroSection .sectionShell {
@@ -688,23 +740,113 @@
 
     .personaDock {
       position: fixed;
-      left: 50%;
-      bottom: calc(var(--pill-offset) + env(safe-area-inset-bottom));
-      transform: translateX(-50%);
+      left: 0;
+      right: 0;
+      bottom: 0;
+      transform: none;
       z-index: 70;
       pointer-events: none;
-      transition: transform 0.18s ease, opacity 0.18s ease;
+      padding-bottom: env(safe-area-inset-bottom);
+      transition: opacity 0.18s ease;
     }
 
     .personaDockInner {
-      pointer-events: auto;
       position: relative;
+      pointer-events: none;
+      min-height: calc(var(--header-h) * 1.5);
+      padding: 16px max(28px, calc(env(safe-area-inset-right) + 24px)) 16px max(28px, calc(env(safe-area-inset-left) + 24px));
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      align-items: center;
+      gap: 28px;
+      background: var(--frame-surface);
+      box-shadow: 0 -16px 36px rgba(16, 24, 42, 0.08);
+      backdrop-filter: blur(14px);
+    }
+
+    .personaDockMeta,
+    .personaDockCenter {
+      pointer-events: auto;
+    }
+
+    .personaDockMeta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+      color: var(--muted-soft);
+      font-size: clamp(0.9rem, 1.2vw, 1.08rem);
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+
+    .personaDockMeta--left {
+      justify-self: start;
+    }
+
+    .personaDockMeta--right {
+      justify-self: end;
+      justify-content: flex-end;
+    }
+
+    .personaDockMeta a {
+      color: var(--muted);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .personaDockCenter {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      min-width: 0;
+      z-index: 1;
+    }
+
+    .personaDockCenter::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: -68px;
+      width: calc(100% + 128px);
+      height: 106px;
+      transform: translateX(-50%);
+      border-radius: 44px 44px 0 0;
+      background: var(--frame-surface);
+      box-shadow: none;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .personaDockFrame {
+      position: relative;
+      margin-top: -50px;
+      padding: 0;
+      border-radius: 999px;
+      border: none;
+      background: transparent;
+      box-shadow: none;
+      z-index: 2;
+    }
+
+    .personaDockFrame::before {
+      content: none;
+    }
+
+    .personaDockCopy {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .personaDockMeta .footerSeparator {
+      color: rgba(120, 130, 144, 0.72);
     }
 
     .personaHint {
       position: absolute;
       left: 50%;
-      bottom: calc(100% + 12px);
+      bottom: calc(100% + var(--pill-offset) - 4px);
       transform: translate(-50%, 8px);
       opacity: 0;
       visibility: hidden;
@@ -893,13 +1035,13 @@
       grid-template-columns: repeat(2, minmax(0, 1fr));
       align-items: center;
       border-radius: 999px;
-      border: 1px solid rgba(160, 182, 204, 0.82);
-      background: linear-gradient(180deg, #d5e0ea 0%, #cdd9e4 100%);
+      border: 1px solid rgba(171, 194, 219, 0.92);
+      background: linear-gradient(180deg, rgba(223, 234, 246, 0.98) 0%, rgba(210, 224, 239, 0.96) 100%);
       box-shadow:
-        inset 9px 9px 16px rgba(124, 142, 162, 0.28),
-        inset -9px -9px 16px rgba(255, 255, 255, 0.72),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3),
-        0 1px 0 rgba(255, 255, 255, 0.46);
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        inset 0 10px 18px rgba(255, 255, 255, 0.3),
+        inset 0 -10px 20px rgba(163, 183, 206, 0.18),
+        0 10px 22px rgba(86, 103, 126, 0.1);
       backdrop-filter: blur(16px);
       padding: 0;
       min-height: clamp(46px, 5vw, 60px);
@@ -908,18 +1050,19 @@
     }
 
     .comparisonToggle[data-mode="driver"] {
-      border-color: rgba(164, 197, 190, 0.84);
-      background: linear-gradient(180deg, #d7ebe4 0%, #d0e5de 100%);
+      border-color: rgba(164, 197, 190, 0.9);
+      background: linear-gradient(180deg, rgba(220, 239, 232, 0.98) 0%, rgba(207, 229, 221, 0.96) 100%);
     }
 
     .comparisonToggle::before {
       content: "";
       position: absolute;
-      inset: 4px;
+      inset: 3px;
       border-radius: 999px;
       box-shadow:
-        inset 5px 5px 10px rgba(128, 146, 167, 0.18),
-        inset -5px -5px 10px rgba(255, 255, 255, 0.38);
+        inset 0 0 0 1px rgba(245, 250, 255, 0.58),
+        inset 0 12px 16px rgba(255, 255, 255, 0.18),
+        inset 0 -6px 12px rgba(157, 177, 198, 0.12);
       pointer-events: none;
       z-index: 1;
     }
@@ -944,10 +1087,10 @@
       text-align: center;
       font-size: clamp(0.88rem, 1.9vw, 1.34rem);
       font-weight: 900;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.05em;
       line-height: 1;
       text-transform: uppercase;
-      color: #243146;
+      color: #223457;
     }
 
     .comparisonToggleBtn {
@@ -991,13 +1134,13 @@
       width: var(--toggle-knob);
       height: var(--toggle-knob);
       border-radius: 999px;
-      border: 1px solid rgba(215, 223, 233, 0.98);
+      border: 1px solid rgba(198, 211, 226, 0.98);
       background: linear-gradient(180deg, #ffffff 0%, #eef3f8 100%);
       box-shadow:
-        0 6px 16px rgba(46, 54, 66, 0.24),
-        0 1px 2px rgba(46, 54, 66, 0.12),
+        0 10px 18px rgba(68, 82, 101, 0.18),
+        0 1px 2px rgba(46, 54, 66, 0.08),
         inset 0 1px 0 rgba(255, 255, 255, 0.98),
-        inset 0 -5px 10px rgba(198, 206, 217, 0.46);
+        inset 0 -8px 14px rgba(198, 206, 217, 0.42);
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -1019,8 +1162,8 @@
     }
 
     .comparisonToggleKnob img {
-      width: clamp(18px, 2vw, 26px);
-      height: clamp(18px, 2vw, 26px);
+      width: clamp(19px, 2vw, 27px);
+      height: clamp(19px, 2vw, 27px);
       object-fit: contain;
     }
 
@@ -1440,11 +1583,7 @@
     }
 
     .betaFooterWrap {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: max(14px, env(safe-area-inset-bottom));
-      z-index: 1;
+      display: none;
     }
 
     .betaFooterWrap .siteFooter {
@@ -1599,6 +1738,24 @@
     }
 
     @media (max-width: 1080px) {
+      .personaDockInner {
+        gap: 18px;
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      .personaDockMeta {
+        font-size: 13px;
+      }
+
+      .personaDockFrame {
+        padding: 0;
+      }
+
+      .comparisonToggle {
+        width: clamp(210px, 32vw, 300px);
+      }
+
       .testimonialLayout {
         grid-template-columns: 1fr;
       }
@@ -1884,6 +2041,20 @@
         border-radius: 22px;
       }
 
+      .simulationSection {
+        padding: 12px 0 18px;
+      }
+
+      .simulationFrame {
+        min-height: 1020px;
+        height: auto;
+        border-radius: 22px;
+      }
+
+      .simulationFrame iframe {
+        min-height: 1020px;
+      }
+
       .kicker {
         font-size: 11px;
         letter-spacing: 0.12em;
@@ -2066,8 +2237,34 @@
       .personaDockInner {
         width: min(100%, calc(100% - 16px));
         margin: 0 auto;
+        min-height: 0;
+        padding: 0;
         display: flex;
         justify-content: center;
+        background: none;
+        box-shadow: none;
+        border-top: none;
+        backdrop-filter: none;
+      }
+
+      .personaDockMeta {
+        display: none;
+      }
+
+      .personaDockCenter {
+        width: 100%;
+      }
+
+      .personaDockCenter::before {
+        content: none;
+      }
+
+      .personaDockFrame {
+        margin-top: 0;
+        padding: 0;
+        border: none;
+        background: none;
+        box-shadow: none;
       }
 
       .comparisonToggle {
@@ -2275,6 +2472,7 @@
       }
 
       .betaFooterWrap {
+        display: block;
         position: static;
         margin-top: 16px;
       }
@@ -2363,22 +2561,35 @@
         <span class="hintText fr">Choisis ton profil</span>
         <span class="hintText en">Choose profile</span>
       </div>
-      <div class="comparisonToggle" role="group" aria-label="Basculer entre passager et conducteur" data-persona-toggle data-mode="rider">
-        <span class="comparisonToggleLabel" aria-hidden="true">
-          <span class="toggleModeLabel rider fr">PASSAGER</span>
-          <span class="toggleModeLabel driver fr">CONDUCTEUR</span>
-          <span class="toggleModeLabel rider en">RIDER</span>
-          <span class="toggleModeLabel driver en">DRIVER</span>
-        </span>
-        <button class="comparisonToggleBtn" type="button" data-persona-mode="rider" aria-pressed="true">
-          <span class="toggleText fr">Passager</span>
-          <span class="toggleText en">Rider</span>
-        </button>
-        <button class="comparisonToggleBtn" type="button" data-persona-mode="driver" aria-pressed="false">
-          <span class="toggleText fr">Conducteur</span>
-          <span class="toggleText en">Driver</span>
-        </button>
-        <span class="comparisonToggleKnob" aria-hidden="true"><img src="Icon.png" alt="" /></span>
+      <div class="personaDockMeta personaDockMeta--left">
+        <span class="personaDockCopy">© 2026 OMW - On My Way</span>
+      </div>
+      <div class="personaDockCenter">
+        <div class="personaDockFrame">
+          <div class="comparisonToggle" role="group" aria-label="Basculer entre passager et conducteur" data-persona-toggle data-mode="rider">
+            <span class="comparisonToggleLabel" aria-hidden="true">
+              <span class="toggleModeLabel rider fr">PASSAGER</span>
+              <span class="toggleModeLabel driver fr">CONDUCTEUR</span>
+              <span class="toggleModeLabel rider en">RIDER</span>
+              <span class="toggleModeLabel driver en">DRIVER</span>
+            </span>
+            <button class="comparisonToggleBtn" type="button" data-persona-mode="rider" aria-pressed="true">
+              <span class="toggleText fr">Passager</span>
+              <span class="toggleText en">Rider</span>
+            </button>
+            <button class="comparisonToggleBtn" type="button" data-persona-mode="driver" aria-pressed="false">
+              <span class="toggleText fr">Conducteur</span>
+              <span class="toggleText en">Driver</span>
+            </button>
+            <span class="comparisonToggleKnob" aria-hidden="true"><img src="Icon.png" alt="" /></span>
+          </div>
+        </div>
+      </div>
+      <div class="personaDockMeta personaDockMeta--right">
+        <a href="mailto:hello@rideomw.com">hello@rideomw.com</a>
+        <span class="footerSeparator" aria-hidden="true">·</span>
+        <a class="personaDockFaq fr" href="#faq-fr">FAQ</a>
+        <a class="personaDockFaq en" href="#faq-en">FAQ</a>
       </div>
     </div>
   </div>
@@ -2426,6 +2637,23 @@
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="landingSection simulationSection" id="simulation-fr" aria-label="Simulation OMW FR">
+        <div class="wrap sectionShell">
+          <div class="simulationFrame">
+            <iframe
+              data-omw-simulation-iframe
+              src="https://omw-demo.vercel.app"
+              width="100%"
+              height="100%"
+              frameborder="0"
+              scrolling="no"
+              style="position: absolute; top: 0; left: 0; z-index: 10;"
+              title="OMW Ride Matching Simulation">
+            </iframe>
           </div>
         </div>
       </section>
@@ -2712,6 +2940,23 @@
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="landingSection simulationSection" id="simulation-en" aria-label="OMW Simulation EN">
+        <div class="wrap sectionShell">
+          <div class="simulationFrame">
+            <iframe
+              data-omw-simulation-iframe
+              src="https://omw-demo.vercel.app"
+              width="100%"
+              height="100%"
+              frameborder="0"
+              scrolling="no"
+              style="position: absolute; top: 0; left: 0; z-index: 10;"
+              title="OMW Ride Matching Simulation">
+            </iframe>
           </div>
         </div>
       </section>
@@ -3461,7 +3706,7 @@
         } catch (err) {}
       }
 
-      const shouldRunPersonaIntro = !mobileLayoutQuery.matches && !prefersReduced.matches && !initialHash && !hasSeenPersonaIntro();
+      const shouldRunPersonaIntro = !mobileLayoutQuery.matches && !prefersReduced.matches && !initialHash;
       let currentPersona = shouldRunPersonaIntro ? "driver" : "rider";
       let personaIntroTimer = 0;
       let personaIntroActive = false;
@@ -3508,9 +3753,8 @@
         const headerHeight = header ? header.offsetHeight : 84;
         const mobile = isMobileLayout();
         const pillHeight = personaDock ? personaDock.offsetHeight : (mobile ? 56 : 74);
-        const viewportHeight = window.innerHeight || 900;
-        const pillOffset = mobile ? 12 : Math.max(Math.min(Math.round(viewportHeight * 0.12), 120), 48);
-        const pillClearance = pillOffset + pillHeight + (mobile ? 28 : 40);
+        const pillOffset = mobile ? 12 : 50;
+        const pillClearance = mobile ? (pillOffset + pillHeight + 28) : (pillOffset + pillHeight + 18);
         document.documentElement.style.setProperty("--header-h", headerHeight + "px");
         document.documentElement.style.setProperty("--pill-h", pillHeight + "px");
         document.documentElement.style.setProperty("--pill-offset", pillOffset + "px");
@@ -4405,6 +4649,68 @@
       function isFrenchForm(form) {
         return form.id.endsWith("-fr");
       }
+    })();
+  </script>
+  <script>
+    (function () {
+      const simulationFrames = Array.from(document.querySelectorAll("[data-omw-simulation-iframe]"));
+      if (!simulationFrames.length) return;
+
+      const trustedOrigins = new Set(
+        simulationFrames.map((frame) => {
+          try {
+            return new URL(frame.src, window.location.href).origin;
+          } catch (error) {
+            return "";
+          }
+        }).filter(Boolean)
+      );
+
+      function getActiveLocaleRoot() {
+        const locale = document.getElementById("lang-en").checked ? "en" : "fr";
+        return document.getElementById("content-" + locale);
+      }
+
+      function getActiveSignupInput() {
+        const activeRoot = getActiveLocaleRoot();
+        if (!activeRoot) return null;
+
+        const activePanel = activeRoot.querySelector(".formCard:not([hidden])");
+        if (!activePanel) return null;
+
+        return activePanel.querySelector("input[name=\"email\"]");
+      }
+
+      function scrollToActiveSignup() {
+        const emailInput = getActiveSignupInput();
+        if (!emailInput) return;
+
+        const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+        const signupSection = emailInput.closest(".betaSection") || emailInput.closest("form") || emailInput;
+
+        signupSection.scrollIntoView({
+          behavior: behavior,
+          block: "start"
+        });
+
+        window.setTimeout(() => {
+          try {
+            emailInput.focus({ preventScroll: true });
+          } catch (error) {
+            emailInput.focus();
+          }
+        }, behavior === "smooth" ? 450 : 0);
+      }
+
+      window.addEventListener("message", (event) => {
+        if (event.data !== "triggerOmwSignup") return;
+        if (!trustedOrigins.has(event.origin)) return;
+
+        const isTrustedFrame = simulationFrames.some((frame) => frame.contentWindow === event.source);
+        if (!isTrustedFrame) return;
+
+        scrollToActiveSignup();
+      });
     })();
   </script>
 </body>
