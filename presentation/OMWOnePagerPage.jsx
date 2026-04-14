@@ -5,16 +5,17 @@ const CONTENT = {
   brand: "OMW",
   title: "OMW - On My Way",
   sublabel: "Covoiturage quotidien en temps réel",
-  betaLabel: "Rejoindre la bêta",
+  betaLabel: "Parler du projet",
+
   headline: "Transformer les sièges vides en trajets utiles.",
-subheadline:
-  "OMW connecte conducteurs et passagers sur des trajets récurrents, avec moins de friction et plus de compatibilité.",
-summary:
-  "OMW connecte conducteurs et passagers autour d’un même trajet récurrent, avec une logique simple, compatible avec une routine déjà existante.",
+  subheadline:
+    "OMW connecte conducteurs et passagers sur des trajets récurrents, avec moins de friction et plus de compatibilité.",
+
   summary:
     "OMW connecte conducteurs et passagers autour d’un même trajet récurrent, avec une logique simple, compatible avec une routine déjà existante.",
   summarySupport:
     "OMW ne remplace pas votre routine. Il s’ajoute à un trajet déjà existant quand il est compatible.",
+
   launchTitle: "Déploiement ciblé",
   launchLocation: "Paris / Île-de-France",
   launchBody:
@@ -25,6 +26,7 @@ summary:
     "Prise en charge flexible : à moins de 2, 4, 6 ou 10 min à pied",
     "Moins de planification, plus de compatibilité",
   ],
+
   modelTitle: "Modèle économique",
   modelItems: [
     {
@@ -38,6 +40,7 @@ summary:
       icon: "▣",
     },
   ],
+
   impactTitle: "Impact",
   impactBullets: [
     "Sièges vides valorisés sur des trajets déjà existants",
@@ -46,16 +49,22 @@ summary:
     "Moins de planification, plus de compatibilité",
     "Une couche de mobilité qui s’ajoute à la routine",
   ],
+
   founderName: "Daniel Blokbergen",
   founderRole: "Fondateur",
-  footerTitle: "Validation pilote en préparation sur des corridors récurrents en Île-de-France",
+
+  footerTitle:
+    "Validation pilote en préparation sur des corridors récurrents en Île-de-France",
   contacts: [
-    { label: "hello@rideomw.com", icon: "✉", href: "mailto:hello@rideomw.com" },
-    { label: "www.rideomw.com", icon: "🌐", href: "https://www.rideomw.com/" },
     {
-      label: "rideomw.com/presentation",
-      icon: "ⓘ",
-      href: "https://www.rideomw.com/presentation",
+      label: "hello@rideomw.com",
+      icon: "✉",
+      href: "mailto:hello@rideomw.com",
+    },
+    {
+      label: "www.rideomw.com",
+      icon: "🌐",
+      href: "https://www.rideomw.com/",
     },
     {
       label: "linkedin.com/in/danielblokbergen",
@@ -165,18 +174,18 @@ const styles = {
     color: palette.muted,
   },
   heroTitle: {
-    fontSize: "clamp(34px, 5vw, 64px)",
-    lineHeight: 1.06,
+    fontSize: "clamp(34px, 5vw, 60px)",
+    lineHeight: 1.08,
     letterSpacing: "-0.045em",
     fontWeight: 800,
-    maxWidth: "820px",
-    margin: "12px 0 14px",
+    maxWidth: "720px",
+    margin: "12px 0 12px",
   },
   heroSub: {
-    fontSize: "clamp(18px, 2vw, 24px)",
-    lineHeight: 1.38,
-    color: palette.muted,
-    maxWidth: "860px",
+    fontSize: "clamp(18px, 2vw, 23px)",
+    lineHeight: 1.42,
+    color: "#6E7A91",
+    maxWidth: "780px",
     marginBottom: "28px",
   },
   card: {
@@ -192,7 +201,7 @@ const styles = {
   },
   summary: {
     fontSize: "clamp(22px, 2.4vw, 34px)",
-    lineHeight: 1.35,
+    lineHeight: 1.32,
     fontWeight: 500,
     letterSpacing: "-0.025em",
   },
@@ -267,7 +276,7 @@ const styles = {
   },
   bulletItem: {
     display: "flex",
-    alignItems: "center",
+    alignItems: "flex-start",
     gap: "12px",
     fontSize: "17px",
     color: "#4A566E",
@@ -288,6 +297,7 @@ const styles = {
     fontWeight: 900,
     fontSize: "16px",
     flexShrink: 0,
+    marginTop: "1px",
   },
   h3: {
     fontSize: "24px",
@@ -382,10 +392,11 @@ const styles = {
     padding: "24px",
   },
   ctaTitle: {
-    fontSize: "clamp(18px, 2vw, 30px)",
-    fontWeight: 500,
+    fontSize: "clamp(18px, 2vw, 28px)",
+    fontWeight: 700,
     letterSpacing: "-0.03em",
     marginBottom: "18px",
+    lineHeight: 1.2,
   },
   contactGrid: {
     display: "grid",
@@ -579,7 +590,7 @@ export default function OMWOnePagerPage() {
 
         <div
           className="omw-founder-card omw-card"
-          style={{ ...styles.card, marginTop: "20px" }}
+          style={{ ...styles.card, marginTop: "20px", minHeight: "132px" }}
         >
           <div style={{ ...styles.cardInner, ...styles.founderCard }}>
             <div className="omw-founder-photo" style={styles.founderPhoto}>
