@@ -6,9 +6,11 @@ const CONTENT = {
   title: "OMW - On My Way",
   sublabel: "Covoiturage quotidien en temps réel",
   betaLabel: "Rejoindre la bêta",
-  headline: "Des sièges vides, enfin utiles sur des trajets récurrents.",
-  subheadline:
-    "OMW connecte conducteurs et passagers autour d’un même trajet récurrent, avec moins de planification, zéro détour ou jusqu’à 5 minutes max côté conducteur, et une prise en charge pensée en temps de marche côté passager.",
+  headline: "Transformer les sièges vides en trajets utiles.",
+subheadline:
+  "OMW connecte conducteurs et passagers sur des trajets récurrents, avec moins de friction et plus de compatibilité.",
+summary:
+  "OMW connecte conducteurs et passagers autour d’un même trajet récurrent, avec une logique simple, compatible avec une routine déjà existante.",
   summary:
     "OMW connecte conducteurs et passagers autour d’un même trajet récurrent, avec une logique simple, compatible avec une routine déjà existante.",
   summarySupport:
