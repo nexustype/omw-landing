@@ -466,10 +466,13 @@
     }
 
     .simulationFrame {
+      --simulation-scale: 0.75;
+      --simulation-base-height: 1260px;
       position: relative;
       width: 100%;
-      min-height: 1260px;
-      height: clamp(1260px, 140svh, 1480px);
+      min-height: 945px;
+      height: 945px;
+      max-height: 945px;
       overflow: hidden;
       border: 0;
       border-radius: var(--radius-xl);
@@ -480,24 +483,31 @@
     .simulationFrame iframe {
       position: absolute;
       top: 0;
-      left: 0;
+      left: 50%;
       z-index: 10;
-      width: 100%;
-      height: 100%;
-      min-height: 1260px;
+      width: calc(100% / var(--simulation-scale));
+      height: var(--simulation-base-height);
+      min-height: var(--simulation-base-height);
       display: block;
       border: 0;
       background: transparent;
+      transform: translateX(-50%) scale(var(--simulation-scale));
+      transform-origin: top center;
+    }
+
+    @media (max-width: 1219px) {
+      .simulationSection {
+        display: none;
+      }
     }
 
     @media (max-width: 1080px) {
       .simulationFrame {
-        min-height: 1100px;
-        height: clamp(1100px, 128svh, 1320px);
-      }
-
-      .simulationFrame iframe {
-        min-height: 1100px;
+        --simulation-scale: 0.84;
+        --simulation-base-height: 1100px;
+        min-height: 924px;
+        height: 924px;
+        max-height: 924px;
       }
     }
 
@@ -2064,13 +2074,20 @@
       }
 
       .simulationFrame {
+        --simulation-scale: 1;
+        --simulation-base-height: 1020px;
         min-height: 1020px;
         height: auto;
+        max-height: none;
         border-radius: 22px;
       }
 
       .simulationFrame iframe {
+        left: 0;
+        width: 100%;
+        height: var(--simulation-base-height);
         min-height: 1020px;
+        transform: none;
       }
 
       .kicker {
@@ -2668,7 +2685,8 @@
           <div class="simulationFrame">
             <iframe
               data-omw-simulation-iframe
-              src="https://omw-demo.vercel.app/?lang=fr"
+              data-omw-simulation-src="https://omw-demo.vercel.app/?lang=fr"
+              loading="lazy"
               width="100%"
               height="100%"
               frameborder="0"
@@ -2963,7 +2981,8 @@
           <div class="simulationFrame">
             <iframe
               data-omw-simulation-iframe
-              src="https://omw-demo.vercel.app/?lang=en"
+              data-omw-simulation-src="https://omw-demo.vercel.app/?lang=en"
+              loading="lazy"
               width="100%"
               height="100%"
               frameborder="0"
@@ -4622,11 +4641,44 @@
     (function () {
       const simulationFrames = Array.from(document.querySelectorAll("[data-omw-simulation-iframe]"));
       if (!simulationFrames.length) return;
+      const simulationMedia = window.matchMedia("(min-width: 1220px)");
+
+      function getFrameSource(frame) {
+        return frame.dataset.omwSimulationSrc || frame.getAttribute("src") || "";
+      }
+
+      function syncSimulationFrames() {
+        simulationFrames.forEach((frame) => {
+          const frameSource = getFrameSource(frame);
+          if (!frameSource) return;
+
+          if (simulationMedia.matches) {
+            if (frame.getAttribute("src") !== frameSource) {
+              frame.setAttribute("src", frameSource);
+            }
+            frame.removeAttribute("tabindex");
+            return;
+          }
+
+          if (frame.hasAttribute("src")) {
+            frame.removeAttribute("src");
+          }
+          frame.setAttribute("tabindex", "-1");
+        });
+      }
+
+      syncSimulationFrames();
+
+      if (typeof simulationMedia.addEventListener === "function") {
+        simulationMedia.addEventListener("change", syncSimulationFrames);
+      } else if (typeof simulationMedia.addListener === "function") {
+        simulationMedia.addListener(syncSimulationFrames);
+      }
 
       const trustedOrigins = new Set(
         simulationFrames.map((frame) => {
           try {
-            return new URL(frame.src, window.location.href).origin;
+            return new URL(getFrameSource(frame), window.location.href).origin;
           } catch (error) {
             return "";
           }
@@ -4673,7 +4725,9 @@
         if (event.data !== "triggerOmwSignup") return;
         if (!trustedOrigins.has(event.origin)) return;
 
-        const isTrustedFrame = simulationFrames.some((frame) => frame.contentWindow === event.source);
+        const isTrustedFrame = simulationFrames.some(
+          (frame) => frame.hasAttribute("src") && frame.contentWindow === event.source
+        );
         if (!isTrustedFrame) return;
 
         scrollToActiveSignup();
