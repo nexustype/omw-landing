@@ -133,6 +133,15 @@
       --mobile-topbar-h: 0px;
       --mobile-bottomdock-h: 0px;
       --mobile-visible-content-h: 100svh;
+      --simulation-base-width: 1228px;
+      --simulation-base-height: 1000px;
+      --simulation-scale: 0.76;
+      --simulation-frame-width: 933px;
+      --simulation-frame-height: 760px;
+      --simulation-shell-width: 965px;
+      --simulation-shell-gutter: 20px;
+      --simulation-section-top-gap: 16px;
+      --simulation-section-bottom-gap: 14px;
     }
 
     * {
@@ -456,23 +465,29 @@
 
     .simulationSection {
       min-height: auto;
-      padding: calc(var(--header-h) + 24px) 0 calc(var(--pill-clearance) + 28px);
+      padding:
+        calc(var(--header-h) + var(--simulation-section-top-gap))
+        0
+        calc(var(--pill-clearance) + var(--simulation-section-bottom-gap));
       scroll-snap-stop: normal;
+    }
+
+    .simulationSection .wrap {
+      width: min(var(--simulation-shell-width), calc(100% - (var(--simulation-shell-gutter) * 2)));
     }
 
     .simulationSection .sectionShell {
       min-height: auto;
-      display: block;
+      display: flex;
+      justify-content: center;
     }
 
     .simulationFrame {
-      --simulation-scale: 0.75;
-      --simulation-base-height: 1260px;
       position: relative;
-      width: 100%;
-      min-height: 945px;
-      height: 945px;
-      max-height: 945px;
+      width: min(100%, var(--simulation-frame-width));
+      min-height: var(--simulation-frame-height);
+      height: var(--simulation-frame-height);
+      max-height: var(--simulation-frame-height);
       overflow: hidden;
       border: 0;
       border-radius: var(--radius-xl);
@@ -485,7 +500,7 @@
       top: 0;
       left: 50%;
       z-index: 10;
-      width: calc(100% / var(--simulation-scale));
+      width: var(--simulation-base-width);
       height: var(--simulation-base-height);
       min-height: var(--simulation-base-height);
       display: block;
@@ -498,16 +513,6 @@
     @media (max-width: 1219px) {
       .simulationSection {
         display: none;
-      }
-    }
-
-    @media (max-width: 1080px) {
-      .simulationFrame {
-        --simulation-scale: 0.84;
-        --simulation-base-height: 1100px;
-        min-height: 924px;
-        height: 924px;
-        max-height: 924px;
       }
     }
 
@@ -1808,6 +1813,64 @@
       .comparisonTable td:first-child {
         width: 45%;
         min-width: 0;
+      }
+    }
+
+    @media (min-width: 1220px) and (max-height: 760px) {
+      .personaDockInner {
+        min-height: 72px;
+        padding: 8px 18px 10px;
+        gap: 14px;
+      }
+
+      .personaDockMeta {
+        gap: 6px;
+        font-size: clamp(0.72rem, 0.82vw, 0.84rem);
+      }
+
+      .personaDockCenter::before {
+        top: -36px;
+        width: calc(100% + 88px);
+        height: 60px;
+        border-radius: 28px 28px 0 0;
+      }
+
+      .personaDockFrame {
+        margin-top: -24px;
+        padding: 4px;
+        box-shadow: 0 6px 14px rgba(16, 24, 42, 0.05);
+      }
+
+      .comparisonToggle {
+        --toggle-knob: 26px;
+        width: clamp(170px, 19vw, 220px);
+        min-height: 32px;
+      }
+
+      .comparisonToggleLabel {
+        width: calc(100% - var(--toggle-knob) - 12px);
+        padding: 0 4px;
+      }
+
+      .toggleModeLabel {
+        font-size: clamp(0.68rem, 0.76vw, 0.82rem);
+      }
+
+      .comparisonToggleBtn {
+        min-height: 32px;
+      }
+
+      .comparisonToggleKnob {
+        left: 4px;
+      }
+
+      .comparisonToggle[data-mode="driver"] .comparisonToggleKnob {
+        left: calc(100% - var(--toggle-knob) - 4px);
+      }
+
+      .comparisonToggleKnob img {
+        width: 16px;
+        height: 16px;
       }
     }
 
@@ -3775,15 +3838,71 @@
       function syncLayoutVars() {
         const headerHeight = header ? header.offsetHeight : 84;
         const mobile = isMobileLayout();
+        const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
+        const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
+        const lowHeightDesktop = !mobile && viewportHeight <= 760;
         const pillHeight = personaDock ? personaDock.offsetHeight : (mobile ? 56 : 74);
-        const pillOffset = mobile ? 12 : 50;
-        const pillClearance = mobile ? (pillOffset + pillHeight + 28) : (pillOffset + pillHeight + 18);
+        const pillOffset = mobile ? 12 : (lowHeightDesktop ? 18 : 50);
+        const pillClearance = mobile
+          ? (pillOffset + pillHeight + 28)
+          : (pillOffset + pillHeight + (lowHeightDesktop ? 10 : 18));
+        const simulationBaseWidth = 1228;
+        const simulationBaseHeight = 1000;
+        let simulationScale = 0.76;
+        let simulationShellGutter = 20;
+        let simulationTopGap = 16;
+        let simulationBottomGap = 14;
+
+        if (!mobile && viewportWidth >= 1220) {
+          simulationScale = 0.36 + (viewportHeight / 1800);
+
+          if (viewportHeight <= 760) {
+            simulationScale -= 0.06;
+            simulationShellGutter = 8;
+            simulationTopGap = 10;
+            simulationBottomGap = 8;
+          } else if (viewportHeight >= 1800) {
+            simulationScale += 0.16;
+            simulationShellGutter = 40;
+            simulationTopGap = 24;
+            simulationBottomGap = 18;
+          } else if (viewportWidth >= 2400) {
+            simulationShellGutter = 44;
+            simulationTopGap = 22;
+            simulationBottomGap = 16;
+          }
+
+          if (viewportWidth >= 1600 && viewportWidth < 2400) {
+            simulationShellGutter = 28;
+          }
+
+          const maxScaleByWidth = (viewportWidth - (simulationShellGutter * 2)) / simulationBaseWidth;
+          simulationScale = Math.min(simulationScale, maxScaleByWidth);
+          simulationScale = Math.max(0.68, Math.min(1.48, simulationScale));
+        }
+
+        const simulationFrameWidth = Math.round(simulationBaseWidth * simulationScale);
+        const simulationFrameHeight = Math.round(simulationBaseHeight * simulationScale);
+        const simulationShellWidth = Math.min(
+          Math.max(simulationFrameWidth + 28, 900),
+          Math.max(viewportWidth - (simulationShellGutter * 2), 0)
+        );
+
         document.documentElement.style.setProperty("--header-h", headerHeight + "px");
         document.documentElement.style.setProperty("--pill-h", pillHeight + "px");
         document.documentElement.style.setProperty("--pill-offset", pillOffset + "px");
         document.documentElement.style.setProperty("--pill-clearance", pillClearance + "px");
         document.documentElement.style.setProperty("--mobile-topbar-h", mobile ? (headerHeight + "px") : "0px");
         document.documentElement.style.setProperty("--mobile-bottomdock-h", mobile ? (pillHeight + "px") : "0px");
+        document.documentElement.style.setProperty("--simulation-base-width", simulationBaseWidth + "px");
+        document.documentElement.style.setProperty("--simulation-base-height", simulationBaseHeight + "px");
+        document.documentElement.style.setProperty("--simulation-scale", simulationScale.toFixed(3));
+        document.documentElement.style.setProperty("--simulation-frame-width", simulationFrameWidth + "px");
+        document.documentElement.style.setProperty("--simulation-frame-height", simulationFrameHeight + "px");
+        document.documentElement.style.setProperty("--simulation-shell-width", simulationShellWidth + "px");
+        document.documentElement.style.setProperty("--simulation-shell-gutter", simulationShellGutter + "px");
+        document.documentElement.style.setProperty("--simulation-section-top-gap", simulationTopGap + "px");
+        document.documentElement.style.setProperty("--simulation-section-bottom-gap", simulationBottomGap + "px");
       }
 
       function scheduleLayoutSync() {
