@@ -132,7 +132,7 @@ const styles = {
     flexWrap: "wrap",
     marginBottom: "24px",
   },
-  brandLink: {
+  brandLink: {s
     display: "flex",
     alignItems: "center",
     gap: "18px",

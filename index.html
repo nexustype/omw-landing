@@ -788,12 +788,16 @@
     .personaDockInner {
       position: relative;
       pointer-events: none;
-      min-height: calc(var(--header-h) * 1.5);
-      padding: 16px max(28px, calc(env(safe-area-inset-right) + 24px)) 16px max(28px, calc(env(safe-area-inset-left) + 24px));
+      min-height: clamp(72px, 9vh, calc(var(--header-h) * 1.5));
+      padding:
+        clamp(8px, 1.3vh, 16px)
+        max(clamp(16px, calc(0.45vw + 0.55vh + 6px), 28px), calc(env(safe-area-inset-right) + 14px))
+        clamp(8px, 1.3vh, 16px)
+        max(clamp(16px, calc(0.45vw + 0.55vh + 6px), 28px), calc(env(safe-area-inset-left) + 14px));
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
       align-items: center;
-      gap: 28px;
+      gap: clamp(12px, calc(0.4vw + 0.5vh + 4px), 28px);
       background: var(--bg);
       box-shadow: 0 -8px 20px rgba(16, 24, 42, 0.05);
     }
@@ -806,10 +810,10 @@
     .personaDockMeta {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: clamp(4px, 0.45vw, 8px);
       min-width: 0;
       color: var(--muted-soft);
-      font-size: clamp(0.9rem, 1.2vw, 1.08rem);
+      font-size: clamp(0.76rem, calc(0.52rem + 0.18vw + 0.18vh), 1.08rem);
       line-height: 1.2;
       letter-spacing: -0.01em;
       white-space: nowrap;
@@ -842,11 +846,11 @@
       content: "";
       position: absolute;
       left: 50%;
-      top: -68px;
-      width: calc(100% + 128px);
-      height: 106px;
+      top: calc(-1 * clamp(36px, 4.8vh, 68px));
+      width: calc(100% + clamp(88px, 6vw, 128px));
+      height: clamp(60px, 7.4vh, 106px);
       transform: translateX(-50%);
-      border-radius: 44px 44px 0 0;
+      border-radius: clamp(28px, 3vw, 44px) clamp(28px, 3vw, 44px) 0 0;
       background: var(--bg);
       box-shadow: none;
       pointer-events: none;
@@ -855,8 +859,8 @@
 
     .personaDockFrame {
       position: relative;
-      margin-top: -50px;
-      padding: 8px;
+      margin-top: calc(-1 * clamp(24px, 4.4vh, 50px));
+      padding: clamp(4px, calc(0.12vw + 0.1vh + 1px), 8px);
       border-radius: 999px;
       border: 1px solid rgba(222, 228, 237, 0.98);
       background: #ffffff;
@@ -1053,9 +1057,9 @@
     }
 
     .comparisonToggle {
-      --toggle-knob: clamp(38px, 4.2vw, 52px);
+      --toggle-knob: clamp(28px, calc(18px + 0.95vw + 0.45vh), 52px);
       position: relative;
-      width: clamp(156px, 38vw, 360px);
+      width: clamp(170px, calc(120px + 10vw), 360px);
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       align-items: center;
@@ -1068,7 +1072,7 @@
         inset 0 -10px 20px rgba(163, 183, 206, 0.18),
         0 6px 14px rgba(86, 103, 126, 0.08);
       padding: 0;
-      min-height: clamp(46px, 5vw, 60px);
+      min-height: clamp(34px, calc(18px + 0.9vw + 0.35vh), 60px);
       user-select: none;
       overflow: hidden;
     }
@@ -1096,20 +1100,20 @@
       top: 0;
       bottom: 0;
       left: 50%;
-      width: calc(100% - var(--toggle-knob) - 18px);
+      width: calc(100% - var(--toggle-knob) - clamp(12px, 1.2vw, 18px));
       transform: translateX(-50%);
       z-index: 2;
       display: flex;
       align-items: center;
       justify-content: center;
       pointer-events: none;
-      padding: 0 10px;
+      padding: 0 clamp(4px, 0.7vw, 10px);
     }
 
     .toggleModeLabel {
       display: none;
       text-align: center;
-      font-size: clamp(0.88rem, 1.9vw, 1.34rem);
+      font-size: clamp(0.72rem, calc(0.56rem + 0.2vw + 0.15vh), 1.34rem);
       font-weight: 900;
       letter-spacing: 0.05em;
       line-height: 1;
@@ -1127,7 +1131,7 @@
       font-weight: 800;
       letter-spacing: 0.04em;
       line-height: 1;
-      min-height: clamp(46px, 5vw, 60px);
+      min-height: clamp(34px, calc(18px + 0.9vw + 0.35vh), 60px);
       cursor: pointer;
       transition: background-color 0.16s ease;
       position: relative;
@@ -1154,7 +1158,7 @@
     .comparisonToggleKnob {
       position: absolute;
       top: 50%;
-      left: 6px;
+      left: clamp(4px, 0.35vw, 6px);
       width: var(--toggle-knob);
       height: var(--toggle-knob);
       border-radius: 999px;
@@ -1177,7 +1181,7 @@
     }
 
     .comparisonToggle[data-mode="driver"] .comparisonToggleKnob {
-      left: calc(100% - var(--toggle-knob) - 6px);
+      left: calc(100% - var(--toggle-knob) - clamp(4px, 0.35vw, 6px));
       transform: translateY(-50%);
     }
 
@@ -1186,8 +1190,8 @@
     }
 
     .comparisonToggleKnob img {
-      width: clamp(19px, 2vw, 27px);
-      height: clamp(19px, 2vw, 27px);
+      width: clamp(16px, calc(11px + 0.55vw + 0.2vh), 27px);
+      height: clamp(16px, calc(11px + 0.55vw + 0.2vh), 27px);
       object-fit: contain;
     }
 
