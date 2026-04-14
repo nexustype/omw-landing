@@ -2,7 +2,7 @@
   "name": "omw-landing",
   "private": true,
   "scripts": {
-    "build:presentation": "esbuild presentation/main.jsx --bundle --format=esm --jsx=automatic --minify --define:process.env.NODE_ENV=\\\"production\\\" --outfile=presentation/app.js"
+    "build:presentation": "esbuild presentation/main.jsx --bundle --format=esm --jsx=automatic --minify --define:process.env.NODE_ENV=\\\"production\\\" --loader:.png=file --asset-names=assets/[name]-[hash] --outfile=presentation/app.js"
   },
   "dependencies": {
     "nodemailer": "^6.9.14"

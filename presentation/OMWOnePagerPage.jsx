@@ -1,42 +1,33 @@
 import React from "react";
 import founderPortrait from "./Portrait 2026.png";
-/**
- * OMW One-Pager
- *
- * Base adapted from the file provided by the user:
- * /Users/blokbergendaniel/Downloads/OMWOnePagerPage.jsx
- *
- * Edit only the CONTENT object below to update copy quickly.
- */
 
 const CONTENT = {
   brand: "OMW",
   title: "OMW - On My Way",
   sublabel: "Covoiturage quotidien en temps réel",
   betaLabel: "Rejoindre la bêta",
-
-  headline: "Le covoiturage quotidien, enfin en temps réel",
+  headline: "Des sièges vides, enfin utiles sur des trajets récurrents.",
   subheadline:
-    "Pour les trajets domicile-travail sur des corridors ciblés à Paris et en Île-de-France, là où le réseau est peu fiable, lent ou incomplet.",
-
+    "OMW connecte conducteurs et passagers autour d’un même trajet récurrent, avec moins de planification, zéro détour ou jusqu’à 5 minutes max côté conducteur, et une prise en charge pensée en temps de marche côté passager.",
   summary:
-    "OMW connecte en temps réel des conducteurs déjà en route et des passagers sur le même corridor, avec un premier déploiement ciblé à Paris et en Île-de-France.",
-
-  launchTitle: "Lancement ciblé",
+    "OMW connecte conducteurs et passagers autour d’un même trajet récurrent, avec une logique simple, compatible avec une routine déjà existante.",
+  summarySupport:
+    "OMW ne remplace pas votre routine. Il s’ajoute à un trajet déjà existant quand il est compatible.",
+  launchTitle: "Déploiement ciblé",
   launchLocation: "Paris / Île-de-France",
   launchBody:
-    "Démarrage sur des corridors ciblés à Paris et autour de Paris, là où les trajets du quotidien souffrent d'une offre de transport peu fiable, lente ou incomplète.",
+    "Démarrage sur des corridors récurrents à Paris et autour de Paris, avec un objectif simple : valoriser des sièges vides sur des trajets déjà existants, sans recréer une logistique lourde ni imposer un nouveau réflexe de mobilité.",
   launchBullets: [
-    "Perturbations RER et réseau de transport",
-    "Liaisons banlieue-banlieue et dernier kilomètre",
-    "Validation pilote terrain",
+    "Trajets récurrents et corridors ciblés",
+    "Sièges vides valorisés sans détour ou avec +5 min max",
+    "Prise en charge flexible : à moins de 2, 4, 6 ou 10 min à pied",
+    "Moins de planification, plus de compatibilité",
   ],
-
   modelTitle: "Modèle économique",
   modelItems: [
     {
       title: "Commission sur les trajets",
-      body: "",
+      body: "Une monétisation simple sur une mise en relation déjà compatible.",
       icon: "€",
     },
     {
@@ -45,23 +36,25 @@ const CONTENT = {
       icon: "▣",
     },
   ],
-
   impactTitle: "Impact",
   impactBullets: [
-    "Valorisation des places inoccupées",
-    "Réduction des émissions liées aux trajets",
-    "Moins de capacité automobile gaspillée",
-    "Mobilité quotidienne plus efficace",
+    "Sièges vides valorisés sur des trajets déjà existants",
+    "Coût de la voiture mieux amorti pour le conducteur",
+    "Option voiture régulière plus abordable pour le passager",
+    "Moins de planification, plus de compatibilité",
+    "Une couche de mobilité qui s’ajoute à la routine",
   ],
-
   founderName: "Daniel Blokbergen",
   founderRole: "Fondateur",
-
-  footerTitle: "Recherche de pilotes et de partenaires terrain en Île-de-France",
-
+  footerTitle: "Validation pilote en préparation sur des corridors récurrents en Île-de-France",
   contacts: [
     { label: "hello@rideomw.com", icon: "✉", href: "mailto:hello@rideomw.com" },
     { label: "www.rideomw.com", icon: "🌐", href: "https://www.rideomw.com/" },
+    {
+      label: "rideomw.com/presentation",
+      icon: "ⓘ",
+      href: "https://www.rideomw.com/presentation",
+    },
     {
       label: "linkedin.com/in/danielblokbergen",
       icon: "in",
@@ -79,7 +72,6 @@ const palette = {
   primary: "#204A67",
   line: "#DCE3EF",
   accent: "#8FB6A8",
-  accent2: "#B6C8E9",
   pillA: "#1A5FD0",
   pillB: "#0F47A3",
   shadow1: "rgba(255,255,255,0.88)",
@@ -135,7 +127,7 @@ const styles = {
     flexWrap: "wrap",
     marginBottom: "24px",
   },
-  brandLink: {s
+  brandLink: {
     display: "flex",
     alignItems: "center",
     gap: "18px",
@@ -175,14 +167,14 @@ const styles = {
     lineHeight: 1.06,
     letterSpacing: "-0.045em",
     fontWeight: 800,
-    maxWidth: "760px",
+    maxWidth: "820px",
     margin: "12px 0 14px",
   },
   heroSub: {
     fontSize: "clamp(18px, 2vw, 24px)",
-    lineHeight: 1.35,
+    lineHeight: 1.38,
     color: palette.muted,
-    maxWidth: "820px",
+    maxWidth: "860px",
     marginBottom: "28px",
   },
   card: {
@@ -204,6 +196,14 @@ const styles = {
   },
   summaryStrong: {
     fontWeight: 800,
+  },
+  summarySupport: {
+    display: "block",
+    marginTop: "14px",
+    fontSize: "clamp(15px, 1.5vw, 18px)",
+    lineHeight: 1.5,
+    color: "#5D6981",
+    letterSpacing: "-0.01em",
   },
   grid: {
     display: "grid",
@@ -343,32 +343,37 @@ const styles = {
     gap: "18px",
   },
   founderPhoto: {
-    width: "84px",
-    height: "84px",
-    borderRadius: "22px",
-    background:
-      "linear-gradient(145deg, #d9e3f0 0%, #f6f8fc 50%, #cfd8e7 100%)",
-    boxShadow: `
-      8px 8px 18px rgba(183,194,211,0.52),
-      -8px -8px 18px rgba(255,255,255,0.82)
-    `,
+    width: "92px",
+    height: "92px",
+    flexShrink: 0,
     overflow: "hidden",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    fontSize: "24px",
-    color: palette.primary,
-    fontWeight: 800,
+    borderRadius: "24px",
+    background: "linear-gradient(145deg, #dfe7f2 0%, #f7f9fc 52%, #d2dceb 100%)",
+    boxShadow: `
+      10px 10px 20px rgba(183,194,211,0.48),
+      -10px -10px 20px rgba(255,255,255,0.84),
+      inset 1px 1px 0 rgba(255,255,255,0.62)
+    `,
+  },
+  founderPhotoImg: {
+    width: "100%",
+    height: "100%",
+    display: "block",
+    objectFit: "cover",
+    objectPosition: "center 24%",
   },
   founderName: {
-    fontSize: "22px",
-    fontWeight: 500,
-    letterSpacing: "-0.03em",
+    fontSize: "24px",
+    fontWeight: 700,
+    lineHeight: 1.08,
+    letterSpacing: "-0.035em",
   },
   founderRole: {
-    fontSize: "18px",
-    color: palette.muted,
+    fontSize: "16px",
+    color: "#6D7A90",
     marginTop: "6px",
+    fontWeight: 500,
+    letterSpacing: "-0.01em",
   },
   ctaWrap: {
     marginTop: "22px",
@@ -379,9 +384,6 @@ const styles = {
     fontWeight: 500,
     letterSpacing: "-0.03em",
     marginBottom: "18px",
-  },
-  ctaStrong: {
-    fontWeight: 800,
   },
   contactGrid: {
     display: "grid",
@@ -433,8 +435,12 @@ const styles = {
       .omw-top-row { gap: 12px !important; }
       .omw-summary { font-size: 18px !important; }
       .omw-logo { font-size: 28px !important; }
-      .omw-founder-card { align-items: flex-start !important; }
-      .omw-founder-photo { width: 68px !important; height: 68px !important; border-radius: 18px !important; }
+      .omw-founder-card { align-items: center !important; }
+      .omw-founder-photo {
+        width: 76px !important;
+        height: 76px !important;
+        border-radius: 20px !important;
+      }
     }
     @media print {
       body { background: #ffffff !important; }
@@ -516,9 +522,8 @@ export default function OMWOnePagerPage() {
 
         <Card>
           <div className="omw-summary" style={styles.summary}>
-            <span style={styles.summaryStrong}>OMW est un concept de covoiturage en temps réel</span>{" "}
-            pour les trajets domicile-travail du quotidien, avec un premier déploiement
-            sur des corridors ciblés à Paris et en Île-de-France.
+            <span style={styles.summaryStrong}>{CONTENT.summary}</span>
+            <span style={styles.summarySupport}>{CONTENT.summarySupport}</span>
           </div>
         </Card>
 
@@ -576,7 +581,11 @@ export default function OMWOnePagerPage() {
         >
           <div style={{ ...styles.cardInner, ...styles.founderCard }}>
             <div className="omw-founder-photo" style={styles.founderPhoto}>
-              DB
+              <img
+                src={founderPortrait}
+                alt="Portrait de Daniel Blokbergen"
+                style={styles.founderPhotoImg}
+              />
             </div>
             <div>
               <div style={styles.founderName}>{CONTENT.founderName}</div>
@@ -587,10 +596,7 @@ export default function OMWOnePagerPage() {
 
         <Card style={{ marginTop: "22px" }}>
           <div style={styles.ctaWrap}>
-            <div style={styles.ctaTitle}>
-              <span style={styles.ctaStrong}>Validation pilote</span> en préparation en{" "}
-              <span style={styles.ctaStrong}>Île-de-France</span>
-            </div>
+            <div style={styles.ctaTitle}>{CONTENT.footerTitle}</div>
 
             <div className="omw-contact-grid" style={styles.contactGrid}>
               {CONTENT.contacts.map((contact) => (
