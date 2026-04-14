@@ -1,5 +1,5 @@
 import React from "react";
-
+import founderPortrait from "./Portrait 2026.png";
 /**
  * OMW One-Pager
  *
@@ -14,20 +14,24 @@ const CONTENT = {
   title: "OMW - On My Way",
   sublabel: "Covoiturage quotidien en temps réel",
   betaLabel: "Rejoindre la bêta",
-  headline: "Transformer les sièges vides en trajets utiles pour tous",
+
+  headline: "Le covoiturage quotidien, enfin en temps réel",
   subheadline:
-    "Rendre les trajets domicile-travail en temps réel plus fluides, plus fiables et plus accessibles",
+    "Pour les trajets domicile-travail sur des corridors ciblés à Paris et en Île-de-France, là où le réseau est peu fiable, lent ou incomplet.",
+
   summary:
-    "OMW est un concept de covoiturage en temps réel pour les trajets domicile-travail du quotidien, avec un premier déploiement sur des corridors ciblés à Paris et en Île-de-France.",
-  launchTitle: "Démarrage en",
+    "OMW connecte en temps réel des conducteurs déjà en route et des passagers sur le même corridor, avec un premier déploiement ciblé à Paris et en Île-de-France.",
+
+  launchTitle: "Lancement ciblé",
   launchLocation: "Paris / Île-de-France",
   launchBody:
-    "Lancement sur des corridors ciblés à Paris et autour de Paris, là où les trajets du quotidien souffrent d'une offre de transport peu fiable, lente ou incomplète.",
+    "Démarrage sur des corridors ciblés à Paris et autour de Paris, là où les trajets du quotidien souffrent d'une offre de transport peu fiable, lente ou incomplète.",
   launchBullets: [
     "Perturbations RER et réseau de transport",
     "Liaisons banlieue-banlieue et dernier kilomètre",
-    "Validation pilote ciblée",
+    "Validation pilote terrain",
   ],
+
   modelTitle: "Modèle économique",
   modelItems: [
     {
@@ -41,6 +45,7 @@ const CONTENT = {
       icon: "▣",
     },
   ],
+
   impactTitle: "Impact",
   impactBullets: [
     "Valorisation des places inoccupées",
@@ -48,17 +53,15 @@ const CONTENT = {
     "Moins de capacité automobile gaspillée",
     "Mobilité quotidienne plus efficace",
   ],
+
   founderName: "Daniel Blokbergen",
   founderRole: "Fondateur",
-  cta: "Validation pilote en préparation en Île-de-France",
+
+  footerTitle: "Recherche de pilotes et de partenaires terrain en Île-de-France",
+
   contacts: [
     { label: "hello@rideomw.com", icon: "✉", href: "mailto:hello@rideomw.com" },
     { label: "www.rideomw.com", icon: "🌐", href: "https://www.rideomw.com/" },
-    {
-      label: "rideomw.com/presentation",
-      icon: "ⓘ",
-      href: "https://www.rideomw.com/presentation",
-    },
     {
       label: "linkedin.com/in/danielblokbergen",
       icon: "in",
