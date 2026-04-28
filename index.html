@@ -121,6 +121,7 @@
         inset 8px 8px 16px rgba(212, 221, 235, 0.56),
         inset -6px -6px 12px rgba(255, 255, 255, 0.86);
       --frame-surface: rgba(237, 241, 247, 0.94);
+      --dock-surface: #edf1f7;
       --radius-xl: 32px;
       --radius-lg: 24px;
       --radius-md: 16px;
@@ -134,10 +135,10 @@
       --mobile-bottomdock-h: 0px;
       --mobile-visible-content-h: 100svh;
       --simulation-base-width: 1228px;
-      --simulation-base-height: 1000px;
+      --simulation-base-height: 940px;
       --simulation-scale: 0.76;
       --simulation-frame-width: 933px;
-      --simulation-frame-height: 760px;
+      --simulation-frame-height: 714px;
       --simulation-shell-width: 965px;
       --simulation-shell-gutter: 20px;
       --simulation-section-top-gap: 16px;
@@ -298,12 +299,21 @@
       letter-spacing: 0.04em;
       padding: 9px 10px;
       color: var(--muted);
+      border-radius: 999px;
+      outline-offset: -2px;
     }
 
     #lang-fr:checked ~ header .langToggle label[for="lang-fr"],
     #lang-en:checked ~ header .langToggle label[for="lang-en"] {
       background: linear-gradient(120deg, var(--brand), var(--accent));
       color: #ffffff;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.32);
+    }
+
+    #lang-fr:checked ~ header .langToggle label[for="lang-fr"]::before,
+    #lang-en:checked ~ header .langToggle label[for="lang-en"]::before {
+      content: "✓ ";
+      font-weight: 900;
     }
 
     .cta.fr,
@@ -367,6 +377,23 @@
       box-shadow:
         0 16px 30px rgba(26, 95, 208, 0.24),
         inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    }
+
+    .btn.secondary {
+      border-color: rgba(151, 164, 184, 0.5);
+      background: transparent;
+      color: var(--muted);
+      box-shadow: none;
+    }
+
+    .btn.secondary:hover {
+      background: rgba(255, 255, 255, 0.5);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .btn:disabled {
+      cursor: wait;
+      transform: none;
     }
 
     :focus-visible {
@@ -788,18 +815,20 @@
     .personaDockInner {
       position: relative;
       pointer-events: none;
-      min-height: clamp(72px, 9vh, calc(var(--header-h) * 1.5));
+      min-height: clamp(58px, 7vh, 72px);
       padding:
-        clamp(8px, 1.3vh, 16px)
+        clamp(6px, 0.9vh, 10px)
         max(clamp(16px, calc(0.45vw + 0.55vh + 6px), 28px), calc(env(safe-area-inset-right) + 14px))
-        clamp(8px, 1.3vh, 16px)
+        clamp(7px, 1vh, 12px)
         max(clamp(16px, calc(0.45vw + 0.55vh + 6px), 28px), calc(env(safe-area-inset-left) + 14px));
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
       align-items: center;
       gap: clamp(12px, calc(0.4vw + 0.5vh + 4px), 28px);
-      background: var(--bg);
-      box-shadow: 0 -8px 20px rgba(16, 24, 42, 0.05);
+      background: var(--dock-surface);
+      border-top: 1px solid var(--stroke-strong);
+      box-shadow: 0 -12px 24px rgba(183, 194, 213, 0.18);
+      backdrop-filter: blur(14px);
     }
 
     .personaDockMeta,
@@ -846,12 +875,13 @@
       content: "";
       position: absolute;
       left: 50%;
-      top: calc(-1 * clamp(36px, 4.8vh, 68px));
-      width: calc(100% + clamp(88px, 6vw, 128px));
-      height: clamp(60px, 7.4vh, 106px);
+      top: calc(-1 * clamp(54px, 6.8vh, 82px));
+      width: calc(100% + clamp(0px, 2vw, 30px));
+      height: clamp(76px, 9vh, 110px);
       transform: translateX(-50%);
-      border-radius: clamp(28px, 3vw, 44px) clamp(28px, 3vw, 44px) 0 0;
-      background: var(--bg);
+      border-radius: clamp(32px, 3.4vw, 48px) clamp(32px, 3.4vw, 48px) 0 0;
+      background: var(--dock-surface);
+      border: 0;
       box-shadow: none;
       pointer-events: none;
       z-index: 0;
@@ -859,12 +889,14 @@
 
     .personaDockFrame {
       position: relative;
-      margin-top: calc(-1 * clamp(24px, 4.4vh, 50px));
-      padding: clamp(4px, calc(0.12vw + 0.1vh + 1px), 8px);
+      margin-top: calc(-1 * clamp(44px, 5.7vh, 66px));
+      padding: 8px 5px;
       border-radius: 999px;
-      border: 1px solid rgba(222, 228, 237, 0.98);
+      border: none;
       background: #ffffff;
-      box-shadow: 0 8px 18px rgba(16, 24, 42, 0.06);
+      box-shadow:
+        0 12px 28px rgba(16, 24, 42, 0.1),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.84);
       z-index: 2;
     }
 
@@ -1057,22 +1089,23 @@
     }
 
     .comparisonToggle {
-      --toggle-knob: clamp(28px, calc(18px + 0.95vw + 0.45vh), 52px);
+      --toggle-knob: 44px;
       position: relative;
-      width: clamp(170px, calc(120px + 10vw), 360px);
+      width: 300px;
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       align-items: center;
       border-radius: 999px;
-      border: 1px solid rgba(171, 194, 219, 0.92);
+      border: 1px solid rgba(139, 166, 193, 0.3);
       background: linear-gradient(180deg, rgb(226, 236, 247) 0%, rgb(213, 226, 241) 100%);
+      backdrop-filter: blur(12px);
       box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.9),
-        inset 0 10px 18px rgba(255, 255, 255, 0.3),
-        inset 0 -10px 20px rgba(163, 183, 206, 0.18),
-        0 6px 14px rgba(86, 103, 126, 0.08);
-      padding: 0;
-      min-height: clamp(34px, calc(18px + 0.9vw + 0.35vh), 60px);
+        inset 0 4px 8px rgba(0, 0, 0, 0.08),
+        inset 0 -4px 6px rgba(255, 255, 255, 0.8),
+        0 4px 10px rgba(0, 0, 0, 0.05);
+      padding: 4px;
+      height: 52px;
+      min-height: 52px;
       user-select: none;
       overflow: hidden;
     }
@@ -1097,28 +1130,35 @@
 
     .comparisonToggleLabel {
       position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 50%;
-      width: calc(100% - var(--toggle-knob) - clamp(12px, 1.2vw, 18px));
-      transform: translateX(-50%);
+      inset: 4px;
       z-index: 2;
       display: flex;
       align-items: center;
       justify-content: center;
       pointer-events: none;
-      padding: 0 clamp(4px, 0.7vw, 10px);
+      padding: 0 20px 0 calc(var(--toggle-knob) + 16px);
+    }
+
+    .comparisonToggle[data-mode="driver"] .comparisonToggleLabel {
+      justify-content: center;
+      padding: 0 calc(var(--toggle-knob) + 16px) 0 20px;
     }
 
     .toggleModeLabel {
       display: none;
       text-align: center;
-      font-size: clamp(0.72rem, calc(0.56rem + 0.2vw + 0.15vh), 1.34rem);
+      font-size: clamp(0.68rem, calc(0.52rem + 0.2vw + 0.15vh), 1.08rem);
       font-weight: 900;
       letter-spacing: 0.05em;
       line-height: 1;
       text-transform: uppercase;
       color: #223457;
+    }
+
+    .toggleModeLabel::before {
+      content: none;
+      color: var(--brand);
+      font-weight: 900;
     }
 
     .comparisonToggleBtn {
@@ -1131,12 +1171,16 @@
       font-weight: 800;
       letter-spacing: 0.04em;
       line-height: 1;
-      min-height: clamp(34px, calc(18px + 0.9vw + 0.35vh), 60px);
+      min-height: 44px;
       cursor: pointer;
       transition: background-color 0.16s ease;
       position: relative;
       z-index: 3;
       border-radius: 0;
+    }
+
+    .comparisonToggleBtn:focus-visible {
+      outline-offset: -5px;
     }
 
     .comparisonToggleBtn[aria-pressed="true"] {
@@ -1158,17 +1202,17 @@
     .comparisonToggleKnob {
       position: absolute;
       top: 50%;
-      left: clamp(4px, 0.35vw, 6px);
+      left: 4px;
       width: var(--toggle-knob);
       height: var(--toggle-knob);
       border-radius: 999px;
       border: 1px solid var(--stroke);
       background: linear-gradient(180deg, #ffffff 0%, #eef3f8 100%);
       box-shadow:
-        8px 8px 16px rgba(183, 194, 213, 0.34),
-        -6px -6px 14px rgba(255, 255, 255, 0.82),
-        inset 0 1px 0 rgba(255, 255, 255, 0.98),
-        inset 0 -8px 14px rgba(198, 206, 217, 0.32);
+        0 4px 12px rgba(0, 0, 0, 0.15),
+        -2px 0 8px rgba(0, 0, 0, 0.05),
+        inset 0 -4px 6px rgba(0, 0, 0, 0.06),
+        inset 0 4px 6px rgba(255, 255, 255, 1);
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -1181,7 +1225,7 @@
     }
 
     .comparisonToggle[data-mode="driver"] .comparisonToggleKnob {
-      left: calc(100% - var(--toggle-knob) - clamp(4px, 0.35vw, 6px));
+      left: calc(100% - var(--toggle-knob) - 4px);
       transform: translateY(-50%);
     }
 
@@ -1190,8 +1234,8 @@
     }
 
     .comparisonToggleKnob img {
-      width: clamp(16px, calc(11px + 0.55vw + 0.2vh), 27px);
-      height: clamp(16px, calc(11px + 0.55vw + 0.2vh), 27px);
+      width: 65%;
+      height: 65%;
       object-fit: contain;
     }
 
@@ -1639,22 +1683,31 @@
     }
 
     .formCard {
-      border: none;
-      border-radius: 18px;
-      background: linear-gradient(180deg, var(--panel-strong) 0%, var(--panel) 100%);
-      padding: 22px;
-      box-shadow: var(--shadow-soft);
+      --form-card-pad: clamp(18px, 3vw, 30px);
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(320px, 1fr);
+      gap: clamp(18px, 3vw, 32px);
+      align-items: stretch;
+      border: 1px solid rgba(222, 228, 237, 0.86);
+      border-radius: 30px;
+      background:
+        radial-gradient(circle at 12% 8%, rgba(26, 95, 208, 0.1), transparent 28%),
+        linear-gradient(180deg, var(--panel-strong) 0%, var(--panel) 100%);
+      padding: var(--form-card-pad);
+      box-shadow: var(--shadow);
     }
 
     .formCard[hidden] {
       display: none;
     }
 
+    .formCard h2,
     .formCard h3 {
       margin: 4px 0 0;
-      font-size: 22px;
-      line-height: 1.12;
-      letter-spacing: -0.02em;
+      font-size: clamp(2.1rem, 4vw, 4rem);
+      line-height: 0.98;
+      letter-spacing: -0.055em;
+      max-width: 9ch;
     }
 
     .formCard p {
@@ -1665,9 +1718,82 @@
     }
 
     .form {
-      margin-top: 10px;
+      margin-top: 0;
       display: grid;
-      gap: 7px;
+      gap: 14px;
+    }
+
+    .formIntro {
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 22px;
+      padding: clamp(4px, 1vw, 10px);
+    }
+
+    .formCard .formIntroLead {
+      max-width: 34ch;
+      color: rgba(36, 52, 74, 0.74);
+      font-size: clamp(1rem, 1.4vw, 1.18rem);
+      line-height: 1.55;
+    }
+
+    .formIntroList {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .formIntroList li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: rgba(36, 52, 74, 0.76);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .formIntroList li::before {
+      content: "✓";
+      flex: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(26, 95, 208, 0.12);
+      color: var(--brand);
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .quickFormPanel {
+      margin:
+        calc(-1 * var(--form-card-pad))
+        calc(-1 * var(--form-card-pad))
+        calc(-1 * var(--form-card-pad))
+        0;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: 0 30px 30px 0;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(244, 248, 252, 0.98));
+      padding: clamp(20px, 3vw, 32px);
+      box-shadow:
+        18px 18px 34px rgba(183, 194, 213, 0.34),
+        -12px -12px 28px rgba(255, 255, 255, 0.82),
+        inset 0 1px 0 rgba(255, 255, 255, 0.96);
+    }
+
+    .formCard .quickFormEyebrow {
+      margin: 0 0 14px;
+      color: var(--muted-soft);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
     }
 
     .row2 {
@@ -1690,15 +1816,18 @@
     select,
     textarea {
       width: 100%;
-      border-radius: 12px;
-      border: 1px solid var(--stroke);
-      background: linear-gradient(145deg, #eef3f9 0%, #f8fbff 100%);
+      min-height: 52px;
+      border-radius: 18px;
+      border: 1px solid rgba(151, 164, 184, 0.62);
+      background: #f7f9fc;
       color: var(--ink);
       font: inherit;
-      font-size: 15px;
-      padding: 10px 12px;
+      font-size: 16px;
+      padding: 12px 16px;
       outline: none;
-      box-shadow: var(--shadow-inset);
+      box-shadow:
+        inset 3px 3px 8px rgba(177, 188, 204, 0.18),
+        inset -4px -4px 10px rgba(255, 255, 255, 0.78);
     }
 
     input:focus,
@@ -1708,6 +1837,16 @@
       box-shadow:
         var(--shadow-inset),
         0 0 0 4px rgba(26, 95, 208, 0.12);
+    }
+
+    input[aria-invalid="true"],
+    select[aria-invalid="true"],
+    textarea[aria-invalid="true"] {
+      border-color: rgba(159, 48, 48, 0.72);
+      background: linear-gradient(145deg, #fff2f2 0%, #fffafa 100%);
+      box-shadow:
+        var(--shadow-inset),
+        0 0 0 4px rgba(159, 48, 48, 0.1);
     }
 
     textarea {
@@ -1721,31 +1860,105 @@
       line-height: 1.5;
     }
 
+    .formCard .fieldHelp {
+      margin: 5px 0 0;
+      color: rgba(54, 70, 92, 0.78);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .formCard .fieldError {
+      display: none;
+      margin: 6px 0 0;
+      color: #8f2424;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+
+    .formCard .fieldError.is-visible {
+      display: block;
+    }
+
     .panelHelperNote {
       margin-top: 10px;
     }
 
     .formActions {
-      margin-top: 2px;
+      margin-top: 4px;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       gap: 10px;
     }
 
+    .formActions .note {
+      flex: 1 1 220px;
+    }
+
+    .formCard .formNextStep {
+      width: 100%;
+      margin: 4px 0 0;
+      color: rgba(36, 52, 74, 0.78);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .quickFormPanel .btn.primary {
+      width: 100%;
+      min-height: 52px;
+      margin-top: 4px;
+      border-radius: 17px;
+      font-size: 16px;
+      font-weight: 900;
+      box-shadow:
+        0 18px 36px rgba(26, 95, 208, 0.26),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+
     .formStatus {
       display: none;
       margin-top: 8px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid transparent;
       font-size: 13px;
-      line-height: 1.4;
+      font-weight: 700;
+      line-height: 1.45;
     }
 
-    .formStatus.success { color: #0f6f5d; }
-    .formStatus.error { color: #9f3030; }
+    .formStatus.success {
+      color: #0f5f51;
+      background: rgba(220, 235, 228, 0.72);
+      border-color: rgba(77, 155, 134, 0.24);
+    }
+
+    .formStatus.error {
+      color: #8f2424;
+      background: rgba(255, 238, 238, 0.8);
+      border-color: rgba(159, 48, 48, 0.22);
+    }
 
     form[data-state="success"] .formStatus.success { display: block; }
     form[data-state="error"] .formStatus.error { display: block; }
-    form[data-state="loading"] .btn.primary { opacity: 0.65; pointer-events: none; }
+    form[data-state="loading"] .btn.primary { opacity: 0.78; pointer-events: none; }
+    form[data-state="loading"] .btn.primary::before {
+      content: "";
+      width: 0.85em;
+      height: 0.85em;
+      border-radius: 999px;
+      border: 2px solid rgba(255, 255, 255, 0.45);
+      border-top-color: #ffffff;
+      animation: omwSpin 0.7s linear infinite;
+    }
+
+    .formClear[hidden] {
+      display: none;
+    }
+
+    @keyframes omwSpin {
+      to { transform: rotate(360deg); }
+    }
 
     .hp {
       position: absolute;
@@ -1822,8 +2035,8 @@
 
     @media (min-width: 1220px) and (max-height: 760px) {
       .personaDockInner {
-        min-height: 72px;
-        padding: 8px 18px 10px;
+        min-height: 58px;
+        padding: 6px 18px 8px;
         gap: 14px;
       }
 
@@ -1833,48 +2046,55 @@
       }
 
       .personaDockCenter::before {
-        top: -36px;
-        width: calc(100% + 88px);
-        height: 60px;
-        border-radius: 28px 28px 0 0;
+        top: -52px;
+        width: calc(100% + 0px);
+        height: 76px;
+        border-radius: 34px 34px 0 0;
       }
 
       .personaDockFrame {
-        margin-top: -24px;
-        padding: 4px;
-        box-shadow: 0 6px 14px rgba(16, 24, 42, 0.05);
+        margin-top: -44px;
+        padding: 8px 5px;
+        box-shadow:
+          0 10px 24px rgba(16, 24, 42, 0.1),
+          inset 0 0 0 1px rgba(255, 255, 255, 0.82);
       }
 
       .comparisonToggle {
-        --toggle-knob: 26px;
-        width: clamp(170px, 19vw, 220px);
-        min-height: 32px;
+        --toggle-knob: 36px;
+        width: 300px;
+        min-height: 46px;
+        height: 46px;
       }
 
       .comparisonToggleLabel {
-        width: calc(100% - var(--toggle-knob) - 12px);
-        padding: 0 4px;
+        inset: 4px;
+        padding: 0 20px 0 calc(var(--toggle-knob) + 16px);
+      }
+
+      .comparisonToggle[data-mode="driver"] .comparisonToggleLabel {
+        padding: 0 calc(var(--toggle-knob) + 16px) 0 20px;
       }
 
       .toggleModeLabel {
-        font-size: clamp(0.68rem, 0.76vw, 0.82rem);
+        font-size: clamp(0.72rem, 0.95vw, 0.9rem);
       }
 
       .comparisonToggleBtn {
-        min-height: 32px;
+        min-height: 46px;
       }
 
       .comparisonToggleKnob {
-        left: 4px;
+        left: 5px;
       }
 
       .comparisonToggle[data-mode="driver"] .comparisonToggleKnob {
-        left: calc(100% - var(--toggle-knob) - 4px);
+        left: calc(100% - var(--toggle-knob) - 5px);
       }
 
       .comparisonToggleKnob img {
-        width: 16px;
-        height: 16px;
+        width: 65%;
+        height: 65%;
       }
     }
 
@@ -2142,8 +2362,8 @@
 
       .simulationFrame {
         --simulation-scale: 1;
-        --simulation-base-height: 1020px;
-        min-height: 1020px;
+        --simulation-base-height: 950px;
+        min-height: 950px;
         height: auto;
         max-height: none;
         border-radius: 22px;
@@ -2153,7 +2373,7 @@
         left: 0;
         width: 100%;
         height: var(--simulation-base-height);
-        min-height: 1020px;
+        min-height: 950px;
         transform: none;
       }
 
@@ -2330,8 +2550,10 @@
         bottom: 0;
         transform: none;
         padding: 6px 0 calc(var(--mobile-safe-bottom) + 6px);
-        background: var(--bg);
-        border-top: 1px solid rgba(16, 24, 42, 0.06);
+        background: var(--dock-surface);
+        border-top: 1px solid var(--stroke-strong);
+        box-shadow: 0 -10px 22px rgba(16, 24, 42, 0.08);
+        backdrop-filter: blur(14px);
       }
 
       .personaDockInner {
@@ -2342,13 +2564,17 @@
         display: flex;
         justify-content: center;
         overflow: visible;
-        background: none;
+        background: transparent;
         box-shadow: none;
         border-top: none;
         backdrop-filter: none;
       }
 
       .personaDockMeta {
+        display: flex;
+      }
+
+      .personaDockMeta--left {
         display: none;
       }
 
@@ -2362,7 +2588,7 @@
 
       .personaDockFrame {
         margin-top: 0;
-        padding: 6px;
+        padding: 6px 4px;
         border: 1px solid rgba(222, 228, 237, 0.98);
         background: #ffffff;
         box-shadow: 0 4px 12px rgba(16, 24, 42, 0.05);
@@ -2377,11 +2603,13 @@
         min-width: 0;
         max-width: none;
         min-height: 50px;
-        border-color: rgba(193, 205, 219, 0.96);
-        background: #ffffff;
+        height: 50px;
+        padding: 4px;
+        border-color: rgba(139, 166, 193, 0.3);
         box-shadow:
-          0 4px 12px rgba(16, 24, 42, 0.08),
-          inset 0 1px 0 rgba(255, 255, 255, 0.72);
+          inset 0 4px 8px rgba(0, 0, 0, 0.08),
+          inset 0 -4px 6px rgba(255, 255, 255, 0.8),
+          0 4px 10px rgba(0, 0, 0, 0.05);
       }
 
       .comparisonToggle::before {
@@ -2393,8 +2621,12 @@
       }
 
       .comparisonToggleLabel {
-        width: calc(100% - var(--toggle-knob) - 14px);
-        padding: 0 6px;
+        inset: 4px;
+        padding: 0 20px 0 calc(var(--toggle-knob) + 16px);
+      }
+
+      .comparisonToggle[data-mode="driver"] .comparisonToggleLabel {
+        padding: 0 calc(var(--toggle-knob) + 16px) 0 20px;
       }
 
       .toggleModeLabel {
@@ -2403,17 +2635,18 @@
       }
 
       .comparisonToggleKnob {
-        left: 5px;
+        left: 4px;
         width: var(--toggle-knob);
         height: var(--toggle-knob);
         box-shadow:
-          0 4px 12px rgba(46, 54, 66, 0.18),
-          inset 0 1px 0 rgba(255, 255, 255, 0.98),
-          inset 0 -3px 8px rgba(198, 206, 217, 0.36);
+          0 4px 12px rgba(0, 0, 0, 0.15),
+          -2px 0 8px rgba(0, 0, 0, 0.05),
+          inset 0 -4px 6px rgba(0, 0, 0, 0.06),
+          inset 0 4px 6px rgba(255, 255, 255, 1);
       }
 
       .comparisonToggle[data-mode="driver"] .comparisonToggleKnob {
-        left: calc(100% - var(--toggle-knob) - 5px);
+        left: calc(100% - var(--toggle-knob) - 4px);
       }
 
       .featureGrid {
@@ -2550,12 +2783,25 @@
       }
 
       .formCard {
+        grid-template-columns: minmax(0, 1fr);
         padding: 18px;
-        border-radius: 18px;
+        border-radius: 24px;
       }
 
+      .formCard h2,
       .formCard h3 {
-        font-size: 1.35rem;
+        font-size: clamp(2.35rem, 12vw, 3.3rem);
+        max-width: 8ch;
+      }
+
+      .formIntro {
+        gap: 16px;
+      }
+
+      .quickFormPanel {
+        margin: 0;
+        padding: 20px;
+        border-radius: 24px;
       }
 
       input,
@@ -2653,9 +2899,9 @@
         <a class="btn primary cta fr" href="#beta-fr">Rejoindre la bêta</a>
         <a class="btn primary cta en" href="#beta-en">Join beta</a>
 
-        <div class="langToggle" aria-label="Language selector">
-          <label for="lang-fr">FR</label>
-          <label for="lang-en">EN</label>
+        <div class="langToggle" role="radiogroup" aria-label="Language selector">
+          <label for="lang-fr" role="radio" tabindex="0" data-lang-option="fr">FR</label>
+          <label for="lang-en" role="radio" tabindex="0" data-lang-option="en">EN</label>
         </div>
       </div>
     </div>
@@ -2672,20 +2918,20 @@
       </div>
       <div class="personaDockCenter">
         <div class="personaDockFrame">
-          <div class="comparisonToggle" role="group" aria-label="Basculer entre passager et conducteur" data-persona-toggle data-mode="rider">
+          <div class="comparisonToggle" role="tablist" aria-label="Basculer entre passager et conducteur" data-persona-toggle data-mode="rider">
             <span class="comparisonToggleLabel" aria-hidden="true">
               <span class="toggleModeLabel rider fr">PASSAGER</span>
               <span class="toggleModeLabel driver fr">CONDUCTEUR</span>
               <span class="toggleModeLabel rider en">RIDER</span>
               <span class="toggleModeLabel driver en">DRIVER</span>
             </span>
-            <button class="comparisonToggleBtn" type="button" data-persona-mode="rider" aria-pressed="true">
-              <span class="toggleText fr">Passager</span>
-              <span class="toggleText en">Rider</span>
+            <button class="comparisonToggleBtn" type="button" role="tab" data-persona-mode="rider" aria-pressed="true" aria-selected="true">
+              <span class="toggleText fr">Je cherche une place</span>
+              <span class="toggleText en">I need a seat</span>
             </button>
-            <button class="comparisonToggleBtn" type="button" data-persona-mode="driver" aria-pressed="false">
-              <span class="toggleText fr">Conducteur</span>
-              <span class="toggleText en">Driver</span>
+            <button class="comparisonToggleBtn" type="button" role="tab" data-persona-mode="driver" aria-pressed="false" aria-selected="false">
+              <span class="toggleText fr">Je peux prendre quelqu'un</span>
+              <span class="toggleText en">I can take someone</span>
             </button>
             <span class="comparisonToggleKnob" aria-hidden="true"><img src="Icon.png" alt="" /></span>
           </div>
@@ -2774,7 +3020,7 @@
 
             <div class="featureGrid" data-features-grid></div>
             <div class="featureSectionAction">
-              <a class="btn primary featureGuideBtn" href="blog/">Lire la guide principale</a>
+              <a class="btn primary featureGuideBtn" href="blog/">Lire le guide principal</a>
             </div>
           </div>
         </div>
@@ -2851,29 +3097,28 @@
           <div class="sectionSurface betaShell dynamicSwap" data-dynamic-section="cta">
             <div class="formsGrid">
               <section class="formCard" id="riders-fr" data-persona-panel="rider">
-                <p class="kicker" data-panel-kicker></p>
-                <h3 data-panel-title></h3>
-
-                <div class="note panelHelperNote" data-panel-corridor-note></div>
-                <div class="row2" style="margin-top: 6px;">
+                <div class="formIntro">
                   <div>
-                    <label class="flabel" for="suggest-fr">Corridor proposé</label>
-                    <input id="suggest-fr" name="corridor_suggested" form="rider-form-fr" placeholder="Ex: Montreuil ↔ Paris 11e" />
+                    <p class="kicker" data-panel-kicker></p>
+                    <h2 data-panel-title></h2>
+                    <p class="formIntroLead">Il suffit de remplir cinq champs pour faire partie des tout premiers utilisateurs d'OMW participant à la bêta exclusive en Île-de-France.</p>
                   </div>
-                  <div>
-                    <label class="flabel" for="time-fr">Fenêtre horaire</label>
-                    <input id="time-fr" name="corridor_time" form="rider-form-fr" placeholder="Ex: 7h30-9h / 23h-1h" />
-                  </div>
+                  <ul class="formIntroList">
+                    <li>Exemple : Porte de Clignancourt → La Défense.</li>
+                    <li>Ajoutez votre trajet habituel plus tard si un corridor se confirme.</li>
+                    <li>Après inscription, on vous contacte pour un test simple.</li>
+                  </ul>
                 </div>
 
-                <form class="form" id="rider-form-fr" data-form="rider" method="post" autocomplete="on" data-fallback="hello@rideomw.com">
-                  <input type="hidden" name="form_type" value="Rider waitlist (FR)" />
-                  <div class="hp" aria-hidden="true">
-                    <label for="company-rider-fr">Company</label>
-                    <input id="company-rider-fr" name="company" tabindex="-1" autocomplete="off" />
-                  </div>
+                <div class="quickFormPanel">
+                  <p class="quickFormEyebrow">Accès bêta rapide</p>
+                  <form class="form" id="rider-form-fr" data-form="rider" data-locale="fr" method="post" autocomplete="on" data-fallback="hello@rideomw.com" novalidate>
+                    <input type="hidden" name="form_type" value="Rider waitlist (FR)" />
+                    <div class="hp" aria-hidden="true">
+                      <label for="company-rider-fr">Company</label>
+                      <input id="company-rider-fr" name="company" tabindex="-1" autocomplete="off" />
+                    </div>
 
-                  <div class="row2">
                     <div>
                       <label class="flabel" for="name-rider-fr">Nom</label>
                       <input id="name-rider-fr" name="name" placeholder="Ton nom" required />
@@ -2882,12 +3127,15 @@
                       <label class="flabel" for="email-rider-fr">Email</label>
                       <input id="email-rider-fr" name="email" type="email" placeholder="toi@domaine.com" required />
                     </div>
-                  </div>
-
-                  <div class="row2">
-                    <div>
-                      <label class="flabel" for="area-rider-fr">Zone principale</label>
-                      <input id="area-rider-fr" name="area" placeholder="Ex: Montreuil / Paris 11e" required />
+                    <div class="row2">
+                      <div>
+                        <label class="flabel" for="suggest-fr">Trajet habituel</label>
+                        <input id="suggest-fr" name="corridor_suggested" placeholder="Porte de Clignancourt → La Défense" required />
+                      </div>
+                      <div>
+                        <label class="flabel" for="time-fr">Horaire habituel</label>
+                        <input id="time-fr" name="corridor_time" placeholder="Départ 8h00-8h30" required />
+                      </div>
                     </div>
                     <div>
                       <label class="flabel" for="usecase-fr">Usage principal</label>
@@ -2897,46 +3145,48 @@
                         <option>Retour de soirée</option>
                         <option>Occasionnel</option>
                       </select>
-                    </div>
-                  </div>
-
-                  <div class="row2">
-                    <div>
-                      <label class="flabel" for="timewindow-fr">Horaires typiques</label>
-                      <input id="timewindow-fr" name="time_window" placeholder="Ex: 7h30-9h / 23h-1h" />
+                      <p class="fieldHelp">OMW sert surtout à repérer des trajets réguliers compatibles.</p>
                     </div>
                     <div>
-                      <label class="flabel" for="pickup-fr">Point de RDV préféré</label>
-                      <input id="pickup-fr" name="pickup" placeholder="Station, avenue, sortie" />
+                      <label class="flabel" for="notes-rider-fr">Notes</label>
+                      <textarea id="notes-rider-fr" name="notes" placeholder="Horaires, contraintes, etc."></textarea>
                     </div>
-                  </div>
 
-                  <div>
-                    <label class="flabel" for="notes-rider-fr">Notes</label>
-                    <textarea id="notes-rider-fr" name="notes" placeholder="Contraintes, attentes, etc."></textarea>
-                  </div>
-
-                  <div class="formActions">
-                    <button class="btn primary" type="submit" data-panel-submit></button>
-                    <span class="note" data-panel-submit-note></span>
-                  </div>
-                  <div class="formStatus success" role="status" aria-live="polite">Merci. On te tient au courant.</div>
-                  <div class="formStatus error" role="status" aria-live="polite">Oups, échec. Écris-nous à <a href="mailto:hello@rideomw.com">hello@rideomw.com</a>.</div>
-                </form>
+                    <div class="formActions">
+                      <button class="btn primary" type="submit" data-panel-submit></button>
+                      <button class="btn secondary formClear" type="button" data-form-clear hidden>Effacer le formulaire</button>
+                      <span class="note" data-panel-submit-note></span>
+                      <p class="formNextStep">Après inscription : on vérifie les trajets compatibles, puis on vous contacte pour un test simple avec de vrais utilisateurs.</p>
+                    </div>
+                    <div class="formStatus success" role="status" aria-live="polite" data-form-success>Merci, c’est bien reçu. On vous contactera pour les prochains tests OMW.</div>
+                    <div class="formStatus error" role="status" aria-live="assertive" data-form-error>L’envoi n’a pas fonctionné. Vérifiez votre connexion ou réessayez dans quelques secondes.</div>
+                  </form>
+                </div>
               </section>
 
               <section class="formCard" id="drivers-fr" data-persona-panel="driver" hidden>
-                <p class="kicker" data-panel-kicker></p>
-                <h3 data-panel-title></h3>
-
-                <form class="form" id="driver-form-fr" data-form="driver" method="post" autocomplete="on" data-fallback="hello@rideomw.com">
-                  <input type="hidden" name="form_type" value="Driver beta (FR)" />
-                  <div class="hp" aria-hidden="true">
-                    <label for="company-fr">Company</label>
-                    <input id="company-fr" name="company" tabindex="-1" autocomplete="off" />
+                <div class="formIntro">
+                  <div>
+                    <p class="kicker" data-panel-kicker></p>
+                    <h2 data-panel-title></h2>
+                    <p class="formIntroLead">Il suffit de remplir cinq champs pour faire partie des tout premiers utilisateurs d'OMW participant à la bêta exclusive en Île-de-France.</p>
                   </div>
+                  <ul class="formIntroList">
+                    <li>Exemple : Nanterre → Paris 8e.</li>
+                    <li>Pas besoin de décrire toute votre routine maintenant.</li>
+                    <li>Vous gardez le contrôle du trajet et du détour.</li>
+                  </ul>
+                </div>
 
-                  <div class="row2">
+                <div class="quickFormPanel">
+                  <p class="quickFormEyebrow">Candidature conducteur rapide</p>
+                  <form class="form" id="driver-form-fr" data-form="driver" data-locale="fr" method="post" autocomplete="on" data-fallback="hello@rideomw.com" novalidate>
+                    <input type="hidden" name="form_type" value="Driver beta (FR)" />
+                    <div class="hp" aria-hidden="true">
+                      <label for="company-fr">Company</label>
+                      <input id="company-fr" name="company" tabindex="-1" autocomplete="off" />
+                    </div>
+
                     <div>
                       <label class="flabel" for="name-driver-fr">Nom</label>
                       <input id="name-driver-fr" name="name" placeholder="Ton nom" required />
@@ -2945,15 +3195,12 @@
                       <label class="flabel" for="email-driver-fr">Email</label>
                       <input id="email-driver-fr" name="email" type="email" placeholder="toi@domaine.com" required />
                     </div>
-                  </div>
-
-                  <div class="row2">
                     <div>
                       <label class="flabel" for="area-driver-fr">Trajet principal</label>
-                      <input id="area-driver-fr" name="route" placeholder="Ex: Nanterre → Paris 8e" required />
+                      <input id="area-driver-fr" name="route" placeholder="Nanterre → Paris 8e" required />
                     </div>
                     <div>
-                      <label class="flabel" for="freq-driver-fr">Fréquence</label>
+                      <label class="flabel" for="freq-driver-fr">Usage principal</label>
                       <select id="freq-driver-fr" name="frequency" required>
                         <option value="">Choisir</option>
                         <option>Tous les jours</option>
@@ -2961,13 +3208,7 @@
                         <option>1-2x / semaine</option>
                         <option>Occasionnel</option>
                       </select>
-                    </div>
-                  </div>
-
-                  <div class="row2">
-                    <div>
-                      <label class="flabel" for="vehicle-fr">Véhicule</label>
-                      <input id="vehicle-fr" name="vehicle" placeholder="Modèle + année" />
+                      <p class="fieldHelp">OMW sert surtout à repérer des trajets réguliers compatibles.</p>
                     </div>
                     <div>
                       <label class="flabel" for="detour-fr">Détour max confortable</label>
@@ -2979,20 +3220,21 @@
                         <option>Flexible</option>
                       </select>
                     </div>
-                  </div>
+                    <div>
+                      <label class="flabel" for="notes-driver-fr">Notes</label>
+                      <textarea id="notes-driver-fr" name="notes" placeholder="Horaires, contraintes, etc."></textarea>
+                    </div>
 
-                  <div>
-                    <label class="flabel" for="notes-driver-fr">Notes</label>
-                    <textarea id="notes-driver-fr" name="notes" placeholder="Horaires, contraintes, etc."></textarea>
-                  </div>
-
-                  <div class="formActions">
-                    <button class="btn primary" type="submit" data-panel-submit></button>
-                    <span class="note" data-panel-submit-note></span>
-                  </div>
-                  <div class="formStatus success" role="status" aria-live="polite">Merci. Nous revenons vite vers toi.</div>
-                  <div class="formStatus error" role="status" aria-live="polite">Oups, échec. Écris-nous à <a href="mailto:hello@rideomw.com">hello@rideomw.com</a>.</div>
-                </form>
+                    <div class="formActions">
+                      <button class="btn primary" type="submit" data-panel-submit></button>
+                      <button class="btn secondary formClear" type="button" data-form-clear hidden>Effacer le formulaire</button>
+                      <span class="note" data-panel-submit-note></span>
+                      <p class="formNextStep">Après inscription : on vérifie les trajets compatibles, puis on vous contacte pour un test simple avec de vrais utilisateurs.</p>
+                    </div>
+                    <div class="formStatus success" role="status" aria-live="polite" data-form-success>Merci, c’est bien reçu. On vous contactera pour les prochains tests OMW.</div>
+                    <div class="formStatus error" role="status" aria-live="assertive" data-form-error>L’envoi n’a pas fonctionné. Vérifiez votre connexion ou réessayez dans quelques secondes.</div>
+                  </form>
+                </div>
               </section>
             </div>
 
@@ -3146,29 +3388,28 @@
           <div class="sectionSurface betaShell dynamicSwap" data-dynamic-section="cta">
             <div class="formsGrid">
               <section class="formCard" id="riders-en" data-persona-panel="rider">
-                <p class="kicker" data-panel-kicker></p>
-                <h3 data-panel-title></h3>
-
-                <div class="note panelHelperNote" data-panel-corridor-note></div>
-                <div class="row2" style="margin-top: 6px;">
+                <div class="formIntro">
                   <div>
-                    <label class="flabel" for="suggest-en">Suggested corridor</label>
-                    <input id="suggest-en" name="corridor_suggested" form="rider-form-en" placeholder="Example: Montreuil ↔ Paris 11" />
+                    <p class="kicker" data-panel-kicker></p>
+                    <h2 data-panel-title></h2>
+                    <p class="formIntroLead">Five simple inputs to be part of the very first OMW users in Ile de France exclusive beta testing.</p>
                   </div>
-                  <div>
-                    <label class="flabel" for="time-en">Time window</label>
-                    <input id="time-en" name="corridor_time" form="rider-form-en" placeholder="Example: 7:30-9 / 23:00-1:00" />
-                  </div>
+                  <ul class="formIntroList">
+                    <li>Example: Porte de Clignancourt → La Défense.</li>
+                    <li>Add the exact route later if a corridor opens.</li>
+                    <li>After joining, we contact you for a simple real-user test.</li>
+                  </ul>
                 </div>
 
-                <form class="form" id="rider-form-en" data-form="rider" method="post" autocomplete="on" data-fallback="hello@rideomw.com">
-                  <input type="hidden" name="form_type" value="Rider waitlist (EN)" />
-                  <div class="hp" aria-hidden="true">
-                    <label for="company-rider-en">Company</label>
-                    <input id="company-rider-en" name="company" tabindex="-1" autocomplete="off" />
-                  </div>
+                <div class="quickFormPanel">
+                  <p class="quickFormEyebrow">Fast beta access</p>
+                  <form class="form" id="rider-form-en" data-form="rider" data-locale="en" method="post" autocomplete="on" data-fallback="hello@rideomw.com" novalidate>
+                    <input type="hidden" name="form_type" value="Rider waitlist (EN)" />
+                    <div class="hp" aria-hidden="true">
+                      <label for="company-rider-en">Company</label>
+                      <input id="company-rider-en" name="company" tabindex="-1" autocomplete="off" />
+                    </div>
 
-                  <div class="row2">
                     <div>
                       <label class="flabel" for="name-rider-en">Name</label>
                       <input id="name-rider-en" name="name" placeholder="Your name" required />
@@ -3177,12 +3418,15 @@
                       <label class="flabel" for="email-rider-en">Email</label>
                       <input id="email-rider-en" name="email" type="email" placeholder="you@domain.com" required />
                     </div>
-                  </div>
-
-                  <div class="row2">
-                    <div>
-                      <label class="flabel" for="area-rider-en">Primary area</label>
-                      <input id="area-rider-en" name="area" placeholder="Example: Montreuil / Paris 11" required />
+                    <div class="row2">
+                      <div>
+                        <label class="flabel" for="suggest-en">Usual route</label>
+                        <input id="suggest-en" name="corridor_suggested" placeholder="Porte de Clignancourt → La Défense" required />
+                      </div>
+                      <div>
+                        <label class="flabel" for="time-en">Usual time</label>
+                        <input id="time-en" name="corridor_time" placeholder="Leaving 8:00-8:30" required />
+                      </div>
                     </div>
                     <div>
                       <label class="flabel" for="usecase-en">Main use case</label>
@@ -3192,46 +3436,48 @@
                         <option>Late-night ride home</option>
                         <option>Occasional</option>
                       </select>
-                    </div>
-                  </div>
-
-                  <div class="row2">
-                    <div>
-                      <label class="flabel" for="timewindow-en">Typical times</label>
-                      <input id="timewindow-en" name="time_window" placeholder="Example: 7:30-9 / 23:00-1:00" />
+                      <p class="fieldHelp">OMW is mainly used to identify compatible recurring routes.</p>
                     </div>
                     <div>
-                      <label class="flabel" for="pickup-en">Preferred pickup</label>
-                      <input id="pickup-en" name="pickup" placeholder="Station, avenue, exit" />
+                      <label class="flabel" for="notes-rider-en">Notes</label>
+                      <textarea id="notes-rider-en" name="notes" placeholder="Hours, constraints, etc."></textarea>
                     </div>
-                  </div>
 
-                  <div>
-                    <label class="flabel" for="notes-rider-en">Notes</label>
-                    <textarea id="notes-rider-en" name="notes" placeholder="Constraints, expectations, etc."></textarea>
-                  </div>
-
-                  <div class="formActions">
-                    <button class="btn primary" type="submit" data-panel-submit></button>
-                    <span class="note" data-panel-submit-note></span>
-                  </div>
-                  <div class="formStatus success" role="status" aria-live="polite">Thanks. We'll keep you posted.</div>
-                  <div class="formStatus error" role="status" aria-live="polite">Something went wrong. Email us at <a href="mailto:hello@rideomw.com">hello@rideomw.com</a>.</div>
-                </form>
+                    <div class="formActions">
+                      <button class="btn primary" type="submit" data-panel-submit></button>
+                      <button class="btn secondary formClear" type="button" data-form-clear hidden>Clear form</button>
+                      <span class="note" data-panel-submit-note></span>
+                      <p class="formNextStep">After joining: we check compatible routes, then contact you for a simple test with real users.</p>
+                    </div>
+                    <div class="formStatus success" role="status" aria-live="polite" data-form-success>Thanks, we got it. We’ll contact you for the next OMW tests.</div>
+                    <div class="formStatus error" role="status" aria-live="assertive" data-form-error>Submission failed. Check your connection or try again in a few seconds.</div>
+                  </form>
+                </div>
               </section>
 
               <section class="formCard" id="drivers-en" data-persona-panel="driver" hidden>
-                <p class="kicker" data-panel-kicker></p>
-                <h3 data-panel-title></h3>
-
-                <form class="form" id="driver-form-en" data-form="driver" method="post" autocomplete="on" data-fallback="hello@rideomw.com">
-                  <input type="hidden" name="form_type" value="Driver beta (EN)" />
-                  <div class="hp" aria-hidden="true">
-                    <label for="company-en">Company</label>
-                    <input id="company-en" name="company" tabindex="-1" autocomplete="off" />
+                <div class="formIntro">
+                  <div>
+                    <p class="kicker" data-panel-kicker></p>
+                    <h2 data-panel-title></h2>
+                    <p class="formIntroLead">Five simple inputs to be part of the very first OMW users in Ile de France exclusive beta testing.</p>
                   </div>
+                  <ul class="formIntroList">
+                    <li>Example: Nanterre → Paris 8.</li>
+                    <li>No need to describe the full routine yet.</li>
+                    <li>You keep control of route and detour.</li>
+                  </ul>
+                </div>
 
-                  <div class="row2">
+                <div class="quickFormPanel">
+                  <p class="quickFormEyebrow">Fast driver application</p>
+                  <form class="form" id="driver-form-en" data-form="driver" data-locale="en" method="post" autocomplete="on" data-fallback="hello@rideomw.com" novalidate>
+                    <input type="hidden" name="form_type" value="Driver beta (EN)" />
+                    <div class="hp" aria-hidden="true">
+                      <label for="company-en">Company</label>
+                      <input id="company-en" name="company" tabindex="-1" autocomplete="off" />
+                    </div>
+
                     <div>
                       <label class="flabel" for="name-driver-en">Name</label>
                       <input id="name-driver-en" name="name" placeholder="Your name" required />
@@ -3240,15 +3486,12 @@
                       <label class="flabel" for="email-driver-en">Email</label>
                       <input id="email-driver-en" name="email" type="email" placeholder="you@domain.com" required />
                     </div>
-                  </div>
-
-                  <div class="row2">
                     <div>
                       <label class="flabel" for="area-driver-en">Main route</label>
-                      <input id="area-driver-en" name="route" placeholder="Example: Nanterre → Paris 8" required />
+                      <input id="area-driver-en" name="route" placeholder="Nanterre → Paris 8" required />
                     </div>
                     <div>
-                      <label class="flabel" for="freq-driver-en">Frequency</label>
+                      <label class="flabel" for="freq-driver-en">Main use case</label>
                       <select id="freq-driver-en" name="frequency" required>
                         <option value="">Select</option>
                         <option>Daily</option>
@@ -3256,16 +3499,10 @@
                         <option>1-2x / week</option>
                         <option>Occasionally</option>
                       </select>
-                    </div>
-                  </div>
-
-                  <div class="row2">
-                    <div>
-                      <label class="flabel" for="vehicle-en">Vehicle</label>
-                      <input id="vehicle-en" name="vehicle" placeholder="Model + year" />
+                      <p class="fieldHelp">OMW is mainly used to identify compatible recurring routes.</p>
                     </div>
                     <div>
-                      <label class="flabel" for="detour-en">Max detour</label>
+                      <label class="flabel" for="detour-en">Max comfortable detour</label>
                       <select id="detour-en" name="detour" required>
                         <option value="">Select</option>
                         <option>≤ 3 minutes</option>
@@ -3274,20 +3511,21 @@
                         <option>Flexible</option>
                       </select>
                     </div>
-                  </div>
+                    <div>
+                      <label class="flabel" for="notes-driver-en">Notes</label>
+                      <textarea id="notes-driver-en" name="notes" placeholder="Hours, constraints, etc."></textarea>
+                    </div>
 
-                  <div>
-                    <label class="flabel" for="notes-driver-en">Notes</label>
-                    <textarea id="notes-driver-en" name="notes" placeholder="Hours, constraints, etc."></textarea>
-                  </div>
-
-                  <div class="formActions">
-                    <button class="btn primary" type="submit" data-panel-submit></button>
-                    <span class="note" data-panel-submit-note></span>
-                  </div>
-                  <div class="formStatus success" role="status" aria-live="polite">Thanks. We'll get back to you soon.</div>
-                  <div class="formStatus error" role="status" aria-live="polite">Something went wrong. Email us at <a href="mailto:hello@rideomw.com">hello@rideomw.com</a>.</div>
-                </form>
+                    <div class="formActions">
+                      <button class="btn primary" type="submit" data-panel-submit></button>
+                      <button class="btn secondary formClear" type="button" data-form-clear hidden>Clear form</button>
+                      <span class="note" data-panel-submit-note></span>
+                      <p class="formNextStep">After joining: we check compatible routes, then contact you for a simple test with real users.</p>
+                    </div>
+                    <div class="formStatus success" role="status" aria-live="polite" data-form-success>Thanks, we got it. We’ll contact you for the next OMW tests.</div>
+                    <div class="formStatus error" role="status" aria-live="assertive" data-form-error>Submission failed. Check your connection or try again in a few seconds.</div>
+                  </form>
+                </div>
               </section>
             </div>
 
@@ -3328,6 +3566,7 @@
         en: document.getElementById("content-en")
       };
       const langInputs = Array.from(document.querySelectorAll(".langRadio"));
+      const langOptions = Array.from(document.querySelectorAll("[data-lang-option]"));
       const personaPanels = Array.from(document.querySelectorAll("[data-persona-panel]"));
       const heroSections = Array.from(document.querySelectorAll("[data-split-hero]"));
       const initialHash = window.location.hash.slice(1);
@@ -3434,15 +3673,15 @@
               helper: "Le formulaire et le submit wiring restent les mêmes ; seule la couche de contenu suit le mode passager.",
               panel: {
                 kicker: "Pour les passagers",
-                title: "Inscris-toi pour les premiers accès Rider",
+                title: "30 secondes pour rejoindre OMW",
                 bullets: [
                   "Accès anticipé aux trajets plus abordables sur axes compatibles.",
                   "Prix visible avant validation.",
                   "Utile pour les corridors quotidiens et besoins répétés."
                 ],
                 corridorNote: "Suggère un corridor (rattaché au formulaire rider) :",
-                submitLabel: "Rejoindre la liste d'attente",
-                submitNote: "On te prévient quand ta zone ouvre."
+                submitLabel: "Rejoindre la bêta",
+                submitNote: "Nom, email, trajet, horaire, usage principal."
               }
             }
           },
@@ -3524,19 +3763,19 @@
                   answer: "Oui, l'objectif est de rester proche de ton itinéraire prévu et de limiter les écarts qui rendent le covoit pénible au quotidien."
                 },
                 {
-                  question: "Comment est calculee la contribution ?",
-                  answer: "Une estimation est affichee avant validation pour que la contribution reste claire des deux cotes."
+                  question: "Comment est calculée la contribution ?",
+                  answer: "Une estimation est affichée avant validation pour que la contribution reste claire des deux côtés."
                 },
                 {
-                  question: "Puis-je retrouver des passagers reguliers ?",
-                  answer: "Oui. Les favoris servent justement a retrouver plus facilement des passagers recurrents sur le meme axe."
+                  question: "Puis-je retrouver des passagers réguliers ?",
+                  answer: "Oui. Les favoris servent justement à retrouver plus facilement des passagers récurrents sur le même axe."
                 }
               ]
             },
             cta: {
               kicker: "Premiers conducteurs",
-              title: "Rejoins les premiers conducteurs beta",
-              lead: "Teste une facon plus fluide de rentabiliser tes sieges vides sans alourdir ton trajet.",
+              title: "Rejoins les premiers conducteurs bêta",
+              lead: "Teste une façon plus fluide de rentabiliser tes sièges vides sans alourdir ton trajet.",
               bullets: [
                 "Rentabiliser les sièges vides.",
                 "Covoiturer sans friction d'organisation.",
@@ -3545,14 +3784,14 @@
               helper: "Le formulaire conducteur existant reste en place ; seule la couche de présentation suit le mode conducteur.",
               panel: {
                 kicker: "Pour les conducteurs",
-                title: "Covoiture sans charge mentale sur ton trajet habituel",
+                title: "30 secondes pour rejoindre OMW",
                 bullets: [
-                  "Mise en place rapide, sans passer ta soiree a coordonner.",
+                  "Mise en place rapide, sans passer ta soirée à coordonner.",
                   "Détours limités pour rester proche de ton axe.",
                   "Contribution visible avant validation."
                 ],
-                submitLabel: "Envoyer la candidature",
-                submitNote: "Reponse rapide."
+                submitLabel: "Rejoindre la bêta conducteur",
+                submitNote: "Nom, email, trajet, fréquence, détour confortable."
               }
             }
           }
@@ -3657,15 +3896,15 @@
               helper: "The form and submission wiring stay the same; only the content layer follows rider mode.",
               panel: {
                 kicker: "For riders",
-                title: "Sign up for early rider access",
+                title: "Join OMW in 30 seconds",
                 bullets: [
                   "Early access to more affordable compatible routes.",
                   "Upfront price before confirmation.",
                   "Useful for repeated everyday corridors."
                 ],
                 corridorNote: "Suggest a corridor (attached to rider form):",
-                submitLabel: "Join the rider waitlist",
-                submitNote: "We'll notify you when your area opens."
+                submitLabel: "Join beta",
+                submitNote: "Name, email, route, time, main use case."
               }
             }
           },
@@ -3768,14 +4007,14 @@
               helper: "The existing driver form stays wired the same way; only the presentation layer changes with driver mode.",
               panel: {
                 kicker: "For drivers",
-                title: "Carpool your routine without planning overhead",
+                title: "Join OMW in 30 seconds",
                 bullets: [
                   "Quick setup instead of a long coordination flow.",
                   "Detours stay limited so your route stays usable.",
                   "Contribution stays clear before validation."
                 ],
-                submitLabel: "Submit driver application",
-                submitNote: "Fast response."
+                submitLabel: "Join driver beta",
+                submitNote: "Name, email, route, frequency, comfortable detour."
               }
             }
           }
@@ -3846,12 +4085,12 @@
         const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
         const lowHeightDesktop = !mobile && viewportHeight <= 760;
         const pillHeight = personaDock ? personaDock.offsetHeight : (mobile ? 56 : 74);
-        const pillOffset = mobile ? 12 : (lowHeightDesktop ? 18 : 50);
+        const pillOffset = 50;
         const pillClearance = mobile
           ? (pillOffset + pillHeight + 28)
           : (pillOffset + pillHeight + (lowHeightDesktop ? 10 : 18));
         const simulationBaseWidth = 1228;
-        const simulationBaseHeight = 1000;
+        const simulationBaseHeight = 940;
         let simulationScale = 0.76;
         let simulationShellGutter = 20;
         let simulationTopGap = 16;
@@ -4160,6 +4399,19 @@
         }
       }
 
+      function syncLanguageToggle() {
+        const safeLocale = getCurrentLocale();
+        langOptions.forEach((option) => {
+          const isActive = option.getAttribute("data-lang-option") === safeLocale;
+          option.setAttribute("aria-checked", isActive ? "true" : "false");
+          if (isActive) {
+            option.setAttribute("aria-current", "true");
+          } else {
+            option.removeAttribute("aria-current");
+          }
+        });
+      }
+
       function renderHero(root, heroData) {
         const section = root.querySelector("[data-dynamic-section=\"hero\"]");
         transitionSwap(section, () => {
@@ -4317,7 +4569,10 @@
         if (corridorNote) corridorNote.textContent = panelData.corridorNote || "";
 
         const submit = panel.querySelector("[data-panel-submit]");
-        if (submit) submit.textContent = panelData.submitLabel;
+        if (submit) {
+          submit.dataset.defaultLabel = panelData.submitLabel;
+          if (submit.getAttribute("aria-busy") !== "true") submit.textContent = panelData.submitLabel;
+        }
 
         const submitNote = panel.querySelector("[data-panel-submit-note]");
         if (submitNote) submitNote.textContent = panelData.submitNote;
@@ -4345,6 +4600,12 @@
         toggle.querySelectorAll("[data-persona-mode]").forEach((button) => {
           const isActive = button.getAttribute("data-persona-mode") === currentPersona;
           button.setAttribute("aria-pressed", isActive ? "true" : "false");
+          button.setAttribute("aria-selected", isActive ? "true" : "false");
+          if (isActive) {
+            button.setAttribute("aria-current", "true");
+          } else {
+            button.removeAttribute("aria-current");
+          }
         });
       }
 
@@ -4640,6 +4901,7 @@
       syncReducedClass();
       syncDocumentLang();
       syncScrollUiLabels();
+      syncLanguageToggle();
 
       if (typeof prefersReduced.addEventListener === "function") {
         prefersReduced.addEventListener("change", syncReducedClass);
@@ -4685,9 +4947,22 @@
         input.addEventListener("change", () => {
           syncDocumentLang();
           syncScrollUiLabels();
+          syncLanguageToggle();
           personaToggles.forEach(syncPersonaToggle);
           scheduleLayoutSync();
           scheduleScrollRailSync();
+        });
+      });
+
+      langOptions.forEach((option) => {
+        option.addEventListener("keydown", (event) => {
+          if (event.key !== "Enter" && event.key !== " ") return;
+          event.preventDefault();
+          const locale = option.getAttribute("data-lang-option") === "en" ? "en" : "fr";
+          const input = document.getElementById("lang-" + locale);
+          if (!input) return;
+          input.checked = true;
+          input.dispatchEvent(new Event("change", { bubbles: true }));
         });
       });
 
@@ -4713,7 +4988,190 @@
         });
       }
 
+      const formCopy = {
+        fr: {
+          clear: "Effacer le formulaire",
+          clearConfirm: "Effacer les informations déjà saisies ?",
+          duplicate: "Cette inscription semble déjà envoyée. Si vous pensez que c'est une erreur, écrivez-nous à hello@rideomw.com.",
+          invalidEmail: "Ajoutez une adresse email valide.",
+          loading: "Envoi en cours…",
+          network: "L’envoi n’a pas fonctionné. Vérifiez votre connexion ou réessayez dans quelques secondes.",
+          required: "Ce champ est nécessaire pour comprendre votre trajet.",
+          server: "L’envoi n’a pas fonctionné. Vérifiez votre connexion ou réessayez dans quelques secondes.",
+          success: "Merci, c’est bien reçu. On vous contactera pour les prochains tests OMW."
+        },
+        en: {
+          clear: "Clear form",
+          clearConfirm: "Clear the information you already entered?",
+          duplicate: "This signup appears to have already been submitted. If that seems wrong, email us at hello@rideomw.com.",
+          invalidEmail: "Add a valid email address.",
+          loading: "Sending…",
+          network: "Submission failed. Check your connection or try again in a few seconds.",
+          required: "This field is needed to understand your route.",
+          server: "Submission failed. Check your connection or try again in a few seconds.",
+          success: "Thanks, we got it. We’ll contact you for the next OMW tests."
+        }
+      };
+
+      function getFormLocale(form) {
+        return form.getAttribute("data-locale") === "en" ? "en" : "fr";
+      }
+
+      function getAssociatedFields(form) {
+        return Array.from(form.elements).filter((field) => {
+          if (!(field instanceof HTMLInputElement || field instanceof HTMLSelectElement || field instanceof HTMLTextAreaElement)) return false;
+          if (field.type === "hidden" || field.name === "company") return false;
+          return !field.disabled;
+        });
+      }
+
+      function getFieldError(field, locale) {
+        const copy = formCopy[locale];
+        const value = String(field.value || "").trim();
+
+        if (field.required && !value) return copy.required;
+        if (field.type === "email" && value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return copy.invalidEmail;
+        return "";
+      }
+
+      function ensureFieldErrorNode(field) {
+        const existingId = field.getAttribute("data-error-id");
+        if (existingId) {
+          const existing = document.getElementById(existingId);
+          if (existing) return existing;
+        }
+
+        const error = document.createElement("p");
+        const baseId = field.id || field.name || "field";
+        error.id = baseId + "-error";
+        error.className = "fieldError";
+        error.setAttribute("aria-live", "polite");
+        field.setAttribute("data-error-id", error.id);
+        field.insertAdjacentElement("afterend", error);
+        return error;
+      }
+
+      function setFieldError(field, message) {
+        const error = ensureFieldErrorNode(field);
+        const describedBy = (field.getAttribute("aria-describedby") || "")
+          .split(/\s+/)
+          .filter(Boolean)
+          .filter((id) => id !== error.id);
+
+        if (message) {
+          error.textContent = message;
+          error.classList.add("is-visible");
+          field.setAttribute("aria-invalid", "true");
+          field.setAttribute("aria-describedby", describedBy.concat(error.id).join(" "));
+          return;
+        }
+
+        error.textContent = "";
+        error.classList.remove("is-visible");
+        field.removeAttribute("aria-invalid");
+        if (describedBy.length) {
+          field.setAttribute("aria-describedby", describedBy.join(" "));
+        } else {
+          field.removeAttribute("aria-describedby");
+        }
+      }
+
+      function validateForm(form) {
+        const locale = getFormLocale(form);
+        let firstInvalid = null;
+
+        getAssociatedFields(form).forEach((field) => {
+          const message = getFieldError(field, locale);
+          setFieldError(field, message);
+          if (message && !firstInvalid) firstInvalid = field;
+        });
+
+        if (firstInvalid) {
+          try {
+            firstInvalid.focus({ preventScroll: true });
+            firstInvalid.scrollIntoView({ behavior: prefersReduced.matches ? "auto" : "smooth", block: "center" });
+          } catch (err) {
+            firstInvalid.focus();
+          }
+        }
+
+        return !firstInvalid;
+      }
+
+      function hasUserEnteredValues(form) {
+        return getAssociatedFields(form).some((field) => String(field.value || "").trim() !== "");
+      }
+
+      function syncClearButton(form) {
+        const clearButton = form.querySelector("[data-form-clear]");
+        if (!clearButton) return;
+        clearButton.hidden = !hasUserEnteredValues(form);
+      }
+
+      function setFormMessage(form, state, message) {
+        const locale = getFormLocale(form);
+        const copy = formCopy[locale];
+        const success = form.querySelector("[data-form-success]");
+        const error = form.querySelector("[data-form-error]");
+
+        if (success) success.textContent = state === "success" ? (message || copy.success) : copy.success;
+        if (error) error.textContent = state === "error" ? (message || copy.network) : copy.network;
+        form.setAttribute("data-state", state || "idle");
+      }
+
+      function setSubmitLoading(form, isLoading) {
+        const locale = getFormLocale(form);
+        const copy = formCopy[locale];
+        const submit = form.querySelector("[data-panel-submit]");
+        if (!submit) return;
+
+        if (!submit.dataset.defaultLabel) submit.dataset.defaultLabel = submit.textContent.trim();
+        submit.disabled = isLoading;
+        submit.setAttribute("aria-busy", isLoading ? "true" : "false");
+        submit.textContent = isLoading ? copy.loading : submit.dataset.defaultLabel;
+      }
+
+      function describeSubmitFailure(response, locale) {
+        const copy = formCopy[locale];
+        if (!response) return copy.network;
+        if (response.status === 409) return copy.duplicate;
+        if (response.status === 400 || response.status === 422) return copy.required;
+        return copy.network;
+      }
+
       document.querySelectorAll("form[data-form]").forEach((form) => {
+        const locale = getFormLocale(form);
+        const copy = formCopy[locale];
+        const clearButton = form.querySelector("[data-form-clear]");
+
+        if (clearButton) clearButton.textContent = copy.clear;
+        getAssociatedFields(form).forEach((field) => {
+          ensureFieldErrorNode(field);
+          field.addEventListener("input", () => {
+            setFieldError(field, getFieldError(field, locale));
+            setFormMessage(form, "idle", "");
+            syncClearButton(form);
+          });
+          field.addEventListener("change", () => {
+            setFieldError(field, getFieldError(field, locale));
+            setFormMessage(form, "idle", "");
+            syncClearButton(form);
+          });
+        });
+
+        syncClearButton(form);
+
+        if (clearButton) {
+          clearButton.addEventListener("click", () => {
+            if (hasUserEnteredValues(form) && !window.confirm(copy.clearConfirm)) return;
+            form.reset();
+            getAssociatedFields(form).forEach((field) => setFieldError(field, ""));
+            setFormMessage(form, "idle", "");
+            setSubmitLoading(form, false);
+            syncClearButton(form);
+          });
+        }
+
         form.addEventListener("submit", async (event) => {
           event.preventDefault();
           const honeypot = form.querySelector("input[name=company]");
@@ -4721,17 +5179,25 @@
 
           const type = form.getAttribute("data-form");
           const endpoint = endpoints[type] || "";
+          const locale = getFormLocale(form);
           const formData = new FormData(form);
           const payload = new URLSearchParams();
+
+          if (!validateForm(form)) {
+            setFormMessage(form, "error", formCopy[locale].required);
+            return;
+          }
 
           formData.forEach((value, key) => {
             if (typeof value === "string") payload.append(key, value);
           });
 
-          form.setAttribute("data-state", "loading");
+          setSubmitLoading(form, true);
+          setFormMessage(form, "loading", "");
 
           if (!endpoint) {
-            form.setAttribute("data-state", "error");
+            setSubmitLoading(form, false);
+            setFormMessage(form, "error", formCopy[locale].server);
             return;
           }
 
@@ -4745,14 +5211,21 @@
               body: payload.toString()
             });
 
+            setSubmitLoading(form, false);
+
             if (response.ok) {
               form.reset();
-              form.setAttribute("data-state", "success");
+              getAssociatedFields(form).forEach((field) => setFieldError(field, ""));
+              setFormMessage(form, "success", formCopy[locale].success);
+              syncClearButton(form);
             } else {
-              form.setAttribute("data-state", "error");
+              setFormMessage(form, "error", describeSubmitFailure(response, locale));
+              syncClearButton(form);
             }
           } catch (err) {
-            form.setAttribute("data-state", "error");
+            setSubmitLoading(form, false);
+            setFormMessage(form, "error", formCopy[locale].network);
+            syncClearButton(form);
           }
         });
       });
