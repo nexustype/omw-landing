@@ -815,16 +815,20 @@
     .personaDockInner {
       position: relative;
       pointer-events: none;
-      min-height: clamp(58px, 7vh, 72px);
+      min-height: clamp(130px, 17vh, 188px);
       padding:
-        clamp(6px, 0.9vh, 10px)
-        max(clamp(16px, calc(0.45vw + 0.55vh + 6px), 28px), calc(env(safe-area-inset-right) + 14px))
-        clamp(7px, 1vh, 12px)
-        max(clamp(16px, calc(0.45vw + 0.55vh + 6px), 28px), calc(env(safe-area-inset-left) + 14px));
+        clamp(48px, 6vh, 68px)
+        max(clamp(28px, 7vw, 96px), calc(env(safe-area-inset-right) + 18px))
+        clamp(24px, 3.5vh, 42px)
+        max(clamp(28px, 7vw, 96px), calc(env(safe-area-inset-left) + 18px));
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      grid-template-areas:
+        "nav nav nav"
+        "copy social contact";
       align-items: center;
-      gap: clamp(12px, calc(0.4vw + 0.5vh + 4px), 28px);
+      row-gap: clamp(22px, 3vh, 34px);
+      column-gap: clamp(16px, 3vw, 56px);
       background: var(--dock-surface);
       border-top: 1px solid var(--stroke-strong);
       box-shadow: 0 -12px 24px rgba(183, 194, 213, 0.18);
@@ -832,6 +836,8 @@
     }
 
     .personaDockMeta,
+    .personaDockSocial,
+    .personaFooterNav,
     .personaDockCenter {
       pointer-events: auto;
     }
@@ -849,10 +855,12 @@
     }
 
     .personaDockMeta--left {
+      grid-area: copy;
       justify-self: start;
     }
 
     .personaDockMeta--right {
+      grid-area: contact;
       justify-self: end;
       justify-content: flex-end;
     }
@@ -864,7 +872,10 @@
     }
 
     .personaDockCenter {
-      position: relative;
+      position: absolute;
+      left: 50%;
+      top: 0;
+      transform: translate(-50%, -48%);
       display: flex;
       justify-content: center;
       min-width: 0;
@@ -911,6 +922,67 @@
 
     .personaDockMeta .footerSeparator {
       color: rgba(120, 130, 144, 0.72);
+    }
+
+    .personaFooterNav {
+      grid-area: nav;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: clamp(28px, 5.5vw, 88px);
+      min-width: 0;
+    }
+
+    .personaFooterNav a {
+      color: rgba(7, 13, 24, 0.94);
+      font-size: clamp(1rem, 1.35vw, 1.35rem);
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .personaFooterNav a:hover,
+    .personaFooterNav a:focus-visible {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    .personaDockSocial {
+      grid-area: social;
+      justify-self: center;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      color: rgba(36, 52, 74, 0.58);
+    }
+
+    .socialLink,
+    .socialSoon {
+      width: 24px;
+      height: 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(36, 52, 74, 0.62);
+      font-size: 18px;
+      font-weight: 900;
+      line-height: 1;
+      text-decoration: none;
+      filter: blur(0.25px);
+    }
+
+    .socialLink:hover,
+    .socialLink:focus-visible {
+      color: var(--brand);
+      filter: none;
+      transform: translateY(-1px);
+    }
+
+    .socialSoon {
+      opacity: 0.34;
+      cursor: default;
     }
 
     .personaHint {
@@ -1994,6 +2066,10 @@
         padding-right: 20px;
       }
 
+      .personaFooterNav {
+        gap: clamp(18px, 4vw, 42px);
+      }
+
       .personaDockMeta {
         font-size: 13px;
       }
@@ -2035,9 +2111,10 @@
 
     @media (min-width: 1220px) and (max-height: 760px) {
       .personaDockInner {
-        min-height: 58px;
-        padding: 6px 18px 8px;
-        gap: 14px;
+        min-height: 118px;
+        padding: 42px 18px 22px;
+        row-gap: 18px;
+        column-gap: 14px;
       }
 
       .personaDockMeta {
@@ -2549,7 +2626,7 @@
         right: 0;
         bottom: 0;
         transform: none;
-        padding: 6px 0 calc(var(--mobile-safe-bottom) + 6px);
+        padding: 0 0 var(--mobile-safe-bottom);
         background: var(--dock-surface);
         border-top: 1px solid var(--stroke-strong);
         box-shadow: 0 -10px 22px rgba(16, 24, 42, 0.08);
@@ -2559,10 +2636,16 @@
       .personaDockInner {
         width: min(100%, calc(100% - 16px));
         margin: 0 auto;
-        min-height: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
+        min-height: 178px;
+        padding: 46px 14px 18px;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-areas:
+          "nav"
+          "social"
+          "contact";
+        row-gap: 14px;
+        justify-items: center;
         overflow: visible;
         background: transparent;
         box-shadow: none;
@@ -2578,8 +2661,31 @@
         display: none;
       }
 
+      .personaDockMeta--right {
+        grid-area: contact;
+        justify-self: center;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .personaFooterNav {
+        gap: 18px;
+        flex-wrap: wrap;
+      }
+
+      .personaFooterNav a {
+        font-size: 0.9rem;
+      }
+
+      .personaDockSocial {
+        gap: 16px;
+      }
+
       .personaDockCenter {
-        width: 100%;
+        width: auto;
+        left: 50%;
+        top: 0;
+        transform: translate(-50%, -46%);
       }
 
       .personaDockCenter::before {
@@ -2916,6 +3022,12 @@
       <div class="personaDockMeta personaDockMeta--left">
         <span class="personaDockCopy">© 2026 OMW - On My Way</span>
       </div>
+      <nav class="personaFooterNav" aria-label="Footer navigation">
+        <a href="/blog/">Articles</a>
+        <a href="/presentation/">Presentation</a>
+        <a href="/legal-notice/">Legal Notice</a>
+        <a href="/privacy-policy/">Privacy Policy</a>
+      </nav>
       <div class="personaDockCenter">
         <div class="personaDockFrame">
           <div class="comparisonToggle" role="tablist" aria-label="Basculer entre passager et conducteur" data-persona-toggle data-mode="rider">
@@ -2936,6 +3048,11 @@
             <span class="comparisonToggleKnob" aria-hidden="true"><img src="Icon.png" alt="" /></span>
           </div>
         </div>
+      </div>
+      <div class="personaDockSocial" aria-label="Social links">
+        <span class="socialSoon" aria-label="Facebook coming soon" title="Facebook coming soon">f</span>
+        <a class="socialLink" href="https://www.linkedin.com/company/rideomw/" target="_blank" rel="noopener noreferrer" aria-label="OMW on LinkedIn">in</a>
+        <span class="socialSoon" aria-label="Instagram coming soon" title="Instagram coming soon">◎</span>
       </div>
       <div class="personaDockMeta personaDockMeta--right">
         <a href="mailto:hello@rideomw.com">hello@rideomw.com</a>
